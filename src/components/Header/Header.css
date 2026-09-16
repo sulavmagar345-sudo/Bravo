@@ -1,0 +1,351 @@
+/* ============================================================
+  NEO-BRUTALIST HEADER STYLES
+  ============================================================ */
+
+.brutal-header {
+ position: sticky;
+ top: 0;
+ left: 0;
+ right: 0;
+ z-index: 1000;
+ background: var(--color-paper);
+ border-bottom: var(--border-thick);
+ padding: 14px 0;
+ box-shadow: 0 4px 0 #000000;
+}
+
+.brutal-header__inner {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ gap: 20px;
+}
+
+/* Logo */
+.brutal-logo {
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ text-decoration: none;
+}
+
+.brutal-logo__avatar {
+ width: 44px;
+ height: 44px;
+ border: var(--border-medium);
+ border-radius: var(--radius-sm);
+ overflow: hidden;
+ box-shadow: 2px 2px 0 #000;
+ background: #FFF;
+}
+
+.brutal-logo__avatar img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+}
+
+.brutal-logo__text-group {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+}
+
+.brutal-logo__title {
+ font-family: var(--font-display);
+ font-size: 2rem;
+ letter-spacing: 0.05em;
+ color: var(--color-black);
+ line-height: 1;
+}
+
+.brutal-badge--sm {
+ font-size: 0.68rem;
+ padding: 3px 8px;
+}
+
+/* Nav */
+.brutal-nav {
+ display: flex;
+}
+
+.brutal-nav__list {
+ display: flex;
+ align-items: center;
+ gap: 6px;
+ list-style: none;
+}
+
+.brutal-nav__item {
+ position: relative;
+}
+
+.brutal-nav__link {
+ display: inline-flex;
+ align-items: center;
+ gap: 6px;
+ padding: 8px 14px;
+ font-family: var(--font-body);
+ font-weight: 700;
+ font-size: 0.88rem;
+ text-transform: uppercase;
+ color: var(--color-black);
+ text-decoration: none;
+ border-radius: var(--radius-xs);
+ border: 2px solid transparent;
+ transition: all var(--trans-fast);
+}
+
+.brutal-nav__icon {
+ font-size: 1rem;
+}
+
+.brutal-nav__arrow {
+ font-size: 0.75rem;
+ transition: transform var(--trans-fast);
+}
+
+.brutal-nav__link:hover {
+ background: var(--bg-lavender);
+ border-color: #000;
+ box-shadow: 2px 2px 0 #000;
+}
+
+.brutal-nav__link.active {
+ background: var(--color-lime);
+ border-color: #000;
+ box-shadow: 2px 2px 0 #000;
+}
+
+/* Dropdown */
+.brutal-dropdown {
+ position: absolute;
+ top: calc(100% + 8px);
+ left: 0;
+ background: var(--color-white);
+ border: var(--border-medium);
+ border-radius: var(--radius-sm);
+ box-shadow: var(--shadow-md);
+ min-width: 230px;
+ padding: 6px;
+ display: flex;
+ flex-direction: column;
+ gap: 4px;
+ z-index: 100;
+ animation: brutalSlideDown 0.15s ease-out;
+}
+
+/* Bridge the gap so mouse doesn't leave when moving to dropdown */
+.brutal-dropdown::before {
+ content: '';
+ position: absolute;
+ top: -15px;
+ left: 0;
+ width: 100%;
+ height: 15px;
+ background: transparent;
+}
+
+@keyframes brutalSlideDown {
+ from { opacity: 0; transform: translateY(-6px); }
+ to { opacity: 1; transform: translateY(0); }
+}
+
+.brutal-dropdown__link {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 10px 14px;
+ text-decoration: none;
+ color: var(--color-black);
+ font-weight: 700;
+ font-size: 0.85rem;
+ border-radius: var(--radius-xs);
+ border: 1px solid transparent;
+}
+
+.brutal-dropdown__link:hover {
+ background: var(--bg-lavender);
+ border-color: #000;
+}
+
+.brutal-dropdown__icon {
+ margin-right: 8px;
+ font-size: 1.1rem;
+}
+
+.brutal-dropdown__label {
+ flex: 1;
+}
+
+/* Actions */
+.brutal-header__actions {
+ display: flex;
+ align-items: center;
+ gap: 12px;
+}
+
+.brutal-hamburger {
+ display: none;
+ background: var(--color-white);
+ border: var(--border-medium);
+ border-radius: var(--radius-xs);
+ box-shadow: 2px 2px 0 #000;
+ width: 44px;
+ height: 44px;
+ padding: 0;
+ cursor: pointer;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ gap: 5px;
+ flex-shrink: 0;
+ -webkit-tap-highlight-color: transparent;
+ touch-action: manipulation;
+ position: relative;
+ z-index: 10;
+}
+
+.hbg-bar {
+ display: block;
+ width: 22px;
+ height: 2.5px;
+ background: var(--color-black);
+ border-radius: 1px;
+ transition: transform 0.2s ease, opacity 0.2s ease;
+ transform-origin: center;
+}
+
+/* Animate to X when open */
+.brutal-hamburger.is-open .hbg-bar:nth-child(1) {
+ transform: translateY(7.5px) rotate(45deg);
+}
+.brutal-hamburger.is-open .hbg-bar:nth-child(2) {
+ opacity: 0;
+ transform: scaleX(0);
+}
+.brutal-hamburger.is-open .hbg-bar:nth-child(3) {
+ transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Drawer */
+.brutal-drawer-backdrop {
+ position: fixed;
+ inset: 0;
+ background: rgba(0, 0, 0, 0.6);
+ z-index: 1999;
+}
+
+.brutal-drawer {
+ position: fixed;
+ top: 0;
+ right: 0;
+ bottom: 0;
+ width: 320px;
+ max-width: 85vw;
+ background: var(--bg-lavender);
+ border-left: var(--border-thick);
+ box-shadow: -8px 0 0 rgba(0, 0, 0, 0.4);
+ z-index: 2000;
+ display: flex;
+ flex-direction: column;
+ transform: translateX(100%);
+ transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+ padding: 24px;
+ overflow-y: auto;
+}
+
+.brutal-drawer.open {
+ transform: translateX(0);
+}
+
+.brutal-drawer__header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding-bottom: 18px;
+ border-bottom: 2px solid #000;
+ margin-bottom: 20px;
+}
+
+.brutal-drawer__close {
+ background: var(--color-white);
+ border: var(--border-medium);
+ box-shadow: 2px 2px 0 #000;
+ width: 36px;
+ height: 36px;
+ font-size: 1.1rem;
+ font-weight: 700;
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+.brutal-drawer__list {
+ list-style: none;
+ display: flex;
+ flex-direction: column;
+ gap: 8px;
+ flex: 1;
+}
+
+.brutal-drawer__link {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 12px 16px;
+ background: var(--color-white);
+ border: var(--border-medium);
+ border-radius: var(--radius-xs);
+ box-shadow: 3px 3px 0 #000;
+ text-decoration: none;
+ color: var(--color-black);
+ font-weight: 700;
+ font-size: 0.95rem;
+}
+
+.brutal-drawer__link.active {
+ background: var(--color-lime);
+}
+
+.brutal-drawer__sub-item {
+ padding-left: 20px;
+}
+
+.brutal-drawer__link.sub {
+ background: var(--bg-lavender-light);
+ font-size: 0.88rem;
+ padding: 10px 14px;
+}
+
+.brutal-drawer__footer {
+ padding-top: 20px;
+ border-top: 2px solid #000;
+}
+
+.brutal-btn--full {
+ width: 100%;
+}
+
+@media (max-width: 992px) {
+ .brutal-nav {
+  display: none;
+ }
+ .brutal-hamburger {
+  display: flex;
+ }
+ /* Hide desktop enroll button on mobile - it's in the drawer instead */
+ .brutal-header__actions > .brutal-btn {
+  display: none;
+ }
+}
+
+@media (max-width: 480px) {
+ .brutal-header {
+  padding: 10px 0;
+ }
+ .brutal-logo__title {
+  font-size: 1.6rem;
+ }
+}

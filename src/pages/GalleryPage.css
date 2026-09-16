@@ -1,0 +1,157 @@
+/* ============================================================
+  GALLERY DEDICATED PAGE STYLES
+  ============================================================ */
+
+.gallery-page {
+ background: var(--color-bg);
+}
+
+/* Video Showcase */
+.video-showcase-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+ gap: 30px;
+ margin-top: 40px;
+}
+
+.video-card {
+ background: var(--color-bg);
+ border: 1px solid var(--color-cream-dark);
+ border-radius: var(--radius-xl);
+ overflow: hidden;
+ box-shadow: var(--shadow-sm);
+}
+
+.video-wrapper {
+ position: relative;
+ aspect-ratio: 16 / 9;
+ background: #000;
+}
+
+.video-player {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+}
+
+.video-card-body {
+ padding: 20px 24px;
+}
+
+.video-card-body h4 {
+ font-size: 1.1rem;
+ color: var(--color-text-main);
+ margin-bottom: 6px;
+}
+
+.video-card-body p {
+ font-size: 0.85rem;
+ color: var(--color-text-muted);
+ line-height: 1.5;
+ margin: 0;
+}
+
+/* Photo Gallery Filters */
+.g-page-filters {
+ display: flex;
+ justify-content: center;
+ gap: 10px;
+ flex-wrap: wrap;
+ margin: 36px 0 44px;
+}
+
+.g-filter-btn {
+ background: var(--color-white);
+ border: 1px solid var(--color-cream-dark);
+ color: var(--color-text-main);
+ padding: 10px 20px;
+ border-radius: var(--radius-full);
+ font-size: 0.88rem;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all var(--transition-base);
+}
+
+.g-filter-btn:hover {
+ background: var(--color-cream-light);
+ border-color: var(--color-primary-light);
+}
+
+.g-filter-btn.active {
+ background: var(--color-primary-dark);
+ color: var(--color-white);
+ border-color: var(--color-primary-dark);
+ box-shadow: var(--shadow-sm);
+}
+
+/* Photos Grid */
+.g-page-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+ gap: 20px;
+}
+
+.g-page-item {
+ border-radius: var(--radius-md);
+ overflow: hidden;
+ background: var(--color-cream-light);
+ cursor: pointer;
+ box-shadow: var(--shadow-sm);
+ transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.g-page-item:hover {
+ transform: translateY(-4px);
+ box-shadow: var(--shadow-md);
+}
+
+.g-page-thumb-wrap {
+ position: relative;
+ aspect-ratio: 4 / 3;
+ overflow: hidden;
+}
+
+.g-page-thumb {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ transition: transform var(--transition-smooth);
+}
+
+.g-page-item:hover .g-page-thumb {
+ transform: scale(1.06);
+}
+
+.g-page-overlay {
+ position: absolute;
+ inset: 0;
+ background: linear-gradient(180deg, transparent 0%, rgba(20, 12, 8, 0.85) 100%);
+ opacity: 0;
+ transition: opacity var(--transition-base);
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ padding: 18px;
+}
+
+.g-page-item:hover .g-page-overlay {
+ opacity: 1;
+}
+
+.g-page-zoom {
+ align-self: flex-end;
+ background: rgba(255, 255, 255, 0.2);
+ backdrop-filter: blur(6px);
+ color: var(--color-white);
+ font-size: 0.78rem;
+ font-weight: 700;
+ padding: 4px 10px;
+ border-radius: var(--radius-full);
+}
+
+.g-page-caption {
+ color: var(--color-white);
+ font-size: 0.85rem;
+ font-weight: 500;
+ line-height: 1.4;
+}

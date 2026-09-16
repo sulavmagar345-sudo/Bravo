@@ -1,0 +1,211 @@
+/* ============================================================
+  CHEF TRAINING DEDICATED PAGE STYLES
+  ============================================================ */
+
+.chef-page {
+ background: var(--bg-lavender);
+}
+
+.chef-split {
+ display: grid;
+ grid-template-columns: 1.2fr 1fr;
+ gap: clamp(40px, 6vw, 80px);
+ align-items: center;
+}
+
+.chef-split__text .lead {
+ font-size: 1.15rem;
+ font-weight: 500;
+ color: var(--color-text-main);
+ line-height: 1.7;
+ margin-bottom: 16px;
+}
+
+.chef-split__text p {
+ color: var(--color-text-muted);
+ line-height: 1.7;
+ margin-bottom: 24px;
+}
+
+.chef-stats {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 16px;
+ margin-top: 24px;
+}
+
+.chef-stat-card {
+ background: var(--color-cream-light);
+ border: 1px solid var(--color-cream-dark);
+ border-radius: var(--radius-md);
+ padding: 16px 12px;
+ text-align: center;
+}
+
+.chef-stat-val {
+ font-family: var(--font-serif);
+ font-size: 1.6rem;
+ font-weight: 700;
+ color: var(--color-primary-dark);
+ display: block;
+}
+
+.chef-stat-card strong {
+ display: block;
+ font-size: 0.9rem;
+ color: var(--color-text-main);
+ margin-bottom: 2px;
+}
+
+.chef-stat-card span {
+ font-size: 0.76rem;
+ color: var(--color-text-muted);
+}
+
+.chef-visual-card {
+ position: relative;
+ border: var(--border-thick);
+ border-radius: var(--radius-sm);
+ overflow: hidden;
+ box-shadow: var(--shadow-lg);
+ height: 440px;
+}
+
+.chef-visual-img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+}
+
+.chef-visual-badge {
+ position: absolute;
+ bottom: 20px;
+ left: 20px;
+ background: var(--color-lime);
+ color: var(--color-black);
+ font-family: var(--font-mono);
+ font-weight: 700;
+ font-size: 0.85rem;
+ padding: 8px 14px;
+ border: 2px solid #000;
+ border-radius: 2px;
+ text-transform: uppercase;
+}
+
+/* Curriculum Grid */
+.chef-curriculum-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+ gap: 24px;
+ margin-top: 40px;
+}
+
+.chef-curr-card {
+ background: var(--color-white);
+ border: var(--border-thick);
+ border-radius: var(--radius-sm);
+ padding: 30px 24px;
+ box-shadow: var(--shadow-sm);
+ transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+.chef-curr-card:hover {
+ transform: translate(-2px, -2px);
+ box-shadow: var(--shadow-md);
+}
+
+.chef-curr-num {
+ font-family: var(--font-display);
+ font-size: 3rem;
+ line-height: 1;
+ color: var(--color-lime);
+ -webkit-text-stroke: 2px #000;
+ text-shadow: 3px 3px 0 #000;
+ display: block;
+ margin-bottom: 12px;
+}
+
+.chef-curr-card h4 {
+ font-family: var(--font-display);
+ font-size: 1.4rem;
+ color: var(--color-black);
+ margin-bottom: 10px;
+ text-transform: uppercase;
+}
+
+.chef-curr-card p {
+ font-size: 0.9rem;
+ color: var(--color-text-muted);
+ line-height: 1.6;
+ margin: 0;
+ font-family: var(--font-body);
+ text-transform: none;
+}
+
+/* Waitlist Box */
+.chef-waitlist-wrap {
+ display: grid;
+ grid-template-columns: 1.2fr 1fr;
+ gap: 48px;
+ background: var(--color-black);
+ border: var(--border-thick);
+ border-radius: var(--radius-sm);
+ padding: clamp(32px, 5vw, 60px);
+ box-shadow: var(--shadow-lime);
+}
+
+.chef-waitlist-info p {
+ color: #CCC;
+ line-height: 1.7;
+ margin: 16px 0 24px;
+}
+
+.chef-perk-list {
+ list-style: none;
+ padding: 0;
+ margin: 0;
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+ color: var(--color-lime);
+ font-size: 0.95rem;
+ font-family: var(--font-mono);
+}
+
+.chef-waitlist-form-card {
+ background: var(--color-white);
+ color: var(--color-text-main);
+ border: var(--border-thick);
+ border-radius: var(--radius-sm);
+ padding: 32px 28px;
+ box-shadow: var(--shadow-sm);
+}
+
+.chef-form h3 {
+ font-family: var(--font-display);
+ font-size: 1.8rem;
+ color: var(--color-black);
+ margin-bottom: 18px;
+ text-transform: uppercase;
+}
+
+.chef-waitlist-success {
+ text-align: center;
+ padding: 24px 10px;
+}
+
+@media (max-width: 900px) {
+ .chef-split,
+ .chef-waitlist-wrap {
+  grid-template-columns: 1fr;
+ }
+}
+
+@media (max-width: 600px) {
+ .chef-stats {
+  grid-template-columns: 1fr;
+ }
+ .chef-visual-card {
+  height: 280px;
+ }
+}

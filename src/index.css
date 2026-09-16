@@ -1,0 +1,353 @@
+/* ============================================================
+  BRAVO - NEO-BRUTALIST DESIGN SYSTEM
+  Inspired by Reference: Lavender, Acid Lime, Heavy Black Shadows,
+  Bebas Neue Extruded Typography & Zero Glassmorphism
+  ============================================================ */
+
+:root {
+ /* Colors */
+ --bg-lavender: #E4D8FA;
+ --bg-lavender-light: #F4EFFF;
+ --bg-lavender-dark: #C9B5F5;
+ --color-paper: #FAF8F5;
+ --color-white: #FFFFFF;
+ --color-black: #111111;
+ --color-lime: #D7FF2E;
+ --color-lime-hover: #C5F515;
+ --color-purple-dark: #22143B;
+ --color-purple-muted: #5D4A7F;
+ --color-gray-border: #000000;
+ --color-text-main: #111111;
+ --color-text-muted: #4A4A4A;
+
+ /* Typography */
+ --font-display: 'Bebas Neue', Impact, sans-serif;
+ --font-body: 'Space Grotesk', -apple-system, sans-serif;
+ --font-mono: 'Space Mono', monospace;
+
+ /* Borders & Shadows */
+ --border-thick: 3px solid #000000;
+ --border-medium: 2px solid #000000;
+ --shadow-sm: 3px 3px 0px #000000;
+ --shadow-md: 5px 5px 0px #000000;
+ --shadow-lg: 8px 8px 0px #000000;
+ --shadow-xl: 12px 12px 0px #000000;
+ --shadow-lime: 5px 5px 0px #D7FF2E;
+
+ /* Radii */
+ --radius-xs: 2px;
+ --radius-sm: 4px;
+ --radius-md: 8px;
+ --radius-lg: 12px;
+ --radius-full: 9999px;
+
+ /* Transitions */
+ --trans-fast: 0.12s ease;
+ --trans-base: 0.18s ease;
+}
+
+*, *::before, *::after {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+}
+
+html {
+ font-size: 16px;
+ scroll-behavior: smooth;
+}
+
+body {
+ font-family: var(--font-body);
+ background-color: var(--bg-lavender);
+ color: var(--color-text-main);
+ line-height: 1.6;
+ -webkit-font-smoothing: antialiased;
+ overflow-x: hidden;
+}
+
+/* Background Pattern inspired by Reference (light coffee cup doodles / grid) */
+.brutal-bg-pattern {
+ background-color: var(--bg-lavender);
+ background-image: radial-gradient(#111111 1px, transparent 1px);
+ background-size: 28px 28px;
+}
+
+/* Container */
+.container {
+ width: 100%;
+ max-width: 1240px;
+ margin: 0 auto;
+ padding: 0 24px;
+}
+
+/* Headings */
+h1, h2, h3, h4, .font-display {
+ font-family: var(--font-display);
+ letter-spacing: 0.04em;
+ text-transform: uppercase;
+ line-height: 0.95;
+ color: var(--color-black);
+}
+
+h1 {
+ font-size: clamp(3.2rem, 9vw, 8rem);
+}
+
+h2 {
+ font-size: clamp(2.4rem, 6vw, 5rem);
+}
+
+h3 {
+ font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+}
+
+h4 {
+ font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+}
+
+/* Extruded 3D Text (Like "COFFEE SHOP" Reference 1) */
+.extrude-text {
+ color: var(--color-white);
+ -webkit-text-stroke: 2px #000000;
+ text-shadow: 
+  3px 3px 0 #000000,
+  6px 6px 0 #000000,
+  8px 8px 0 #000000;
+}
+
+.extrude-text-dark {
+ color: var(--color-black);
+ text-shadow: 
+  3px 3px 0 var(--color-lime),
+  6px 6px 0 var(--color-lime);
+}
+
+/* Brutal Buttons */
+.brutal-btn {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ gap: 10px;
+ font-family: var(--font-body);
+ font-weight: 700;
+ font-size: 0.95rem;
+ text-transform: uppercase;
+ letter-spacing: 0.04em;
+ padding: 14px 26px;
+ background: var(--color-lime);
+ color: var(--color-black);
+ border: var(--border-medium);
+ border-radius: var(--radius-sm);
+ box-shadow: var(--shadow-md);
+ cursor: pointer;
+ text-decoration: none;
+ transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+.brutal-btn:hover {
+ background: var(--color-lime-hover);
+ transform: translate(-2px, -2px);
+ box-shadow: var(--shadow-lg);
+}
+
+.brutal-btn:active {
+ transform: translate(3px, 3px);
+ box-shadow: 1px 1px 0 #000;
+}
+
+.brutal-btn--dark {
+ background: var(--color-black);
+ color: var(--color-white);
+}
+
+.brutal-btn--dark:hover {
+ background: #252525;
+}
+
+.brutal-btn--white {
+ background: var(--color-white);
+ color: var(--color-black);
+}
+
+.brutal-btn--sm {
+ padding: 8px 16px;
+ font-size: 0.82rem;
+ box-shadow: var(--shadow-sm);
+}
+
+/* Brutal Badge (Like "MADE WITH LOVE" / "SHAKE THE MOOD" in Reference 2 & 3) */
+.brutal-badge {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ gap: 6px;
+ background: var(--color-lime);
+ color: var(--color-black);
+ font-family: var(--font-mono);
+ font-size: 0.75rem;
+ font-weight: 800;
+ text-transform: uppercase;
+ letter-spacing: 0.06em;
+ padding: 6px 14px;
+ border-radius: var(--radius-full);
+ border: 2px solid #000000;
+ box-shadow: 2px 2px 0px #000000;
+}
+
+.brutal-badge--white {
+ background: var(--color-white);
+}
+
+.brutal-badge--lavender {
+ background: var(--bg-lavender-dark);
+}
+
+/* Brutal Card */
+.brutal-card {
+ background: var(--color-white);
+ border: var(--border-thick);
+ border-radius: var(--radius-md);
+ box-shadow: var(--shadow-md);
+ padding: 30px;
+ position: relative;
+ transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+.brutal-card:hover {
+ transform: translate(-2px, -2px);
+ box-shadow: var(--shadow-lg);
+}
+
+.brutal-card--lavender {
+ background: var(--bg-lavender-light);
+}
+
+.brutal-card--lime {
+ background: var(--color-lime);
+}
+
+.brutal-card--dark {
+ background: var(--color-black);
+ color: var(--color-white);
+ box-shadow: var(--shadow-lime);
+}
+
+.brutal-card--dark h1,
+.brutal-card--dark h2,
+.brutal-card--dark h3,
+.brutal-card--dark h4 {
+ color: var(--color-white);
+}
+
+/* Marquee / Ticker */
+.brutal-ticker {
+ background: var(--color-black);
+ color: var(--color-lime);
+ border-top: var(--border-medium);
+ border-bottom: var(--border-medium);
+ padding: 12px 0;
+ overflow: hidden;
+ white-space: nowrap;
+ font-family: var(--font-display);
+ font-size: 1.4rem;
+ letter-spacing: 0.08em;
+ text-transform: uppercase;
+}
+
+.brutal-ticker__track {
+ display: inline-block;
+ animation: tickerSlide 22s linear infinite;
+}
+
+@keyframes tickerSlide {
+ 0% { transform: translateX(0); }
+ 100% { transform: translateX(-50%); }
+}
+
+/* Section styling */
+.brutal-section {
+ padding: clamp(60px, 8vw, 100px) 0;
+ position: relative;
+}
+
+.brutal-section--white {
+ background: var(--color-white);
+ border-top: var(--border-thick);
+ border-bottom: var(--border-thick);
+}
+
+.brutal-section--paper {
+ background: var(--color-paper);
+ border-top: var(--border-thick);
+ border-bottom: var(--border-thick);
+}
+
+.brutal-section--dark {
+ background: var(--color-black);
+ color: var(--color-white);
+ border-top: var(--border-thick);
+ border-bottom: var(--border-thick);
+}
+
+.brutal-section--dark h2,
+.brutal-section--dark h3 {
+ color: var(--color-white);
+}
+
+/* Image Frames in Neo-Brutalism */
+.brutal-img-frame {
+ border: var(--border-thick);
+ border-radius: var(--radius-md);
+ box-shadow: var(--shadow-md);
+ overflow: hidden;
+ background: var(--color-black);
+ position: relative;
+}
+
+.brutal-img-frame img,
+.brutal-img-frame video {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ display: block;
+}
+
+/* Forms */
+.brutal-input,
+.brutal-select,
+.brutal-textarea {
+ width: 100%;
+ background: var(--color-white);
+ border: var(--border-medium);
+ border-radius: var(--radius-xs);
+ padding: 14px 16px;
+ font-family: var(--font-body);
+ font-size: 0.95rem;
+ font-weight: 500;
+ color: var(--color-black);
+ box-shadow: 3px 3px 0px #000000;
+ transition: all var(--trans-fast);
+}
+
+.brutal-input:focus,
+.brutal-select:focus,
+.brutal-textarea:focus {
+ outline: none;
+ background: #FFF;
+ box-shadow: 5px 5px 0px var(--color-lime);
+ border-color: #000;
+}
+
+/* Technical Hairline Rules */
+.brutal-hairline {
+ height: 2px;
+ background: #000000;
+ width: 100%;
+ margin: 20px 0;
+}
+
+/* Scroll reveal animations - snappier for brutalism */
+.reveal {
+ opacity: 1;
+}

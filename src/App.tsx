@@ -1,0 +1,66 @@
+import React from 'react';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import FloatingCTA from './components/FloatingCTA/FloatingCTA';
+import ScrollToTop from './components/ScrollToTop';
+import { useScrollReveal } from './hooks/useScrollReveal';
+
+// Pages
+import HomePage from './pages/HomePage';
+import BaristaPage from './pages/BaristaPage';
+import CafeBarTrainingPage from './pages/CafeBarTrainingPage';
+import CafeBarPage from './pages/CafeBarPage';
+import ChefPage from './pages/ChefPage';
+import ProgramsPage from './pages/ProgramsPage';
+import GalleryPage from './pages/GalleryPage';
+import AboutPage from './pages/AboutPage';
+import CertificationPage from './pages/CertificationPage';
+import ContactPage from './pages/ContactPage';
+import FAQPage from './pages/FAQPage';
+
+const AppContent: React.FC = () => {
+ useScrollReveal();
+
+ return (
+  <div className="app">
+   <ScrollToTop />
+   <Header />
+
+   <main id="main-content">
+    <Routes>
+     {/* Home Overview */}
+     <Route path="/" element={<HomePage />} />
+
+     {/* Dedicated Program & Icon Pages */}
+     <Route path="/programs" element={<ProgramsPage />} />
+     <Route path="/barista-training" element={<BaristaPage />} />
+     <Route path="/cafe-bar-training" element={<CafeBarTrainingPage />} />
+     <Route path="/cafe-bar" element={<CafeBarPage />} />
+     <Route path="/chef-training" element={<ChefPage />} />
+     <Route path="/certification" element={<CertificationPage />} />
+     <Route path="/gallery" element={<GalleryPage />} />
+     <Route path="/about" element={<AboutPage />} />
+     <Route path="/contact" element={<ContactPage />} />
+     <Route path="/faq" element={<FAQPage />} />
+
+     {/* Catch-all fallback */}
+     <Route path="*" element={<HomePage />} />
+    </Routes>
+   </main>
+
+   <Footer />
+   <FloatingCTA />
+  </div>
+ );
+};
+
+const App: React.FC = () => {
+ return (
+  <Router>
+   <AppContent />
+  </Router>
+ );
+};
+
+export default App;

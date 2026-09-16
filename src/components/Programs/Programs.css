@@ -1,0 +1,262 @@
+/* ============================================================
+  PROGRAMS SECTION — NEO-BRUTALIST
+  ============================================================ */
+
+.programs {
+ background: var(--bg-lavender);
+}
+
+/* ---- Tabs ---- */
+.programs__tabs {
+ display: flex;
+ gap: 0;
+ margin-bottom: 40px;
+ border: var(--border-thick);
+ box-shadow: var(--shadow-md);
+ flex-wrap: wrap;
+ overflow: hidden;
+}
+
+.programs__tab {
+ flex: 1;
+ min-width: 160px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 8px;
+ padding: 18px 20px;
+ font-family: var(--font-mono);
+ font-size: 0.85rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.06em;
+ color: var(--color-black);
+ cursor: pointer;
+ transition: background var(--trans-fast), color var(--trans-fast);
+ border: none;
+ border-right: var(--border-medium);
+ background: var(--color-white);
+}
+
+.programs__tab:last-child {
+ border-right: none;
+}
+
+.programs__tab:hover {
+ background: var(--bg-lavender-dark);
+}
+
+.programs__tab--active {
+ background: var(--color-black);
+ color: var(--color-lime);
+}
+
+.programs__tab--active:hover {
+ background: var(--color-black);
+ color: var(--color-lime);
+}
+
+.programs__tab--soon {
+ opacity: 0.75;
+}
+
+.programs__tab-icon {
+ font-size: 1.1rem;
+}
+
+.programs__tab-label {
+ font-weight: 700;
+}
+
+.programs__tab-badge {
+ font-size: 0.62rem;
+}
+
+/* ---- Detail Panel ---- */
+.programs__detail {
+ background: var(--color-white);
+ border: var(--border-thick);
+ box-shadow: var(--shadow-lg);
+ animation: panelIn 0.3s ease;
+}
+
+@keyframes panelIn {
+ from { opacity: 0; transform: translateY(12px); }
+ to { opacity: 1; transform: translateY(0); }
+}
+
+.programs__detail-content {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ min-height: 560px;
+}
+
+/* Left text */
+.programs__detail-text {
+ padding: clamp(36px, 5vw, 64px);
+ display: flex;
+ flex-direction: column;
+ gap: 0;
+ border-right: var(--border-thick);
+}
+
+.programs__detail-text .eyebrow {
+ font-family: var(--font-mono);
+ font-size: 0.82rem;
+ letter-spacing: 0.1em;
+ text-transform: uppercase;
+ color: var(--color-text-muted);
+ margin-bottom: 8px;
+}
+
+.programs__detail-text h3 {
+ font-family: var(--font-display);
+ font-size: clamp(2rem, 3vw, 3rem);
+ margin-bottom: 4px;
+ color: var(--color-black);
+ text-transform: uppercase;
+ line-height: 1;
+}
+
+.programs__detail-subtitle {
+ font-family: var(--font-mono);
+ font-size: 0.9rem;
+ font-weight: 700;
+ color: var(--color-text-muted);
+ text-transform: uppercase;
+ margin-bottom: 20px;
+ padding-bottom: 20px;
+ border-bottom: var(--border-medium);
+}
+
+.programs__detail-desc {
+ font-size: 1rem;
+ line-height: 1.75;
+ color: #333;
+ margin-bottom: 24px;
+}
+
+/* Meta pills */
+.programs__meta {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 12px;
+ margin-bottom: 32px;
+}
+
+.programs__meta-pill {
+ display: inline-flex;
+ align-items: center;
+ gap: 6px;
+ padding: 8px 16px;
+ border: var(--border-medium);
+ background: var(--color-white);
+ font-family: var(--font-mono);
+ font-size: 0.85rem;
+ color: var(--color-black);
+ box-shadow: 2px 2px 0 #000;
+}
+
+.programs__meta-pill strong {
+ color: var(--color-black);
+ font-weight: 800;
+}
+
+/* Features list */
+.programs__features {
+ display: flex;
+ flex-direction: column;
+ gap: 0;
+ margin-bottom: 36px;
+ flex: 1;
+ border: var(--border-medium);
+ background: var(--color-white);
+ box-shadow: 4px 4px 0 #000;
+}
+
+.programs__feature {
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ font-size: 1rem;
+ color: var(--color-black);
+ font-weight: 600;
+ border-bottom: 2px solid #000;
+ padding: 14px 18px;
+}
+
+.programs__feature:last-child {
+ border-bottom: none;
+}
+
+.programs__feature-num {
+ font-family: var(--font-mono);
+ font-size: 0.85rem;
+ font-weight: 800;
+ color: var(--color-lime);
+ text-shadow: 1px 1px 0 #000;
+ width: 28px;
+ flex-shrink: 0;
+}
+
+/* Right image */
+.programs__detail-img-wrap {
+ position: relative;
+ overflow: hidden;
+ min-height: 400px;
+}
+
+.programs__detail-img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ transition: transform 0.6s ease;
+}
+
+.programs__detail:hover .programs__detail-img {
+ transform: scale(1.03);
+}
+
+.programs__img-overlay {
+ position: absolute;
+ inset: 0;
+ background: rgba(0, 0, 0, 0.5);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+/* ============================================================
+  RESPONSIVE
+  ============================================================ */
+@media (max-width: 900px) {
+ .programs__detail-content {
+  grid-template-columns: 1fr;
+ }
+
+ .programs__detail-text {
+  border-right: none;
+  border-bottom: var(--border-thick);
+ }
+
+ .programs__detail-img-wrap {
+  height: 320px;
+  min-height: unset;
+  order: -1;
+ }
+}
+
+@media (max-width: 640px) {
+ .programs__tabs {
+  flex-direction: column;
+ }
+
+ .programs__tab {
+  border-right: none;
+  border-bottom: var(--border-medium);
+ }
+
+ .programs__tab:last-child {
+  border-bottom: none;
+ }
+}

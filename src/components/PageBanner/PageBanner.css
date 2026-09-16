@@ -1,0 +1,114 @@
+/* ============================================================
+  PAGE BANNER COMPONENT STYLES
+  ============================================================ */
+
+.page-banner {
+ position: relative;
+ padding: 160px 0 80px;
+ background-color: var(--color-primary-dark);
+ color: var(--color-white);
+ overflow: hidden;
+}
+
+.page-banner__bg {
+ position: absolute;
+ inset: 0;
+ z-index: 1;
+}
+
+.page-banner__img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ object-position: center center;
+}
+
+.page-banner__overlay {
+ position: absolute;
+ inset: 0;
+ background: linear-gradient(180deg, rgba(20, 12, 8, 0.78) 0%, rgba(20, 12, 8, 0.94) 100%);
+}
+
+.page-banner__container {
+ position: relative;
+ z-index: 2;
+}
+
+.page-banner__breadcrumbs {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ font-size: 0.85rem;
+ margin-bottom: 24px;
+}
+
+.page-banner__breadcrumbs a {
+ color: var(--color-cream-mid);
+ text-decoration: none;
+ transition: color var(--transition-fast);
+}
+
+.page-banner__breadcrumbs a:hover {
+ color: var(--color-gold);
+}
+
+.page-banner__crumb-sep {
+ color: rgba(255, 255, 255, 0.3);
+}
+
+.page-banner__crumb-current {
+ color: var(--color-gold);
+ font-weight: 600;
+}
+
+.page-banner__icon-row {
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ margin-bottom: 16px;
+}
+
+.page-banner__icon {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ width: 52px;
+ height: 52px;
+ border-radius: var(--radius-md);
+ background: rgba(200, 149, 90, 0.2);
+ border: 1px solid rgba(200, 149, 90, 0.4);
+ font-size: 1.8rem;
+}
+
+.page-banner__badge {
+ background: var(--color-gold);
+ color: var(--color-primary-dark);
+ font-size: 0.75rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.06em;
+ padding: 4px 12px;
+ border-radius: var(--radius-full);
+}
+
+.page-banner__title {
+ font-family: var(--font-serif);
+ font-size: clamp(2.2rem, 4vw, 3.4rem);
+ font-weight: 700;
+ color: var(--color-white);
+ line-height: 1.15;
+ margin-bottom: 14px;
+}
+
+.page-banner__subtitle {
+ font-size: clamp(1rem, 1.6vw, 1.2rem);
+ color: var(--color-cream-mid);
+ max-width: 680px;
+ line-height: 1.65;
+}
+
+@media (max-width: 768px) {
+ .page-banner {
+  padding: 130px 0 60px;
+ }
+}

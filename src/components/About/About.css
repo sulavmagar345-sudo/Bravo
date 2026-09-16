@@ -1,0 +1,119 @@
+/* ============================================================
+  ABOUT HOMEPAGE SECTION STYLES (NEO-BRUTALIST)
+  ============================================================ */
+
+.about-home-header h2 {
+ font-size: clamp(2.4rem, 6vw, 4.5rem);
+ margin-top: 14px;
+}
+
+/* ---- Video Block ---- */
+.about-home-video-wrap {
+ border: var(--border-thick);
+ border-radius: var(--radius-sm);
+ box-shadow: var(--shadow-lg);
+ overflow: hidden;
+ margin-bottom: 30px;
+ background: #000;
+}
+
+.about-home-video-bar {
+ background: var(--color-black);
+ color: var(--color-lime);
+ padding: 10px 18px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ font-family: var(--font-mono);
+ font-size: 0.82rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ border-bottom: 2px solid #333;
+ letter-spacing: 0.04em;
+}
+
+.about-home-video-frame {
+ position: relative;
+ /* 16:9 aspect ratio container */
+ width: 100%;
+ padding-bottom: 56.25%;
+ height: 0;
+ background: #000;
+ overflow: hidden;
+}
+
+.about-home-video-frame video {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ display: block;
+}
+
+/* ---- Story Card ---- */
+.about-home-story h3 {
+ font-family: var(--font-display);
+ font-size: clamp(1.6rem, 3vw, 2.4rem);
+ margin-bottom: 16px;
+ color: var(--color-black);
+ line-height: 1.1;
+}
+
+.about-home-story .lead {
+ font-size: 1.15rem;
+ font-weight: 600;
+ color: var(--color-black);
+ line-height: 1.6;
+ margin-bottom: 14px;
+}
+
+.about-home-story p {
+ font-size: 1rem;
+ color: #333;
+ line-height: 1.7;
+ margin-bottom: 24px;
+}
+
+.about-home-footer-row {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ border-top: var(--border-medium);
+ padding-top: 24px;
+ flex-wrap: wrap;
+ gap: 20px;
+}
+
+.about-quick-stats {
+ display: flex;
+ gap: 36px;
+}
+
+.about-quick-stats div strong {
+ display: block;
+ font-family: var(--font-display);
+ font-size: 2.2rem;
+ color: var(--color-black);
+ line-height: 1;
+}
+
+.about-quick-stats div span {
+ font-family: var(--font-mono);
+ font-size: 0.78rem;
+ text-transform: uppercase;
+ color: #555;
+ letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+ .about-home-footer-row {
+  flex-direction: column;
+  align-items: flex-start;
+ }
+ .about-quick-stats {
+  flex-wrap: wrap;
+  gap: 16px;
+ }
+}

@@ -1,0 +1,349 @@
+/* ============================================================
+  BARISTA DEDICATED PAGE STYLES
+  ============================================================ */
+
+.barista-page {
+ background: var(--color-bg);
+}
+
+.barista-overview {
+ display: grid;
+ grid-template-columns: 1.2fr 1fr;
+ gap: clamp(40px, 6vw, 80px);
+ align-items: center;
+}
+
+.barista-overview__content .lead {
+ font-size: 1.15rem;
+ font-weight: 500;
+ color: var(--color-text-main);
+ line-height: 1.7;
+ margin-bottom: 16px;
+}
+
+.barista-overview__content p {
+ color: var(--color-text-muted);
+ line-height: 1.7;
+ margin-bottom: 24px;
+}
+
+.barista-highlights-grid {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 16px;
+ margin-top: 24px;
+}
+
+.b-high-card {
+ background: var(--color-cream-light);
+ border: 1px solid var(--color-cream-dark);
+ border-radius: var(--radius-md);
+ padding: 18px 14px;
+ text-align: center;
+}
+
+.b-high-num {
+ font-family: var(--font-serif);
+ font-size: 1.8rem;
+ font-weight: 700;
+ color: var(--color-primary-dark);
+ display: block;
+}
+
+.b-high-card strong {
+ display: block;
+ font-size: 0.9rem;
+ color: var(--color-text-main);
+ margin-bottom: 4px;
+}
+
+.b-high-card span {
+ font-size: 0.78rem;
+ color: var(--color-text-muted);
+ line-height: 1.4;
+ display: block;
+}
+
+/* Image Stack */
+.b-img-stack {
+ position: relative;
+ height: 440px;
+}
+
+.b-img-main {
+ width: 78%;
+ height: 78%;
+ object-fit: cover;
+ border-radius: var(--radius-lg);
+ box-shadow: var(--shadow-lg);
+ position: absolute;
+ top: 0;
+ left: 0;
+}
+
+.b-img-sub {
+ width: 65%;
+ height: 65%;
+ object-fit: cover;
+ border-radius: var(--radius-lg);
+ border: 5px solid var(--color-white);
+ box-shadow: var(--shadow-lg);
+ position: absolute;
+ bottom: 0;
+ right: 0;
+}
+
+/* Course Tiers Grid */
+.course-tiers-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+ gap: 24px;
+ margin-top: 40px;
+}
+
+.tier-card {
+ background: var(--color-white);
+ border-radius: var(--radius-xl);
+ padding: 36px 28px;
+ border: 1px solid var(--color-cream-dark);
+ display: flex;
+ flex-direction: column;
+ position: relative;
+ transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.tier-card:hover {
+ transform: translateY(-6px);
+ box-shadow: var(--shadow-md);
+}
+
+.tier-card--featured {
+ border: 2px solid var(--color-primary);
+ box-shadow: 0 12px 30px rgba(139, 69, 19, 0.12);
+}
+
+.tier-badge {
+ position: absolute;
+ top: -12px;
+ right: 24px;
+ background: var(--color-primary);
+ color: var(--color-white);
+ font-size: 0.75rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ padding: 4px 12px;
+ border-radius: var(--radius-full);
+}
+
+.tier-title {
+ font-size: 1.4rem;
+ margin-bottom: 12px;
+ color: var(--color-text-main);
+}
+
+.tier-meta {
+ display: flex;
+ gap: 16px;
+ font-size: 0.85rem;
+ font-weight: 600;
+ color: var(--color-primary-light);
+ margin-bottom: 16px;
+ flex-wrap: wrap;
+}
+
+.tier-desc {
+ font-size: 0.92rem;
+ color: var(--color-text-muted);
+ line-height: 1.6;
+ margin-bottom: 24px;
+}
+
+.tier-features {
+ list-style: none;
+ padding: 0;
+ margin: 0 0 32px;
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+
+.tier-features li {
+ font-size: 0.88rem;
+ color: var(--color-text-main);
+ line-height: 1.4;
+}
+
+/* Syllabus Grid */
+.syllabus-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+ gap: 24px;
+ margin-top: 40px;
+}
+
+.syllabus-card {
+ background: var(--color-bg);
+ border: 1px solid var(--color-cream-dark);
+ border-radius: var(--radius-lg);
+ padding: 28px 24px;
+ position: relative;
+ transition: transform var(--transition-base), border-color var(--transition-base);
+}
+
+.syllabus-card:hover {
+ border-color: var(--color-primary);
+ transform: translateY(-4px);
+}
+
+.syllabus-num {
+ font-family: var(--font-serif);
+ font-size: 2.2rem;
+ font-weight: 700;
+ color: rgba(139, 69, 19, 0.2);
+ line-height: 1;
+ display: block;
+ margin-bottom: 8px;
+}
+
+.syllabus-title {
+ font-size: 1.15rem;
+ color: var(--color-text-main);
+ margin-bottom: 14px;
+}
+
+.syllabus-list {
+ list-style: none;
+ padding: 0;
+ margin: 0;
+ display: flex;
+ flex-direction: column;
+ gap: 8px;
+}
+
+.syllabus-list li {
+ font-size: 0.88rem;
+ color: var(--color-text-muted);
+ line-height: 1.5;
+ position: relative;
+ padding-left: 16px;
+}
+
+.syllabus-list li::before {
+ content: '•';
+ color: var(--color-primary);
+ position: absolute;
+ left: 0;
+ font-size: 1.1rem;
+}
+
+/* Photo Grid */
+.barista-photo-grid {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 16px;
+ margin-top: 30px;
+}
+
+.b-grid-img {
+ width: 100%;
+ height: 240px;
+ object-fit: cover;
+ border-radius: var(--radius-md);
+ box-shadow: var(--shadow-sm);
+ transition: transform var(--transition-base);
+}
+
+.b-grid-img:hover {
+ transform: scale(1.03);
+}
+
+/* Enroll Box */
+.barista-enroll-box {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 48px;
+ background: rgba(255, 255, 255, 0.04);
+ border: 1px solid rgba(255, 255, 255, 0.1);
+ border-radius: var(--radius-xl);
+ padding: clamp(32px, 5vw, 60px);
+}
+
+.b-enroll-info p {
+ color: var(--color-cream-mid);
+ line-height: 1.7;
+ margin: 16px 0 24px;
+}
+
+.b-enroll-perks {
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+ color: var(--color-gold);
+ font-weight: 500;
+ font-size: 0.95rem;
+}
+
+.b-enroll-form-wrap {
+ background: var(--color-white);
+ color: var(--color-text-main);
+ border-radius: var(--radius-lg);
+ padding: 32px 28px;
+}
+
+.b-enroll-form h3 {
+ font-size: 1.3rem;
+ color: var(--color-primary-dark);
+ margin-bottom: 18px;
+}
+
+.b-enroll-success {
+ text-align: center;
+ padding: 30px 10px;
+}
+
+.b-success-icon {
+ width: 54px;
+ height: 54px;
+ border-radius: 50%;
+ background: #22c55e;
+ color: var(--color-white);
+ font-size: 1.8rem;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin: 0 auto 16px;
+}
+
+.b-enroll-success h4 {
+ font-size: 1.4rem;
+ margin-bottom: 8px;
+}
+
+.b-enroll-success p {
+ color: var(--color-text-muted);
+ font-size: 0.92rem;
+ margin-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+ .barista-overview,
+ .barista-enroll-box {
+  grid-template-columns: 1fr;
+ }
+ .barista-photo-grid {
+  grid-template-columns: repeat(2, 1fr);
+ }
+}
+
+@media (max-width: 600px) {
+ .barista-highlights-grid {
+  grid-template-columns: 1fr;
+ }
+ .b-img-stack {
+  height: 300px;
+ }
+ .barista-photo-grid {
+  grid-template-columns: 1fr;
+ }
+}

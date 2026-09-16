@@ -1,0 +1,262 @@
+/* ============================================================
+  CAFE & BAR SECTION — NEO-BRUTALIST
+  ============================================================ */
+
+.cafebar {
+ background: var(--bg-lavender);
+ padding: 80px 0;
+}
+
+/* ---- Header split ---- */
+.cafebar__header {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: clamp(40px, 6vw, 80px);
+ align-items: start;
+ margin-bottom: clamp(50px, 7vw, 90px);
+ padding-bottom: clamp(40px, 5vw, 60px);
+ border-bottom: var(--border-thick);
+}
+
+.cafebar__header-text {
+ padding-right: 20px;
+}
+
+.cafebar__header-text .eyebrow {
+ font-family: var(--font-mono);
+ font-size: 0.85rem;
+ text-transform: uppercase;
+ letter-spacing: 0.1em;
+ color: var(--color-text-muted);
+ display: block;
+ margin-bottom: 12px;
+}
+
+.cafebar__header-text h2 {
+ font-family: var(--font-display);
+ font-size: clamp(2.8rem, 5vw, 4.2rem);
+ line-height: 1.0;
+ color: var(--color-black);
+ text-transform: uppercase;
+ margin-bottom: 0;
+}
+
+.cafebar__highlight {
+ font-style: italic;
+ color: var(--color-black);
+ display: block;
+}
+
+.cafebar__header-text .divider {
+ margin: 20px 0;
+}
+
+.cafebar__header-text p {
+ font-size: 1.05rem;
+ line-height: 1.72;
+ color: #333;
+ max-width: 480px;
+ margin: 0;
+}
+
+.cafebar__header-img {
+ border: var(--border-thick);
+ box-shadow: var(--shadow-lg);
+ overflow: hidden;
+ height: 420px;
+}
+
+.cafebar__hero-img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ object-position: center 40%;
+ transition: transform 0.55s ease;
+}
+
+.cafebar__header-img:hover .cafebar__hero-img {
+ transform: scale(1.04);
+}
+
+/* ---- Card Grid ---- */
+.cafebar__grid {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 0;
+ margin-bottom: clamp(50px, 7vw, 90px);
+ border: var(--border-thick);
+ box-shadow: var(--shadow-md);
+ overflow: hidden;
+}
+
+.cafebar__card {
+ cursor: default;
+ background: var(--color-white);
+ border-right: var(--border-medium);
+ transition: background var(--trans-fast);
+}
+
+.cafebar__card:last-child {
+ border-right: none;
+}
+
+.cafebar__card:hover {
+ background: var(--color-lime);
+}
+
+.cafebar__card-img-wrap {
+ height: 200px;
+ overflow: hidden;
+ border-bottom: var(--border-medium);
+}
+
+.cafebar__card-img-wrap img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ transition: transform 0.55s ease;
+}
+
+.cafebar__card:hover .cafebar__card-img-wrap img {
+ transform: scale(1.06);
+}
+
+.cafebar__card-body {
+ padding: 20px 22px;
+}
+
+.cafebar__card-title {
+ font-family: var(--font-display);
+ font-size: 1.4rem;
+ color: var(--color-black);
+ text-transform: uppercase;
+ margin-bottom: 8px;
+ line-height: 1;
+}
+
+.cafebar__card-desc {
+ font-size: 0.9rem;
+ color: #444;
+ line-height: 1.55;
+}
+
+/* ---- CTA Banner ---- */
+.cafebar__cta-banner {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ border: var(--border-thick);
+ box-shadow: var(--shadow-lg);
+ overflow: hidden;
+ min-height: 360px;
+ background: var(--color-black);
+}
+
+.cafebar__cta-img-wrap {
+ overflow: hidden;
+ border-right: var(--border-thick);
+}
+
+.cafebar__cta-img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ object-position: center 20%;
+ transition: transform 0.55s ease;
+}
+
+.cafebar__cta-banner:hover .cafebar__cta-img {
+ transform: scale(1.04);
+}
+
+.cafebar__cta-text {
+ padding: clamp(32px, 5vw, 60px);
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ gap: 20px;
+}
+
+.cafebar__cta-text h3 {
+ color: var(--color-lime);
+ font-family: var(--font-display);
+ font-size: clamp(1.8rem, 3vw, 2.6rem);
+ text-transform: uppercase;
+ line-height: 1.1;
+}
+
+.cafebar__cta-text p {
+ color: #CCCCCC;
+ font-size: 1rem;
+ line-height: 1.65;
+}
+
+.cafebar__cta-btns {
+ display: flex;
+ gap: 12px;
+ flex-wrap: wrap;
+}
+
+/* ============================================================
+  RESPONSIVE
+  ============================================================ */
+@media (max-width: 1100px) {
+ .cafebar__grid {
+  grid-template-columns: repeat(2, 1fr);
+ }
+
+ .cafebar__card:nth-child(2) {
+  border-right: none;
+ }
+
+ .cafebar__card:nth-child(3) {
+  border-top: var(--border-medium);
+ }
+
+ .cafebar__card:nth-child(4) {
+  border-right: none;
+  border-top: var(--border-medium);
+ }
+}
+
+@media (max-width: 900px) {
+ .cafebar__header {
+  grid-template-columns: 1fr;
+ }
+
+ .cafebar__header-text {
+  padding-right: 0;
+ }
+
+ .cafebar__header-img {
+  height: 300px;
+ }
+
+ .cafebar__cta-banner {
+  grid-template-columns: 1fr;
+ }
+
+ .cafebar__cta-img-wrap {
+  height: 260px;
+  border-right: none;
+  border-bottom: var(--border-thick);
+ }
+}
+
+@media (max-width: 640px) {
+ .cafebar {
+  padding: 60px 0;
+ }
+
+ .cafebar__grid {
+  grid-template-columns: 1fr;
+ }
+
+ .cafebar__card {
+  border-right: none;
+  border-bottom: var(--border-medium);
+ }
+
+ .cafebar__card-img-wrap {
+  height: 200px;
+ }
+}
