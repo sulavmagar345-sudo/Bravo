@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { fetchEnquiryCounts } from '../services/enquiries';
 import { fetchAllBanners } from '../services/banners';
-import { fetchAllPrograms } from '../services/programs'; // Oh wait, I named it fetchAllProgramStatuses
+import { fetchAllProgramStatuses } from '../services/programs';
 
 import type { EnquiryStatus } from '../types';
 

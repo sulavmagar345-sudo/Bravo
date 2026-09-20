@@ -26,7 +26,7 @@ export async function fetchActiveBanners(location: 'homepage' | 'all' = 'homepag
   return data ?? [];
 }
 
-export async function createBanner(insert: BannerInsert, imageFile: File): Promise<Banner> {
+export async function createBanner(insert: Omit<BannerInsert, 'image_path'>, imageFile: File): Promise<Banner> {
   const ext = imageFile.name.split('.').pop();
   const filePath = `banner-${Date.now()}.${ext}`;
   
