@@ -58,7 +58,7 @@
 .home-welcome__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 7vw, 5rem); align-items: center; }
 .home-welcome__media { margin: 0; }
 .home-welcome__media video { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--color-coffee-deep); }
-.home-welcome__media figcaption { margin-top: var(--space-2); color: var(--color-text-muted); font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
+.home-welcome__media figcaption { margin-top: var(--space-2); color: var(--color-text-muted); font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.05em; }
 .home-welcome__copy h2 { margin-bottom: var(--space-4); }
 .home-welcome__copy > p:not(.home-kicker) { margin-top: var(--space-4); line-height: 1.6; }
 
