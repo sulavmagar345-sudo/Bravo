@@ -114,8 +114,7 @@ const GalleryPage: React.FC = () => {
 
       <div className="video-showcase-grid reveal">
        {videos.map((v, i) => (
-        <div key={i} className="video-card">
-         <div className="video-wrapper">
+         <figure className="video-figure">
           <video
            controls
            preload="metadata"
@@ -126,12 +125,10 @@ const GalleryPage: React.FC = () => {
            <source src={v.src} type="video/mp4" />
            Your browser does not support the video tag.
           </video>
-         </div>
-         <div className="video-card-body">
-          <h4>{v.title}</h4>
-          <p>{v.desc}</p>
-         </div>
-        </div>
+          <figcaption className="video-caption">
+           <span className="video-caption__icon">▶</span> {v.title}
+          </figcaption>
+         </figure>
        ))}
       </div>
     </div>
