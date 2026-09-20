@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PageBanner from '../components/PageBanner/PageBanner';
 import { GALLERY_IMAGES, GalleryImage, IMAGES } from '../data/images';
+import { fetchPublishedGalleryItems, getGalleryImageUrl } from '../admin/services/gallery';
+import { fetchActiveVideos, getVideoUrl } from '../admin/services/videos';
+import type { Video } from '../admin/types';
 import './GalleryPage.css';
 
 type CategoryFilter = 'all' | 'barista' | 'cafe' | 'bar' | 'training' | 'events';
@@ -14,11 +17,11 @@ const CATEGORIES: { label: string; value: CategoryFilter }[] = [
  { label: 'Events & Certifications', value: 'events' },
 ];
 
-const VIDEOS = [
+const FALLBACK_VIDEOS = [
  {
   title: 'Hands-on Barista Training in Action',
   desc: 'Watch our students steam microfoam and practice commercial machine workflows.',
-  src: '/assets/AQOymab3-Qdbxu7asAI6dRbZ8iP44xQBqmIsg6FLeqXEiedcuXinGkxKBb3PJNHGFgtfLZeqfsQDsgwdGNBWtwDLiZZIEx8Jsfn8m5eSVbbSMQ.mp4',
+  src: '/assets/AQMMqaPfj01ksylGcqLS_dIJNYi5oHxrzMI-ZmQyJ0KAOH95JilAIPO9Ruy3gukWc1ORwiUwbP8UmkBD0_nPDIsJrz_38RN6aBEwZKtrzV1g8w.mp4',
  },
  {
   title: 'Café & Bar Atmosphere & Hospitality',
@@ -28,12 +31,42 @@ const VIDEOS = [
 ];
 
 const GalleryPage: React.FC = () => {
- const [filter, setFilter] = useState<CategoryFilter>('all');
- const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [filter, setFilter] = useState<CategoryFilter>('all');
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  
+  // Dynamic data state
+  const [dynamicImages, setDynamicImages] = useState<GalleryImage[]>([]);
+  const [videos, setVideos] = useState(FALLBACK_VIDEOS);
 
- const filteredImages = filter === 'all'
-  ? GALLERY_IMAGES
-  : GALLERY_IMAGES.filter((img) => img.category === filter);
+  // Combine static fallback + dynamic from DB
+  const allImages = [...dynamicImages, ...GALLERY_IMAGES];
+  
+  const filteredImages = filter === 'all'
+   ? allImages
+   : allImages.filter((img) => img.category === filter);
+
+  useEffect(() => {
+    // Fetch dynamic gallery items
+    fetchPublishedGalleryItems().then(items => {
+      const mapped = items.map(i => ({
+        src: getGalleryImageUrl(i.image_path),
+        category: i.category as any,
+        alt: i.title || 'Bravo Gallery Image'
+      }));
+      setDynamicImages(mapped);
+    }).catch(console.error);
+
+    // Fetch dynamic videos
+    fetchActiveVideos().then(vids => {
+      if (vids.length > 0) {
+        setVideos(vids.map(v => ({
+          title: v.display_name,
+          desc: v.description || '',
+          src: getVideoUrl(v.video_path)
+        })));
+      }
+    }).catch(console.error);
+  }, []);
 
  useEffect(() => {
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -79,27 +112,28 @@ const GalleryPage: React.FC = () => {
       </p>
      </div>
 
-     <div className="video-showcase-grid reveal">
-      {VIDEOS.map((v, i) => (
-       <div key={i} className="video-card">
-        <div className="video-wrapper">
-         <video
-          controls
-          preload="metadata"
-          playsInline
-          className="video-player"
-         >
-          <source src={v.src} type="video/mp4" />
-          Your browser does not support the video tag.
-         </video>
+      <div className="video-showcase-grid reveal">
+       {videos.map((v, i) => (
+        <div key={i} className="video-card">
+         <div className="video-wrapper">
+          <video
+           controls
+           preload="metadata"
+           playsInline
+           className="video-player"
+           key={v.src}
+          >
+           <source src={v.src} type="video/mp4" />
+           Your browser does not support the video tag.
+          </video>
+         </div>
+         <div className="video-card-body">
+          <h4>{v.title}</h4>
+          <p>{v.desc}</p>
+         </div>
         </div>
-        <div className="video-card-body">
-         <h4>{v.title}</h4>
-         <p>{v.desc}</p>
-        </div>
-       </div>
-      ))}
-     </div>
+       ))}
+      </div>
     </div>
    </section>
 

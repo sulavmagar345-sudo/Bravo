@@ -113,26 +113,60 @@ const COURSE_TIERS = [
  },
 ];
 
+const isValidName = (v: string) => {
+  const t = v.trim();
+  if (t.length < 2 || t.length > 60) return false;
+  // must contain at least one letter, allow letters (incl. Nepali/unicode), spaces, hyphen, apostrophe, period
+  if (!/[\p{L}]/u.test(t)) return false;
+  if (/^\s+$/.test(t)) return false;
+  // reject if only emojis/symbols — require letters
+  if (!/^[\p{L}\s'.-]+$/u.test(t)) return false;
+  return true;
+};
+const isValidPhone = (v: string) => {
+  const digits = v.replace(/[\s\-()]/g, '');
+  const stripped = digits.startsWith('+') ? digits.slice(1) : digits;
+  if (!/^\d+$/.test(stripped)) return false;
+  if (stripped.length < 7 || stripped.length > 15) return false;
+  return true;
+};
+
 const BaristaPage: React.FC = () => {
- const [enrolledTier, setEnrolledTier] = useState('Professional Barista Diploma');
- const [formSent, setFormSent] = useState(false);
- const [studentInfo, setStudentInfo] = useState({ name: '', phone: '', slot: 'morning' });
+  const [enrolledTier, setEnrolledTier] = useState('Professional Barista Diploma');
+  const [formSent, setFormSent] = useState(false);
+  const [studentInfo, setStudentInfo] = useState({ name: '', phone: '', slot: 'morning' });
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
 
- const handleEnrollSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  setFormSent(true);
- };
+  const handleEnrollSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const nextErrors: typeof errors = {};
+    const trimmedName = studentInfo.name.trim();
+    const trimmedPhone = studentInfo.phone.trim();
+    if (!isValidName(trimmedName)) {
+      nextErrors.name = 'Please enter a valid name (2–60 letters, spaces, hyphen or apostrophe).';
+    }
+    if (!isValidPhone(trimmedPhone)) {
+      nextErrors.phone = 'Please enter a valid phone number (7–15 digits, may start with +).';
+    }
+    if (Object.keys(nextErrors).length) {
+      setErrors(nextErrors);
+      return;
+    }
+    setErrors({});
+    // Normalize before submit — trimming is the minimal server-side expectation
+    setStudentInfo({ ...studentInfo, name: trimmedName, phone: trimmedPhone });
+    setFormSent(true);
+  };
 
- return (
-  <div className="barista-page">
-   <PageBanner
-    icon=""
-    badge="Accredited Training"
-    title="Professional Barista Training"
-    subtitle="Learn the art and science of specialty coffee from master baristas inside an active commercial café. 100% practical, globally recognized."
-    bgImage={IMAGES.hero}
-    breadcrumbs={[{ label: 'Programs', path: '/programs' }, { label: 'Barista Training' }]}
-   />
+  return (
+    <div className="barista-page">
+      <PageBanner
+        icon=""
+        badge="Accredited Training"
+        title="Professional Barista Training"
+        subtitle="Learn the art and science of specialty coffee from master baristas inside an active commercial café. 100% practical, globally recognized."
+        breadcrumbs={[{ label: 'Programs', path: '/programs' }, { label: 'Barista Training' }]}
+      />
 
    {/* Overview & Highlights */}
    <section className="section section--white">
@@ -315,27 +349,42 @@ const BaristaPage: React.FC = () => {
           </select>
          </div>
 
-         <div className="form-group">
-          <label>Your Full Name *</label>
-          <input
-           type="text"
-           required
-           placeholder="e.g. Anil Shrestha"
-           value={studentInfo.name}
-           onChange={(e) => setStudentInfo({ ...studentInfo, name: e.target.value })}
-          />
-         </div>
+          <div className="form-group">
+            <label htmlFor="barista-name">Your Full Name *</label>
+            <input
+              id="barista-name"
+              type="text"
+              required
+              placeholder="e.g. Anil Shrestha"
+              value={studentInfo.name}
+              onChange={(e) => setStudentInfo({ ...studentInfo, name: e.target.value })}
+              autoComplete="name"
+              inputMode="text"
+              maxLength={60}
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? 'barista-name-error' : undefined}
+            />
+            {errors.name && <span id="barista-name-error" className="form-error" role="alert">{errors.name}</span>}
+          </div>
 
-         <div className="form-group">
-          <label>Phone / WhatsApp Number *</label>
-          <input
-           type="tel"
-           required
-           placeholder="e.g. 98XXXXXXXX"
-           value={studentInfo.phone}
-           onChange={(e) => setStudentInfo({ ...studentInfo, phone: e.target.value })}
-          />
-         </div>
+          <div className="form-group">
+            <label htmlFor="barista-phone">Phone / WhatsApp Number *</label>
+            <input
+              id="barista-phone"
+              type="tel"
+              required
+              placeholder="e.g. 98XXXXXXXX"
+              value={studentInfo.phone}
+              onChange={(e) => setStudentInfo({ ...studentInfo, phone: e.target.value })}
+              autoComplete="tel"
+              inputMode="numeric"
+              maxLength={20}
+              pattern="\+?[0-9\s\-()]{7,20}"
+              aria-invalid={!!errors.phone}
+              aria-describedby={errors.phone ? 'barista-phone-error' : undefined}
+            />
+            {errors.phone && <span id="barista-phone-error" className="form-error" role="alert">{errors.phone}</span>}
+          </div>
 
          <div className="form-group">
           <label>Preferred Batch Slot</label>
@@ -363,7 +412,7 @@ const BaristaPage: React.FC = () => {
           <strong>{studentInfo.phone}</strong> with batch dates and fee details.
          </p>
          <a
-          href={`https://wa.me/9779800000000?text=Hi%20Bravo,%20I%20just%20applied%20for%20${encodeURIComponent(
+          href={`https://wa.me/9779802004823?text=Hi%20Bravo,%20I%20just%20applied%20for%20${encodeURIComponent(
            enrolledTier
           )}.`}
           target="_blank"

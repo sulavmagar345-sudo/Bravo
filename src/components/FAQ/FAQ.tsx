@@ -102,7 +102,7 @@ const FAQ: React.FC = () => {
     <div className="faq__footer-help text-center reveal">
      <p>Still have questions? We are always happy to chat.</p>
      <a
-      href="https://wa.me/9779800000000?text=Hi%20Bravo,%20I%20have%20a%20question%20about%20your%20training%20courses"
+      href="https://wa.me/9779802004823?text=Hi%20Bravo,%20I%20have%20a%20question%20about%20your%20training%20courses"
       target="_blank"
       rel="noopener noreferrer"
       className="btn btn--outline-dark"

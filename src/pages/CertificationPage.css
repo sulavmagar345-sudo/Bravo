@@ -1,7 +1,710 @@
-/* ============================================================
-  CERTIFICATION DEDICATED PAGE STYLES
-  ============================================================ */
+/* ═══════════════════════════════════════════════════════
+   CERTIFICATION PAGE
+   Global scoping: .cert-page
+═══════════════════════════════════════════════════════ */
 
-.certification-page {
- background: var(--color-bg);
+.cert-page {
+  /* Use global tokens from index.css */
+  --cp-duration: 1.5s;
+  --cp-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--color-canvas);
+  color: var(--color-text);
+}
+
+/* ───────────────────────────────────────────────────────
+   ANIMATION SYSTEM (Data-reveal)
+──────────────────────────────────────────────────────── */
+
+/* Masked Text Reveal */
+.cp-heading-mask {
+  display: block;
+  overflow: hidden;
+  /* Line height slightly reduced for tighter masking */
+  line-height: 1.05;
+  padding-bottom: 0.1em;
+}
+
+.cp-heading-mask__inner {
+  display: block;
+  transform: translateY(110%);
+  transition: transform var(--cp-duration) var(--cp-ease);
+  will-change: transform;
+}
+
+[data-cp-reveal].cp-revealed .cp-heading-mask__inner {
+  transform: translateY(0);
+}
+
+/* Stagger lines */
+.cp-heading-mask:nth-child(2) .cp-heading-mask__inner {
+  transition-delay: 0.1s;
+}
+
+/* Generic Fade Up for elements without masking */
+[data-cp-reveal]:not(.cp-heading-mask-parent) {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 1s ease, transform 1s var(--cp-ease);
+}
+
+/* When parents are revealed, trigger fade up if they don't use mask */
+[data-cp-reveal].cp-revealed:not(.cp-heading-mask-parent) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* For elements that contain masked text, we don't fade the parent itself */
+h1[data-cp-reveal],
+h2[data-cp-reveal] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* ───────────────────────────────────────────────────────
+   GLOBAL SECTION STYLES
+──────────────────────────────────────────────────────── */
+
+.cp-section-header {
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  text-align: center;
+}
+
+.cp-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.cp-section-sub {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+/* ───────────────────────────────────────────────────────
+   1. HERO
+──────────────────────────────────────────────────────── */
+.cp-hero {
+  padding-block: clamp(4rem, 10vw, 8rem) clamp(3rem, 8vw, 6rem);
+  background: var(--color-canvas);
+}
+
+.cp-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(3rem, 8vw, 6rem);
+  align-items: center;
+}
+
+.cp-hero__eyebrow {
+  display: block;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-gold);
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+.cp-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 400;
+  color: var(--color-ink);
+  margin-bottom: var(--space-4);
+  line-height: 1;
+}
+
+.cp-hero__lead {
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--color-text);
+  max-width: 45ch;
+  margin-bottom: var(--space-6);
+}
+
+.cp-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.cp-hero__cert-wrapper {
+  position: relative;
+  background: var(--color-surface);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.cp-hero__cert-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--color-border);
+}
+
+@media (min-width: 64rem) {
+  .cp-hero__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ───────────────────────────────────────────────────────
+   2. WHAT IT REPRESENTS
+──────────────────────────────────────────────────────── */
+.cp-represents {
+  padding-block: clamp(4rem, 8vw, 6rem);
+}
+
+.cp-represents__rows {
+  max-width: 50rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.cp-rep-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  padding-block: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cp-rep-row:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.cp-rep-row__label {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ink);
+}
+
+.cp-rep-row__text {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-family: var(--font-display);
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+@media (min-width: 48rem) {
+  .cp-rep-row {
+    grid-template-columns: 15rem 1fr;
+    gap: var(--space-6);
+    align-items: baseline;
+  }
+}
+
+/* ───────────────────────────────────────────────────────
+   3. PATH TO CERTIFICATION
+──────────────────────────────────────────────────────── */
+.cp-path {
+  padding-block: clamp(4rem, 8vw, 6rem);
+}
+
+.cp-path__process {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  position: relative;
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
+.cp-path__line {
+  position: absolute;
+  left: 1.25rem;
+  top: 2rem;
+  bottom: 2rem;
+  width: 1px;
+  background: var(--color-border);
+  z-index: 0;
+}
+
+.cp-path__step {
+  position: relative;
+  z-index: 1;
+  padding-left: 4rem;
+}
+
+.cp-path__num {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.cp-path__label {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  color: var(--color-ink);
+  margin-bottom: var(--space-2);
+  margin-top: 0.2rem;
+}
+
+.cp-path__desc {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--color-text);
+  max-width: 35ch;
+}
+
+@media (min-width: 48rem) {
+  .cp-path__process {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .cp-path__line {
+    left: 2rem;
+    right: 2rem;
+    top: 1.25rem;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+
+  .cp-path__step {
+    padding-left: 0;
+    padding-top: 4rem;
+  }
+
+  .cp-path__num {
+    left: 1.5rem; /* alignment based on grid */
+  }
+}
+
+/* ───────────────────────────────────────────────────────
+   4. CERTIFICATE SHOWCASE & LIGHTBOX
+──────────────────────────────────────────────────────── */
+.cp-showcase {
+  padding-block: clamp(4rem, 8vw, 6rem);
+}
+
+.cp-showcase__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(3rem, 6vw, 5rem);
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
+.cp-cert-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.cp-cert-card__btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: zoom-in;
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  overflow: hidden;
+  display: block;
+}
+
+.cp-cert-card__btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s var(--cp-ease);
+}
+
+.cp-cert-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cp-cert-card__icon {
+  font-size: 2rem;
+  color: #fff;
+  transform: scale(0.8);
+  transition: transform 0.4s var(--cp-ease);
+}
+
+.cp-cert-card__btn:hover img {
+  transform: scale(1.02);
+}
+
+.cp-cert-card__btn:hover .cp-cert-card__overlay {
+  opacity: 1;
+}
+
+.cp-cert-card__btn:hover .cp-cert-card__icon {
+  transform: scale(1);
+}
+
+.cp-cert-card__label {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--color-ink);
+  text-align: center;
+}
+
+@media (min-width: 56rem) {
+  .cp-showcase__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Lightbox */
+.cp-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(18, 18, 18, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  cursor: zoom-out;
+}
+
+.cp-lightbox__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 3rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: var(--space-2);
+  z-index: 10000;
+}
+
+.cp-lightbox__content {
+  max-width: 90vw;
+  max-height: 90vh;
+  cursor: default;
+}
+
+.cp-lightbox__content img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  display: block;
+}
+
+/* ───────────────────────────────────────────────────────
+   5. MORE THAN A CERTIFICATE
+──────────────────────────────────────────────────────── */
+.cp-more {
+  padding-block: clamp(4rem, 8vw, 6rem);
+}
+
+.cp-more__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(3rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.cp-more__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: var(--color-ink);
+  margin-bottom: var(--space-4);
+  line-height: 1.1;
+}
+
+.cp-more__text {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.7;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.cp-more__media {
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.cp-more__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (min-width: 60rem) {
+  .cp-more__inner {
+    grid-template-columns: 1fr 1.1fr;
+  }
+}
+
+/* ───────────────────────────────────────────────────────
+   6. STUDENT EXPERIENCES (Marquee)
+──────────────────────────────────────────────────────── */
+.cp-experiences {
+  padding-block: clamp(4rem, 8vw, 6rem);
+  overflow: hidden;
+}
+
+.cp-marquee-wrap {
+  position: relative;
+  width: 100%;
+  margin-top: var(--space-6);
+}
+
+.cp-marquee {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,1) 5%,
+    rgba(0,0,0,1) 95%,
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,1) 5%,
+    rgba(0,0,0,1) 95%,
+    rgba(0,0,0,0) 100%
+  );
+}
+
+.cp-marquee__track {
+  display: flex;
+  gap: var(--space-6);
+  width: max-content;
+  animation: cp-marquee 40s linear infinite;
+}
+
+@keyframes cp-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - (var(--space-6) / 2))); }
+}
+
+.cp-marquee:hover .cp-marquee__track {
+  animation-play-state: paused;
+}
+
+.cp-marquee__item {
+  width: clamp(280px, 40vw, 400px);
+  padding: var(--space-6);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.cp-marquee__text {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.cp-marquee__meta {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cp-marquee__meta strong {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.cp-marquee__meta span {
+  color: var(--color-text-muted);
+}
+
+/* ───────────────────────────────────────────────────────
+   7. VERIFICATION
+──────────────────────────────────────────────────────── */
+.cp-verification {
+  padding-block: clamp(4rem, 8vw, 6rem);
+}
+
+.cp-verify-box {
+  max-width: 48rem;
+  margin-inline: auto;
+  text-align: center;
+  padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.cp-verify-box__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--color-ink);
+  margin-bottom: var(--space-4);
+}
+
+.cp-verify-box__text {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  margin-bottom: var(--space-6);
+}
+
+/* ───────────────────────────────────────────────────────
+   8. FAQ
+──────────────────────────────────────────────────────── */
+.cp-faq {
+  padding-block: clamp(4rem, 8vw, 6rem);
+}
+
+.cp-faq__list {
+  max-width: 48rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.cp-faq__item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cp-faq__item:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.cp-faq__question {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: var(--space-5) 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  color: var(--color-ink);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.cp-faq__icon {
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.cp-faq__icon::before,
+.cp-faq__icon::after {
+  content: '';
+  position: absolute;
+  background: var(--color-ink);
+  transition: transform 0.3s ease;
+}
+
+.cp-faq__icon::before {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.cp-faq__icon::after {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+.cp-faq__item--open .cp-faq__icon::after {
+  transform: translateX(-50%) rotate(90deg);
+}
+
+.cp-faq__answer-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s var(--cp-ease);
+}
+
+.cp-faq__item--open .cp-faq__answer-wrapper {
+  grid-template-rows: 1fr;
+}
+
+.cp-faq__answer {
+  overflow: hidden;
+  padding-bottom: 0;
+  transition: padding-bottom 0.3s var(--cp-ease);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+.cp-faq__item--open .cp-faq__answer {
+  padding-bottom: var(--space-5);
+}
+
+/* ───────────────────────────────────────────────────────
+   9. FINAL CTA
+──────────────────────────────────────────────────────── */
+.cp-cta {
+  padding-block: clamp(5rem, 10vw, 8rem);
+  background: var(--color-canvas);
+}
+
+.cp-cta__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--color-ink);
+  margin-bottom: var(--space-4);
+  line-height: 1;
+}
+
+.cp-cta__text {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--color-text);
+  margin-bottom: var(--space-6);
+  max-width: 45ch;
+  margin-inline: auto;
+}
+
+.cp-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
 }

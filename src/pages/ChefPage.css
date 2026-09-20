@@ -1,9 +1,9 @@
 /* ============================================================
-  CHEF TRAINING DEDICATED PAGE STYLES
-  ============================================================ */
+   BRAVO — VINTAGE CAFÉ CHEF TRAINING PAGE
+   ============================================================ */
 
 .chef-page {
- background: var(--bg-lavender);
+ background: var(--bg-page);
 }
 
 .chef-split {
@@ -14,150 +14,191 @@
 }
 
 .chef-split__text .lead {
- font-size: 1.15rem;
+ font-family: var(--font-accent);
+ font-size: 1.2rem;
+ font-style: italic;
  font-weight: 500;
- color: var(--color-text-main);
+ color: var(--color-caramel);
  line-height: 1.7;
  margin-bottom: 16px;
 }
 
 .chef-split__text p {
- color: var(--color-text-muted);
- line-height: 1.7;
+ font-family: var(--font-body);
+ color: var(--color-text-body);
+ line-height: 1.8;
  margin-bottom: 24px;
+ font-size: 1.05rem;
 }
 
 .chef-stats {
  display: grid;
  grid-template-columns: repeat(3, 1fr);
  gap: 16px;
- margin-top: 24px;
+ margin-top: 32px;
 }
 
 .chef-stat-card {
- background: var(--color-cream-light);
- border: 1px solid var(--color-cream-dark);
+ background: var(--color-parchment-light);
+ border: 1px solid rgba(120, 72, 30, 0.15);
  border-radius: var(--radius-md);
- padding: 16px 12px;
+ padding: 22px 14px;
  text-align: center;
+ transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+.chef-stat-card:hover {
+ transform: translateY(-3px);
+ box-shadow: var(--shadow-sm);
+ background: var(--color-parchment);
 }
 
 .chef-stat-val {
- font-family: var(--font-serif);
- font-size: 1.6rem;
+ font-family: var(--font-display);
+ font-size: 2.2rem;
  font-weight: 700;
- color: var(--color-primary-dark);
+ color: var(--color-mahogany);
  display: block;
+ margin-bottom: 4px;
 }
 
 .chef-stat-card strong {
  display: block;
- font-size: 0.9rem;
- color: var(--color-text-main);
- margin-bottom: 2px;
+ font-family: var(--font-body);
+ font-size: 0.85rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.08em;
+ color: var(--color-text-body);
+ margin-bottom: 6px;
 }
 
 .chef-stat-card span {
- font-size: 0.76rem;
+ font-family: var(--font-body);
+ font-size: 0.85rem;
  color: var(--color-text-muted);
+ line-height: 1.4;
 }
 
+/* ── Visual Card ── */
 .chef-visual-card {
  position: relative;
- border: var(--border-thick);
- border-radius: var(--radius-sm);
+ border-radius: var(--radius-lg);
  overflow: hidden;
- box-shadow: var(--shadow-lg);
- height: 440px;
+ box-shadow: var(--shadow-xl);
+ height: 480px;
+ border: 1px solid rgba(120, 72, 30, 0.15);
+ background: var(--color-mahogany);
 }
 
 .chef-visual-img {
  width: 100%;
  height: 100%;
  object-fit: cover;
+ transition: transform 0.6s ease;
+}
+
+.chef-visual-card:hover .chef-visual-img {
+ transform: scale(1.05);
 }
 
 .chef-visual-badge {
  position: absolute;
- bottom: 20px;
- left: 20px;
- background: var(--color-lime);
- color: var(--color-black);
- font-family: var(--font-mono);
+ bottom: 24px;
+ left: 24px;
+ background: var(--color-caramel);
+ color: var(--color-cream);
+ font-family: var(--font-body);
+ font-size: 0.78rem;
  font-weight: 700;
- font-size: 0.85rem;
- padding: 8px 14px;
- border: 2px solid #000;
- border-radius: 2px;
+ padding: 6px 14px;
+ border-radius: var(--radius-full);
  text-transform: uppercase;
+ letter-spacing: 0.08em;
+ box-shadow: var(--shadow-md);
 }
 
-/* Curriculum Grid */
+/* ── Curriculum Grid ── */
 .chef-curriculum-grid {
  display: grid;
  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
  gap: 24px;
- margin-top: 40px;
+ margin-top: 48px;
 }
 
 .chef-curr-card {
- background: var(--color-white);
- border: var(--border-thick);
- border-radius: var(--radius-sm);
- padding: 30px 24px;
+ background: var(--color-cream);
+ border-radius: var(--radius-lg);
+ padding: 32px 28px;
+ border: 1px solid rgba(120, 72, 30, 0.15);
  box-shadow: var(--shadow-sm);
- transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+ transition: transform var(--trans-base), box-shadow var(--trans-base);
 }
 
 .chef-curr-card:hover {
- transform: translate(-2px, -2px);
+ transform: translateY(-4px);
  box-shadow: var(--shadow-md);
 }
 
 .chef-curr-num {
  font-family: var(--font-display);
  font-size: 3rem;
+ font-weight: 700;
+ font-style: italic;
  line-height: 1;
- color: var(--color-lime);
- -webkit-text-stroke: 2px #000;
- text-shadow: 3px 3px 0 #000;
+ color: rgba(120, 72, 30, 0.12);
  display: block;
  margin-bottom: 12px;
 }
 
 .chef-curr-card h4 {
  font-family: var(--font-display);
- font-size: 1.4rem;
- color: var(--color-black);
- margin-bottom: 10px;
- text-transform: uppercase;
+ font-size: 1.5rem;
+ color: var(--color-mahogany);
+ margin-bottom: 14px;
 }
 
 .chef-curr-card p {
- font-size: 0.9rem;
- color: var(--color-text-muted);
- line-height: 1.6;
- margin: 0;
  font-family: var(--font-body);
- text-transform: none;
+ font-size: 0.95rem;
+ color: var(--color-text-muted);
+ line-height: 1.7;
+ margin: 0;
 }
 
-/* Waitlist Box */
+/* ── Waitlist Box ── */
 .chef-waitlist-wrap {
  display: grid;
  grid-template-columns: 1.2fr 1fr;
  gap: 48px;
- background: var(--color-black);
- border: var(--border-thick);
- border-radius: var(--radius-sm);
- padding: clamp(32px, 5vw, 60px);
- box-shadow: var(--shadow-lime);
+ background: var(--bg-dark);
+ border: 1px solid rgba(240, 223, 192, 0.1);
+ border-radius: var(--radius-xl);
+ padding: clamp(36px, 6vw, 64px);
+ box-shadow: var(--shadow-xl);
+ position: relative;
+ overflow: hidden;
+}
+
+.chef-waitlist-wrap::before {
+ content: '';
+ position: absolute;
+ inset: 0;
+ background: radial-gradient(ellipse 60% 60% at 30% 50%, rgba(74, 30, 8, 0.4) 0%, transparent 80%);
+ pointer-events: none;
+}
+
+.chef-waitlist-info {
+ position: relative;
+ z-index: 2;
 }
 
 .chef-waitlist-info p {
- color: #CCC;
- line-height: 1.7;
- margin: 16px 0 24px;
+ color: rgba(240, 223, 192, 0.75);
+ font-family: var(--font-body);
+ font-size: 1.05rem;
+ line-height: 1.8;
+ margin: 18px 0 28px;
 }
 
 .chef-perk-list {
@@ -166,27 +207,63 @@
  margin: 0;
  display: flex;
  flex-direction: column;
- gap: 12px;
- color: var(--color-lime);
+ gap: 14px;
+ color: var(--color-tan);
+ font-family: var(--font-body);
  font-size: 0.95rem;
- font-family: var(--font-mono);
+ font-weight: 500;
 }
 
 .chef-waitlist-form-card {
- background: var(--color-white);
- color: var(--color-text-main);
- border: var(--border-thick);
- border-radius: var(--radius-sm);
- padding: 32px 28px;
- box-shadow: var(--shadow-sm);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 2;
+}
+
+.chef-form input,
+.chef-form select {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  caret-color: var(--color-ink);
+  font-size: 1rem;
+}
+
+.chef-form input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.95;
+}
+
+.chef-form input:focus,
+.chef-form select:focus {
+  border-color: var(--color-focus);
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 3px rgb(139 99 53 / 18%);
 }
 
 .chef-form h3 {
- font-family: var(--font-display);
- font-size: 1.8rem;
- color: var(--color-black);
- margin-bottom: 18px;
- text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-ink);
+  margin-bottom: 24px;
+}
+
+.chef-waitlist-form-card h3,
+.chef-waitlist-form-card h4 {
+  color: var(--color-ink);
+}
+
+.chef-waitlist-form-card label {
+  color: var(--color-ink);
 }
 
 .chef-waitlist-success {
@@ -194,6 +271,7 @@
  padding: 24px 10px;
 }
 
+/* ── Responsive ── */
 @media (max-width: 900px) {
  .chef-split,
  .chef-waitlist-wrap {
@@ -206,6 +284,6 @@
   grid-template-columns: 1fr;
  }
  .chef-visual-card {
-  height: 280px;
+  height: 320px;
  }
 }

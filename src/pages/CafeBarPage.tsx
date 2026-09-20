@@ -247,7 +247,7 @@ const CafeBarPage: React.FC = () => {
           Thank you, <strong>{reserveInfo.name}</strong>! We will verify availability and confirm with you on WhatsApp.
          </p>
          <a
-          href="https://wa.me/9779800000000?text=Hi%20Bravo%20Café,%20I%20would%20like%20to%20confirm%20my%20table%20reservation."
+          href="https://wa.me/9779802004823?text=Hi%20Bravo%20Café,%20I%20would%20like%20to%20confirm%20my%20table%20reservation."
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn--primary"

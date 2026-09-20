@@ -1,9 +1,9 @@
 /* ============================================================
-  BARISTA DEDICATED PAGE STYLES
-  ============================================================ */
+   BRAVO — VINTAGE CAFÉ BARISTA DEDICATED PAGE
+   ============================================================ */
 
 .barista-page {
- background: var(--color-bg);
+ background: var(--bg-page);
 }
 
 .barista-overview {
@@ -14,60 +14,77 @@
 }
 
 .barista-overview__content .lead {
- font-size: 1.15rem;
+ font-family: var(--font-accent);
+ font-size: 1.2rem;
+ font-style: italic;
  font-weight: 500;
- color: var(--color-text-main);
+ color: var(--color-caramel);
  line-height: 1.7;
  margin-bottom: 16px;
 }
 
 .barista-overview__content p {
- color: var(--color-text-muted);
- line-height: 1.7;
+ font-family: var(--font-body);
+ color: var(--color-text-body);
+ line-height: 1.8;
  margin-bottom: 24px;
+ font-size: 1.05rem;
 }
 
 .barista-highlights-grid {
  display: grid;
  grid-template-columns: repeat(3, 1fr);
  gap: 16px;
- margin-top: 24px;
+ margin-top: 32px;
 }
 
 .b-high-card {
- background: var(--color-cream-light);
- border: 1px solid var(--color-cream-dark);
+ background: var(--color-parchment-light);
+ border: 1px solid rgba(120, 72, 30, 0.15);
  border-radius: var(--radius-md);
- padding: 18px 14px;
+ padding: 22px 16px;
  text-align: center;
+ transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+.b-high-card:hover {
+ transform: translateY(-3px);
+ box-shadow: var(--shadow-sm);
+ background: var(--color-parchment);
 }
 
 .b-high-num {
- font-family: var(--font-serif);
- font-size: 1.8rem;
+ font-family: var(--font-display);
+ font-size: 2.2rem;
  font-weight: 700;
- color: var(--color-primary-dark);
+ color: var(--color-mahogany);
  display: block;
+ margin-bottom: 4px;
 }
 
 .b-high-card strong {
  display: block;
- font-size: 0.9rem;
- color: var(--color-text-main);
- margin-bottom: 4px;
+ font-family: var(--font-body);
+ font-size: 0.85rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.08em;
+ color: var(--color-text-body);
+ margin-bottom: 6px;
 }
 
 .b-high-card span {
- font-size: 0.78rem;
+ font-family: var(--font-body);
+ font-size: 0.85rem;
  color: var(--color-text-muted);
  line-height: 1.4;
  display: block;
 }
 
-/* Image Stack */
+/* ── Image Stack ── */
 .b-img-stack {
  position: relative;
- height: 440px;
+ height: 480px;
 }
 
 .b-img-main {
@@ -75,7 +92,8 @@
  height: 78%;
  object-fit: cover;
  border-radius: var(--radius-lg);
- box-shadow: var(--shadow-lg);
+ box-shadow: var(--shadow-xl);
+ border: 1px solid rgba(120, 72, 30, 0.15);
  position: absolute;
  top: 0;
  left: 0;
@@ -86,76 +104,86 @@
  height: 65%;
  object-fit: cover;
  border-radius: var(--radius-lg);
- border: 5px solid var(--color-white);
+ border: 6px solid var(--color-cream);
  box-shadow: var(--shadow-lg);
  position: absolute;
  bottom: 0;
  right: 0;
 }
 
-/* Course Tiers Grid */
+/* ── Course Tiers Grid ── */
 .course-tiers-grid {
  display: grid;
  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
  gap: 24px;
- margin-top: 40px;
+ margin-top: 48px;
 }
 
 .tier-card {
- background: var(--color-white);
+ background: var(--color-cream);
  border-radius: var(--radius-xl);
- padding: 36px 28px;
- border: 1px solid var(--color-cream-dark);
+ padding: 36px 30px;
+ border: 1px solid rgba(120, 72, 30, 0.15);
  display: flex;
  flex-direction: column;
  position: relative;
- transition: transform var(--transition-base), box-shadow var(--transition-base);
+ transition: transform var(--trans-base), box-shadow var(--trans-base);
+ box-shadow: var(--shadow-md);
 }
 
 .tier-card:hover {
  transform: translateY(-6px);
- box-shadow: var(--shadow-md);
+ box-shadow: var(--shadow-lg);
 }
 
 .tier-card--featured {
- border: 2px solid var(--color-primary);
- box-shadow: 0 12px 30px rgba(139, 69, 19, 0.12);
+ border: 2px solid var(--color-tan);
+ box-shadow: 0 12px 36px rgba(139, 69, 19, 0.15);
+ background: #fffcf8;
 }
 
 .tier-badge {
  position: absolute;
- top: -12px;
- right: 24px;
- background: var(--color-primary);
- color: var(--color-white);
- font-size: 0.75rem;
+ top: -14px;
+ right: 28px;
+ background: var(--color-caramel);
+ color: var(--color-cream);
+ font-family: var(--font-body);
+ font-size: 0.72rem;
  font-weight: 700;
  text-transform: uppercase;
- padding: 4px 12px;
+ letter-spacing: 0.1em;
+ padding: 5px 14px;
  border-radius: var(--radius-full);
 }
 
 .tier-title {
- font-size: 1.4rem;
- margin-bottom: 12px;
- color: var(--color-text-main);
+ font-family: var(--font-display);
+ font-size: 1.8rem;
+ font-weight: 700;
+ margin-bottom: 14px;
+ color: var(--color-mahogany);
 }
 
 .tier-meta {
  display: flex;
  gap: 16px;
+ font-family: var(--font-body);
  font-size: 0.85rem;
- font-weight: 600;
- color: var(--color-primary-light);
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.05em;
+ color: var(--color-caramel);
  margin-bottom: 16px;
  flex-wrap: wrap;
 }
 
 .tier-desc {
- font-size: 0.92rem;
+ font-family: var(--font-body);
+ font-size: 0.95rem;
  color: var(--color-text-muted);
  line-height: 1.6;
- margin-bottom: 24px;
+ margin-bottom: 28px;
 }
 
 .tier-features {
@@ -165,16 +193,29 @@
  flex: 1;
  display: flex;
  flex-direction: column;
- gap: 10px;
+ gap: 12px;
 }
 
 .tier-features li {
- font-size: 0.88rem;
- color: var(--color-text-main);
- line-height: 1.4;
+ font-family: var(--font-body);
+ font-size: 0.92rem;
+ color: var(--color-text-body);
+ line-height: 1.5;
+ padding-left: 20px;
+ position: relative;
 }
 
-/* Syllabus Grid */
+.tier-features li::before {
+ content: '•';
+ position: absolute;
+ left: 0;
+ color: var(--color-tan);
+ font-size: 1.4rem;
+ line-height: 1;
+ top: -2px;
+}
+
+/* ── Syllabus Grid ── */
 .syllabus-grid {
  display: grid;
  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -183,33 +224,36 @@
 }
 
 .syllabus-card {
- background: var(--color-bg);
- border: 1px solid var(--color-cream-dark);
+ background: var(--color-parchment-light);
+ border: 1px solid rgba(120, 72, 30, 0.15);
  border-radius: var(--radius-lg);
- padding: 28px 24px;
+ padding: 28px 26px;
  position: relative;
- transition: transform var(--transition-base), border-color var(--transition-base);
+ transition: transform var(--trans-base), box-shadow var(--trans-base), background var(--trans-fast);
 }
 
 .syllabus-card:hover {
- border-color: var(--color-primary);
- transform: translateY(-4px);
+ background: var(--color-parchment);
+ box-shadow: var(--shadow-sm);
+ transform: translateY(-3px);
 }
 
 .syllabus-num {
- font-family: var(--font-serif);
- font-size: 2.2rem;
+ font-family: var(--font-display);
+ font-size: 2.5rem;
  font-weight: 700;
- color: rgba(139, 69, 19, 0.2);
+ color: rgba(120, 72, 30, 0.15);
+ font-style: italic;
  line-height: 1;
  display: block;
  margin-bottom: 8px;
 }
 
 .syllabus-title {
- font-size: 1.15rem;
- color: var(--color-text-main);
- margin-bottom: 14px;
+ font-family: var(--font-display);
+ font-size: 1.3rem;
+ color: var(--color-mahogany);
+ margin-bottom: 16px;
 }
 
 .syllabus-list {
@@ -218,83 +262,126 @@
  margin: 0;
  display: flex;
  flex-direction: column;
- gap: 8px;
+ gap: 10px;
 }
 
 .syllabus-list li {
- font-size: 0.88rem;
+ font-family: var(--font-body);
+ font-size: 0.9rem;
  color: var(--color-text-muted);
  line-height: 1.5;
  position: relative;
- padding-left: 16px;
+ padding-left: 18px;
 }
 
 .syllabus-list li::before {
- content: '•';
- color: var(--color-primary);
+ content: '—';
+ color: var(--color-tan);
  position: absolute;
  left: 0;
- font-size: 1.1rem;
+ font-weight: 700;
 }
 
-/* Photo Grid */
+/* ── Photo Grid ── */
 .barista-photo-grid {
  display: grid;
  grid-template-columns: repeat(4, 1fr);
  gap: 16px;
- margin-top: 30px;
+ margin-top: 36px;
 }
 
 .b-grid-img {
  width: 100%;
- height: 240px;
+ height: 260px;
  object-fit: cover;
  border-radius: var(--radius-md);
  box-shadow: var(--shadow-sm);
- transition: transform var(--transition-base);
+ transition: transform 0.5s ease;
 }
 
 .b-grid-img:hover {
- transform: scale(1.03);
+ transform: scale(1.04);
+ box-shadow: var(--shadow-md);
 }
 
-/* Enroll Box */
+/* ── Enroll Box ── */
 .barista-enroll-box {
  display: grid;
  grid-template-columns: 1fr 1fr;
  gap: 48px;
- background: rgba(255, 255, 255, 0.04);
- border: 1px solid rgba(255, 255, 255, 0.1);
+ background: rgba(240, 223, 192, 0.05);
+ border: 1px solid rgba(240, 223, 192, 0.12);
  border-radius: var(--radius-xl);
- padding: clamp(32px, 5vw, 60px);
+ padding: clamp(36px, 6vw, 64px);
 }
 
 .b-enroll-info p {
- color: var(--color-cream-mid);
+ color: rgba(240, 223, 192, 0.7);
+ font-family: var(--font-body);
  line-height: 1.7;
- margin: 16px 0 24px;
+ margin: 16px 0 28px;
+ font-size: 1.05rem;
 }
 
 .b-enroll-perks {
  display: flex;
  flex-direction: column;
- gap: 12px;
- color: var(--color-gold);
- font-weight: 500;
+ gap: 14px;
+ color: var(--color-tan);
+ font-family: var(--font-body);
+ font-weight: 600;
  font-size: 0.95rem;
 }
 
 .b-enroll-form-wrap {
- background: var(--color-white);
- color: var(--color-text-main);
- border-radius: var(--radius-lg);
- padding: 32px 28px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  box-shadow: var(--shadow-xl);
 }
 
-.b-enroll-form h3 {
- font-size: 1.3rem;
- color: var(--color-primary-dark);
- margin-bottom: 18px;
+.b-enroll-form input,
+.b-enroll-form select {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  caret-color: var(--color-ink);
+  font-size: 1rem;
+}
+
+.b-enroll-form input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.95;
+}
+
+.b-enroll-form input:focus,
+.b-enroll-form select:focus {
+  border-color: var(--color-focus);
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 3px rgb(139 99 53 / 18%);
+}
+
+.b-enroll-form h3,
+.b-enroll-form-wrap h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-ink);
+  margin-bottom: 24px;
+}
+
+.b-enroll-form-wrap label,
+.b-enroll-form label {
+  color: var(--color-ink);
+}
+
+.b-enroll-success h4 {
+  color: var(--color-ink);
 }
 
 .b-enroll-success {
@@ -303,29 +390,34 @@
 }
 
 .b-success-icon {
- width: 54px;
- height: 54px;
+ width: 60px;
+ height: 60px;
  border-radius: 50%;
- background: #22c55e;
- color: var(--color-white);
+ background: var(--color-caramel);
+ color: var(--color-cream);
  font-size: 1.8rem;
  display: flex;
  align-items: center;
  justify-content: center;
- margin: 0 auto 16px;
+ margin: 0 auto 20px;
+ box-shadow: var(--shadow-md);
 }
 
 .b-enroll-success h4 {
- font-size: 1.4rem;
- margin-bottom: 8px;
+ font-family: var(--font-display);
+ font-size: 1.5rem;
+ color: var(--color-mahogany);
+ margin-bottom: 10px;
 }
 
 .b-enroll-success p {
+ font-family: var(--font-body);
  color: var(--color-text-muted);
- font-size: 0.92rem;
- margin-bottom: 20px;
+ font-size: 0.95rem;
+ margin-bottom: 24px;
 }
 
+/* ── Responsive ── */
 @media (max-width: 900px) {
  .barista-overview,
  .barista-enroll-box {
@@ -341,7 +433,7 @@
   grid-template-columns: 1fr;
  }
  .b-img-stack {
-  height: 300px;
+  height: 320px;
  }
  .barista-photo-grid {
   grid-template-columns: 1fr;

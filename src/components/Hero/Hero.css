@@ -1,203 +1,299 @@
 /* ============================================================
-  NEO-BRUTALIST HERO STYLES
-  ============================================================ */
+   BRAVO — VINTAGE CAFÉ HERO
+   ============================================================ */
 
 .brutal-hero {
- background-color: var(--bg-lavender);
- padding: 40px 0 60px;
+ background-color: var(--bg-page);
+ background-image:
+  radial-gradient(ellipse 80% 60% at 60% 80%, rgba(200, 147, 90, 0.12) 0%, transparent 70%),
+  radial-gradient(ellipse 60% 50% at 10% 20%, rgba(212, 160, 23, 0.08) 0%, transparent 60%);
+ padding: 0 0 80px;
  position: relative;
+ overflow: hidden;
 }
 
+/* Decorative top border */
+.brutal-hero::before {
+ content: '';
+ display: block;
+ height: 4px;
+ background: linear-gradient(90deg, var(--color-mahogany), var(--color-caramel), var(--color-amber), var(--color-caramel), var(--color-mahogany));
+}
+
+/* Meta header row */
 .brutal-hero__meta-header {
  display: flex;
  justify-content: space-between;
  align-items: center;
- font-family: var(--font-mono);
- font-size: 0.85rem;
+ padding: 18px 0 0;
+ font-family: var(--font-body);
+ font-size: 0.75rem;
  font-weight: 700;
- letter-spacing: 0.08em;
+ letter-spacing: 0.15em;
  text-transform: uppercase;
+ color: var(--color-text-muted);
 }
 
+/* ── Main Layout ── */
 .brutal-hero__main {
  display: grid;
- grid-template-columns: 1.15fr 0.85fr;
- gap: clamp(30px, 5vw, 60px);
+ grid-template-columns: 1fr 1fr;
+ gap: clamp(36px, 6vw, 72px);
  align-items: center;
- margin-bottom: 50px;
+ padding-top: clamp(50px, 7vw, 90px);
+ margin-bottom: clamp(60px, 8vw, 100px);
 }
 
-/* Titles */
+/* Title Area */
 .brutal-hero__title-area {
  display: flex;
  flex-direction: column;
- gap: 16px;
+ gap: 20px;
 }
 
 .brutal-hero__badge-row {
  display: flex;
  gap: 10px;
  flex-wrap: wrap;
+ align-items: center;
+}
+
+/* Decorative serif label above title */
+.brutal-hero__eyebrow {
+ font-family: var(--font-accent);
+ font-size: 1rem;
+ font-style: italic;
+ color: var(--color-caramel);
+ letter-spacing: 0.04em;
 }
 
 .brutal-hero__h1 {
- display: flex;
- flex-direction: column;
- line-height: 0.95;
- margin: 10px 0;
- font-size: clamp(3.2rem, 9vw, 7.5rem);
+ font-family: var(--font-display);
+ font-size: clamp(3rem, 7vw, 5.5rem);
+ font-weight: 900;
+ color: var(--color-mahogany);
+ line-height: 1.05;
+ letter-spacing: -0.01em;
+}
+
+.brutal-hero__h1 em {
+ font-style: italic;
+ color: var(--color-caramel);
 }
 
 .brutal-hero__sub-row {
  display: flex;
  flex-direction: column;
- gap: 20px;
- max-width: 580px;
+ gap: 24px;
+ max-width: 520px;
 }
 
 .brutal-hero__lead {
- font-size: 1.15rem;
- font-weight: 500;
- color: var(--color-black);
- line-height: 1.6;
+ font-family: var(--font-body);
+ font-size: 1.05rem;
+ font-weight: 400;
+ color: var(--color-text-body);
+ line-height: 1.75;
 }
 
 .brutal-hero__buttons {
  display: flex;
  gap: 14px;
  flex-wrap: wrap;
+ align-items: center;
 }
 
-/* Image Visual */
+/* ── Visual / Image ── */
 .brutal-hero__visual {
  position: relative;
 }
 
 .brutal-hero__img-frame {
- border: var(--border-thick);
- border-radius: var(--radius-md);
- box-shadow: var(--shadow-lg);
- background: #000;
- height: 480px;
+ border-radius: var(--radius-lg);
+ box-shadow: var(--shadow-xl);
+ background: var(--color-mahogany);
+ height: clamp(400px, 55vw, 560px);
  overflow: hidden;
  position: relative;
+ border: 1px solid rgba(120, 72, 30, 0.2);
 }
 
 .brutal-hero__img {
  width: 100%;
  height: 100%;
  object-fit: cover;
- transition: transform var(--trans-base);
+ transition: transform 0.6s ease;
 }
 
 .brutal-hero__img-frame:hover .brutal-hero__img {
- transform: scale(1.03);
+ transform: scale(1.04);
+}
+
+/* Warm gradient overlay on image bottom */
+.brutal-hero__img-frame::after {
+ content: '';
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ height: 40%;
+ background: linear-gradient(to top, rgba(30,15,4,0.45), transparent);
+ pointer-events: none;
 }
 
 .brutal-hero__floating-sticker {
  position: absolute;
- top: 18px;
- left: 18px;
+ top: 20px;
+ left: 20px;
  z-index: 2;
 }
 
 .brutal-hero__floating-sticker-bottom {
  position: absolute;
- bottom: 18px;
- right: 18px;
+ bottom: 20px;
+ right: 20px;
  z-index: 2;
 }
 
-/* Pathways Grid */
+/* ── Pathways / Program Cards ── */
 .brutal-hero__pathways {
- margin-top: 60px;
+ margin-top: 0;
+}
+
+.brutal-hero__pathways-label {
+ font-family: var(--font-body);
+ font-size: 0.72rem;
+ font-weight: 700;
+ letter-spacing: 0.18em;
+ text-transform: uppercase;
+ color: var(--color-text-muted);
+ margin-bottom: 18px;
+ display: flex;
+ align-items: center;
+ gap: 14px;
+}
+
+.brutal-hero__pathways-label::after {
+ content: '';
+ flex: 1;
+ height: 1px;
+ background: rgba(120, 72, 30, 0.2);
 }
 
 .brutal-pathways-grid {
  display: grid;
  grid-template-columns: repeat(3, 1fr);
- gap: 24px;
+ gap: 20px;
 }
 
 .brutal-path-card {
- background: var(--color-white);
- border: var(--border-thick);
+ background: var(--color-cream);
+ border: 1px solid rgba(120, 72, 30, 0.15);
  border-radius: var(--radius-md);
- box-shadow: var(--shadow-md);
- padding: 24px;
+ box-shadow: var(--shadow-sm);
+ padding: 22px;
  text-decoration: none;
- color: var(--color-black);
+ color: var(--color-text-body);
  display: flex;
  flex-direction: column;
- transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+ transition: transform var(--trans-base), box-shadow var(--trans-base), border-color var(--trans-base);
 }
 
 .brutal-path-card:hover {
- transform: translate(-3px, -3px);
+ transform: translateY(-5px);
  box-shadow: var(--shadow-lg);
+ border-color: rgba(120, 72, 30, 0.35);
 }
 
 .brutal-path-card--lime {
- background: var(--color-lime);
+ background: var(--color-parchment);
+ border-color: rgba(212, 160, 23, 0.3);
 }
 
 .brutal-path-card__badge-bar {
  display: flex;
  justify-content: space-between;
  align-items: center;
- margin-bottom: 16px;
+ margin-bottom: 14px;
 }
 
 .brutal-path-arrow {
- font-size: 1.5rem;
- font-weight: 800;
+ font-size: 1.2rem;
+ color: var(--color-caramel);
+ transition: transform var(--trans-fast);
+}
+
+.brutal-path-card:hover .brutal-path-arrow {
+ transform: translate(3px, -3px);
 }
 
 .brutal-path-img-wrap {
- height: 190px;
- border: var(--border-medium);
- border-radius: var(--radius-xs);
+ height: 180px;
+ border-radius: var(--radius-sm);
  overflow: hidden;
- margin-bottom: 16px;
- background: #000;
+ margin-bottom: 14px;
+ background: var(--color-mahogany);
 }
 
 .brutal-path-img-wrap img {
  width: 100%;
  height: 100%;
  object-fit: cover;
+ transition: transform 0.5s ease;
+}
+
+.brutal-path-card:hover .brutal-path-img-wrap img {
+ transform: scale(1.05);
 }
 
 .brutal-path-card h3 {
- font-size: 1.6rem;
+ font-family: var(--font-display);
+ font-size: 1.35rem;
+ font-weight: 700;
  margin-bottom: 8px;
- color: var(--color-black);
+ color: var(--color-mahogany);
 }
 
 .brutal-path-card p {
- font-size: 0.9rem;
- color: #333;
- line-height: 1.5;
- margin-bottom: 18px;
+ font-size: 0.88rem;
+ color: var(--color-text-muted);
+ line-height: 1.6;
+ margin-bottom: 16px;
  flex: 1;
 }
 
 .brutal-path-link {
- font-family: var(--font-mono);
- font-size: 0.8rem;
+ font-family: var(--font-body);
+ font-size: 0.75rem;
  font-weight: 700;
  text-transform: uppercase;
- color: var(--color-black);
+ letter-spacing: 0.1em;
+ color: var(--color-caramel);
 }
 
+/* ── Responsive ── */
 @media (max-width: 992px) {
  .brutal-hero__main {
   grid-template-columns: 1fr;
  }
+ .brutal-hero__img-frame {
+  height: clamp(300px, 60vw, 420px);
+ }
  .brutal-pathways-grid {
   grid-template-columns: 1fr;
+  max-width: 480px;
  }
- .brutal-hero__img-frame {
-  height: 360px;
+}
+
+@media (max-width: 600px) {
+ .brutal-hero {
+  padding-bottom: 56px;
+ }
+ .brutal-hero__h1 {
+  font-size: clamp(2.4rem, 10vw, 3.4rem);
+ }
+ .brutal-pathways-grid {
+  grid-template-columns: 1fr;
+  max-width: none;
  }
 }

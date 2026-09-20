@@ -30,9 +30,9 @@ const About: React.FC = () => {
        loop
        playsInline
       >
-       {/* Girls video */}
+       {/* Man with glasses video */}
        <source
-        src="/assets/AQMc8AXPZcoYSBYQjfRbHUAv5_M0fX7UZ_bQviBTR7TPPtgG0cKqpu9QxJax39ISQAWaoP9P46qq3keIxBh9XT2mIUWasllppmatyRFh8aW8Lg.mp4"
+        src="/assets/AQOymab3-Qdbxu7asAI6dRbZ8iP44xQBqmIsg6FLeqXEiedcuXinGkxKBb3PJNHGFgtfLZeqfsQDsgwdGNBWtwDLiZZIEx8Jsfn8m5eSVbbSMQ.mp4"
         type="video/mp4"
        />
        Your browser does not support HTML5 video.

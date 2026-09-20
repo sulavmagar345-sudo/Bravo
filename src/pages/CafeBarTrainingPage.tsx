@@ -36,25 +36,51 @@ const BAR_MODULES = [
  },
 ];
 
+const isValidName = (v: string) => {
+  const t = v.trim();
+  if (t.length < 2 || t.length > 60) return false;
+  if (!/[\p{L}]/u.test(t)) return false;
+  if (!/^[\p{L}\s'.-]+$/u.test(t)) return false;
+  return true;
+};
+const isValidPhone = (v: string) => {
+  const digits = v.replace(/[\s\-()]/g, '');
+  const stripped = digits.startsWith('+') ? digits.slice(1) : digits;
+  if (!/^\d+$/.test(stripped)) return false;
+  if (stripped.length < 7 || stripped.length > 15) return false;
+  return true;
+};
+
 const CafeBarTrainingPage: React.FC = () => {
- const [formSent, setFormSent] = useState(false);
- const [info, setInfo] = useState({ name: '', phone: '', timing: 'evening' });
+  const [formSent, setFormSent] = useState(false);
+  const [info, setInfo] = useState({ name: '', phone: '', timing: 'evening' });
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
 
- const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  setFormSent(true);
- };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const nextErrors: typeof errors = {};
+    const trimmedName = info.name.trim();
+    const trimmedPhone = info.phone.trim();
+    if (!isValidName(trimmedName)) nextErrors.name = 'Please enter a valid name (2–60 letters, spaces, hyphen or apostrophe).';
+    if (!isValidPhone(trimmedPhone)) nextErrors.phone = 'Please enter a valid phone number (7–15 digits, may start with +).';
+    if (Object.keys(nextErrors).length) {
+      setErrors(nextErrors);
+      return;
+    }
+    setErrors({});
+    setInfo({ ...info, name: trimmedName, phone: trimmedPhone });
+    setFormSent(true);
+  };
 
- return (
-  <div className="cafebar-training-page">
-   <PageBanner
-    icon=""
-    badge="Mixology & Hospitality"
-    title="Café & Bar Bartending Course"
-    subtitle="Learn from champion mixologists inside our operational bar. Master classic cocktails, working flair, mocktails, and high-energy bar service."
-    bgImage={IMAGES.barAction}
-    breadcrumbs={[{ label: 'Programs', path: '/programs' }, { label: 'Café & Bar Training' }]}
-   />
+  return (
+    <div className="cafebar-training-page">
+      <PageBanner
+        icon=""
+        badge="Mixology & Hospitality"
+        title="Café & Bar Bartending Course"
+        subtitle="Learn from champion mixologists inside our operational bar. Master classic cocktails, working flair, mocktails, and high-energy bar service."
+        breadcrumbs={[{ label: 'Programs', path: '/programs' }, { label: 'Café & Bar Training' }]}
+      />
 
    {/* Hero Split Section */}
    <section className="section section--white">
@@ -183,26 +209,41 @@ const CafeBarTrainingPage: React.FC = () => {
        {!formSent ? (
         <form onSubmit={handleSubmit}>
          <h3>Reserve Your Slot</h3>
-         <div className="form-group">
-          <label>Full Name *</label>
-          <input
-           type="text"
-           required
-           placeholder="Your name"
-           value={info.name}
-           onChange={(e) => setInfo({ ...info, name: e.target.value })}
-          />
-         </div>
-         <div className="form-group">
-          <label>Phone / WhatsApp *</label>
-          <input
-           type="tel"
-           required
-           placeholder="e.g. 98XXXXXXXX"
-           value={info.phone}
-           onChange={(e) => setInfo({ ...info, phone: e.target.value })}
-          />
-         </div>
+          <div className="form-group">
+            <label htmlFor="cafebar-name">Full Name *</label>
+            <input
+              id="cafebar-name"
+              type="text"
+              required
+              placeholder="Your name"
+              value={info.name}
+              onChange={(e) => setInfo({ ...info, name: e.target.value })}
+              autoComplete="name"
+              inputMode="text"
+              maxLength={60}
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? 'cafebar-name-error' : undefined}
+            />
+            {errors.name && <span id="cafebar-name-error" className="form-error" role="alert">{errors.name}</span>}
+          </div>
+          <div className="form-group">
+            <label htmlFor="cafebar-phone">Phone / WhatsApp *</label>
+            <input
+              id="cafebar-phone"
+              type="tel"
+              required
+              placeholder="e.g. 98XXXXXXXX"
+              value={info.phone}
+              onChange={(e) => setInfo({ ...info, phone: e.target.value })}
+              autoComplete="tel"
+              inputMode="numeric"
+              maxLength={20}
+              pattern="\+?[0-9\s\-()]{7,20}"
+              aria-invalid={!!errors.phone}
+              aria-describedby={errors.phone ? 'cafebar-phone-error' : undefined}
+            />
+            {errors.phone && <span id="cafebar-phone-error" className="form-error" role="alert">{errors.phone}</span>}
+          </div>
          <div className="form-group">
           <label>Preferred Shift</label>
           <select
@@ -226,7 +267,7 @@ const CafeBarTrainingPage: React.FC = () => {
           Thank you, <strong>{info.name}</strong>! We will message you on WhatsApp to confirm your batch.
          </p>
          <a
-          href={`https://wa.me/9779800000000?text=Hi%20Bravo,%20I%20am%20interested%20in%20the%20Café%20and%20Bar%20Bartending%20course.`}
+          href={`https://wa.me/9779802004823?text=Hi%20Bravo,%20I%20am%20interested%20in%20the%20Café%20and%20Bar%20Bartending%20course.`}
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn--primary"

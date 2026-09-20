@@ -42,12 +42,20 @@ export const IMAGES = {
  certificates: '/assets/certificate.png',
  certificateIndividual: '/assets/certificate 2.png',
 
- // ABOUT / TEAM
- team: '/assets/96404465_871493560003114_9097596256053624832_n.jpg',
- teamGroup: '/assets/98377402_881994065619730_8370993961161981952_n.jpg',
- teamCafe: '/assets/492356765_1256858429774026_3620093556861238375_n.jpg',
+// ABOUT / TEAM
+  team: '/assets/96404465_871493560003114_9097596256053624832_n.jpg',
+  teamGroup: '/assets/98377402_881994065619730_8370993961161981952_n.jpg',
+  teamCafe: '/assets/492356765_1256858429774026_3620093556861238375_n.jpg',
 
- // BAR TRAINING
+  // TRAINERS - individual portrait candidates
+  trainer1: '/assets/486100383_1223723583087511_4505845927975402134_n.jpg',
+  trainer2: '/assets/494197463_1262717105854825_2298219446583537736_n.jpg',
+  trainer3: '/assets/494549997_1262481455878390_5202487372607401708_n.jpg',
+
+  // VIDEO
+  welcomeVideo: '/assets/AQMMqaPfj01ksylGcqLS_dIJNYi5oHxrzMI-ZmQyJ0KAOH95JilAIPO9Ruy3gukWc1ORwiUwbP8UmkBD0_nPDIsJrz_38RN6aBEwZKtrzV1g8w.mp4',
+
+  // BAR TRAINING
  barTraining: '/assets/480670013_2055564068262718_2096599669859853065_n.jpg',
  barAction: '/assets/480816279_2055576588261466_6237295885905362791_n.jpg',
 

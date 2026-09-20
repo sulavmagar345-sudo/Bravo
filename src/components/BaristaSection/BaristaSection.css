@@ -1,10 +1,10 @@
 /* ============================================================
-  BARISTA SECTION — NEO-BRUTALIST (dark bg version)
-  ============================================================ */
+   BRAVO — VINTAGE CAFÉ BARISTA SECTION
+   ============================================================ */
 
 .barista {
- background: var(--color-white);
- padding: 80px 0;
+ background: var(--bg-page);
+ padding: clamp(72px, 10vw, 110px) 0;
 }
 
 .barista__layout {
@@ -14,16 +14,17 @@
  align-items: center;
 }
 
-/* ---- Images ---- */
+/* ── Image Collage ── */
 .barista__imgs {
  display: grid;
  grid-template-columns: 1fr 1fr;
  gap: 12px;
- height: 540px;
+ height: 520px;
 }
 
 .barista__img-main {
- border: var(--border-thick);
+ border-radius: var(--radius-md);
+ border: 1px solid rgba(120, 72, 30, 0.15);
  box-shadow: var(--shadow-md);
  overflow: hidden;
  height: 100%;
@@ -37,8 +38,9 @@
 
 .barista__img-top,
 .barista__img-bottom {
- border: var(--border-thick);
- box-shadow: var(--shadow-md);
+ border-radius: var(--radius-md);
+ border: 1px solid rgba(120, 72, 30, 0.15);
+ box-shadow: var(--shadow-sm);
  overflow: hidden;
  flex: 1;
 }
@@ -53,10 +55,10 @@
 .barista__img-main:hover .barista__img,
 .barista__img-top:hover .barista__img,
 .barista__img-bottom:hover .barista__img {
- transform: scale(1.04);
+ transform: scale(1.05);
 }
 
-/* ---- Text ---- */
+/* ── Text ── */
 .barista__text {
  display: flex;
  flex-direction: column;
@@ -64,110 +66,103 @@
 }
 
 .barista__text .eyebrow {
- font-family: var(--font-mono);
- font-size: 0.85rem;
+ font-family: var(--font-body);
+ font-size: 0.72rem;
+ font-weight: 700;
  text-transform: uppercase;
- letter-spacing: 0.1em;
- color: var(--color-lime);
+ letter-spacing: 0.18em;
+ color: var(--color-caramel);
 }
 
 .barista__text h2 {
- color: var(--color-black);
+ color: var(--color-mahogany);
  font-family: var(--font-display);
- font-size: clamp(2.4rem, 4vw, 3.6rem);
- line-height: 1.0;
+ font-size: clamp(2.2rem, 4vw, 3.4rem);
+ line-height: 1.1;
  margin: 0;
 }
 
 .barista__highlight {
- font-style: normal;
- color: var(--color-black);
- display: block;
+ font-style: italic;
+ color: var(--color-caramel);
 }
 
 .barista__text p {
- color: #333;
- font-size: 1.05rem;
- line-height: 1.72;
+ color: var(--color-text-body);
+ font-size: 0.97rem;
+ line-height: 1.8;
  margin: 0;
 }
 
-/* ---- Perks ---- */
+/* ── Perks Grid ── */
 .barista__perks {
  display: grid;
  grid-template-columns: 1fr 1fr;
- gap: 16px;
+ gap: 12px;
 }
 
 .barista__perk {
- background: var(--color-white);
- border: var(--border-medium);
- padding: 16px;
+ background: var(--color-parchment-light);
+ border: 1px solid rgba(120, 72, 30, 0.15);
+ border-radius: var(--radius-sm);
+ padding: 16px 18px;
  display: flex;
  flex-direction: column;
- gap: 6px;
- transition: border-color var(--trans-fast), background var(--trans-fast);
- box-shadow: 2px 2px 0 var(--color-black);
+ gap: 5px;
+ transition: all var(--trans-fast);
 }
 
 .barista__perk:hover {
- border-color: var(--color-black);
- background: var(--color-lime);
+ background: var(--color-parchment);
+ border-color: rgba(120, 72, 30, 0.3);
+ transform: translateY(-2px);
+ box-shadow: var(--shadow-xs);
 }
 
 .barista__perk strong {
  display: block;
- font-family: var(--font-mono);
- font-size: 0.9rem;
+ font-family: var(--font-body);
+ font-size: 0.82rem;
  font-weight: 700;
- color: var(--color-black);
+ color: var(--color-mahogany);
  text-transform: uppercase;
- letter-spacing: 0.04em;
+ letter-spacing: 0.06em;
 }
 
 .barista__perk span {
- font-size: 0.88rem;
- color: #555;
- line-height: 1.4;
+ font-size: 0.86rem;
+ color: var(--color-text-muted);
+ line-height: 1.45;
 }
 
-/* ---- CTAs ---- */
+/* ── CTAs ── */
 .barista__ctas {
  display: flex;
- gap: 14px;
+ gap: 12px;
  flex-wrap: wrap;
 }
 
-/* ============================================================
-  RESPONSIVE
-  ============================================================ */
+/* ── Responsive ── */
 @media (max-width: 1024px) {
  .barista__layout {
   grid-template-columns: 1fr;
  }
-
  .barista__imgs {
-  height: 400px;
+  height: 380px;
   order: -1;
  }
 }
 
 @media (max-width: 640px) {
- .barista {
-  padding: 60px 0;
- }
-
  .barista__imgs {
-  height: 280px;
+  height: 260px;
   grid-template-columns: 1fr;
  }
-
  .barista__img-side {
   display: none;
  }
-
  .barista__perks {
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 10px;
  }
 }

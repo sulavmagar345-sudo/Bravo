@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Hero.css';
-import { IMAGES } from '../../data/images';
 
 const Hero: React.FC = () => {
  return (
@@ -44,14 +43,19 @@ const Hero: React.FC = () => {
      </div>
     </div>
 
-    {/* High-Impact Focal Image in Neo-Brutalist Frame */}
+    {/* High-Impact Focal Video in Vintage Frame */}
     <div className="brutal-hero__visual">
-     <div className="brutal-hero__img-frame">
-      <img
-       src={IMAGES.hero}
-       alt="Barista practicing latte art at Bravo"
+     <div className="brutal-hero__img-frame" style={{ background: '#150a04', overflow: 'hidden' }}>
+      <video
+       autoPlay
+       muted
+       loop
+       playsInline
        className="brutal-hero__img"
-      />
+       style={{ objectFit: 'cover', opacity: 0.95 }}
+      >
+       <source src="/assets/AQMc8AXPZcoYSBYQjfRbHUAv5_M0fX7UZ_bQviBTR7TPPtgG0cKqpu9QxJax39ISQAWaoP9P46qq3keIxBh9XT2mIUWasllppmatyRFh8aW8Lg.mp4" type="video/mp4" />
+      </video>
       <div className="brutal-hero__floating-sticker">
        <span className="brutal-badge"> PURE ESPRESSO</span>
       </div>
@@ -70,7 +74,7 @@ const Hero: React.FC = () => {
     </div>
    </div>
 
-   {/* 3 Pathway Cards in Neo-Brutalist Style */}
+   {/* 3 Pathway Cards in Vintage Style (Images removed per request to reduce images on homepage) */}
    <div className="container brutal-hero__pathways">
     <div className="brutal-pathways-grid">
      {/* Card 1: Barista */}
@@ -78,9 +82,6 @@ const Hero: React.FC = () => {
       <div className="brutal-path-card__badge-bar">
        <span className="brutal-badge"> PROGRAM 01</span>
        <span className="brutal-path-arrow">↗</span>
-      </div>
-      <div className="brutal-path-img-wrap">
-       <img src={IMAGES.baristaTraining1} alt="Barista Training" />
       </div>
       <h3>BARISTA TRAINING</h3>
       <p>Master espresso extraction, milk microfoam, and latte art on commercial FAEMA machines.</p>
@@ -93,9 +94,6 @@ const Hero: React.FC = () => {
        <span className="brutal-badge brutal-badge--white">🍺 DESTINATION</span>
        <span className="brutal-path-arrow">↗</span>
       </div>
-      <div className="brutal-path-img-wrap">
-       <img src={IMAGES.cafeInterior} alt="Bravo Café & Bar" />
-      </div>
       <h3>CAFÉ &amp; BAR</h3>
       <p>Artisan coffee, loaded shakes, cocktails, live acoustic music, and flair bartending shows.</p>
       <span className="brutal-path-link">Explore Café Experience →</span>
@@ -106,9 +104,6 @@ const Hero: React.FC = () => {
       <div className="brutal-path-card__badge-bar">
        <span className="brutal-badge"> COMING SOON</span>
        <span className="brutal-path-arrow">↗</span>
-      </div>
-      <div className="brutal-path-img-wrap">
-       <img src={IMAGES.groupTraining1} alt="Chef Training Waitlist" />
       </div>
       <h3>CHEF TRAINING</h3>
       <p>Commercial kitchen training, knife skills, 5 mother sauces, and HACCP food hygiene.</p>

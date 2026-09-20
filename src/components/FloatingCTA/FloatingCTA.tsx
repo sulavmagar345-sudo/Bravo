@@ -22,7 +22,7 @@ const FloatingCTA: React.FC = () => {
    </Link>
 
     <a
-     href="https://wa.me/9779800000000?text=Hello%20Bravo!%20I%20would%20like%20information%20on%20barista%20and%20hospitality%20courses."
+     href="https://wa.me/9779802004823?text=Hello%20Bravo!%20I%20would%20like%20information%20on%20barista%20and%20hospitality%20courses."
      target="_blank"
      rel="noopener noreferrer"
      className="floating-cta__whatsapp"

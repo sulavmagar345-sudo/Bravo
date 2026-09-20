@@ -3,28 +3,31 @@ import { Link } from 'react-router-dom';
 import './PageBanner.css';
 
 interface PageBannerProps {
- icon: string;
- badge?: string;
- title: string;
- subtitle: string;
- bgImage: string;
- breadcrumbs: { label: string; path?: string }[];
+  icon: string;
+  badge?: string;
+  title: string;
+  subtitle: string;
+  bgImage?: string;
+  breadcrumbs: { label: string; path?: string }[];
 }
 
 const PageBanner: React.FC<PageBannerProps> = ({
- icon,
- badge,
- title,
- subtitle,
- bgImage,
- breadcrumbs,
+  icon,
+  badge,
+  title,
+  subtitle,
+  bgImage,
+  breadcrumbs,
 }) => {
- return (
-  <div className="page-banner">
-   <div className="page-banner__bg">
-    <img src={bgImage} alt={title} className="page-banner__img" />
-    <div className="page-banner__overlay" />
-   </div>
+  const isSolid = !bgImage;
+  return (
+    <div className={`page-banner${isSolid ? ' page-banner--solid' : ''}`}>
+      {bgImage ? (
+        <div className="page-banner__bg" aria-hidden="true">
+          <img src={bgImage} alt="" className="page-banner__img" />
+          <div className="page-banner__overlay" />
+        </div>
+      ) : null}
 
    <div className="container page-banner__container">
     <nav className="page-banner__breadcrumbs" aria-label="Breadcrumb">

@@ -1,13 +1,58 @@
 /* ============================================================
-  PAGE BANNER COMPONENT STYLES
-  ============================================================ */
+   BRAVO — VINTAGE CAFÉ PAGE BANNER
+   ============================================================ */
 
 .page-banner {
- position: relative;
- padding: 160px 0 80px;
- background-color: var(--color-primary-dark);
- color: var(--color-white);
- overflow: hidden;
+  position: relative;
+  padding: clamp(120px, 16vw, 180px) 0 clamp(60px, 8vw, 100px);
+  background-color: var(--color-espresso);
+  color: var(--color-parchment);
+  overflow: hidden;
+}
+
+.page-banner--solid {
+  padding: clamp(2.75rem, 6vw, 4.5rem) 0 clamp(2rem, 4vw, 3rem);
+  background: var(--color-canvas);
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.page-banner--solid .page-banner__container {
+  color: var(--color-text);
+}
+
+.page-banner--solid .page-banner__breadcrumbs,
+.page-banner--solid .page-banner__breadcrumbs a {
+  color: var(--color-text-muted);
+}
+
+.page-banner--solid .page-banner__breadcrumbs a:hover {
+  color: var(--color-coffee);
+}
+
+.page-banner--solid .page-banner__crumb-sep {
+  color: var(--color-border-strong);
+}
+
+.page-banner--solid .page-banner__crumb-current {
+  color: var(--color-gold);
+}
+
+.page-banner--solid .page-banner__badge {
+  background: transparent;
+  color: var(--color-gold);
+  border: 1px solid var(--color-border);
+  padding: 0.35rem 0.75rem;
+}
+
+.page-banner--solid .page-banner__title {
+  color: var(--color-ink);
+}
+
+.page-banner--solid .page-banner__subtitle {
+  color: var(--color-text-muted);
+  font-style: normal;
+  font-family: var(--font-body);
 }
 
 .page-banner__bg {
@@ -26,7 +71,24 @@
 .page-banner__overlay {
  position: absolute;
  inset: 0;
- background: linear-gradient(180deg, rgba(20, 12, 8, 0.78) 0%, rgba(20, 12, 8, 0.94) 100%);
+ background: linear-gradient(
+  160deg,
+  rgba(30, 15, 4, 0.88) 0%,
+  rgba(74, 30, 8, 0.75) 50%,
+  rgba(30, 15, 4, 0.92) 100%
+ );
+}
+
+/* Decorative warm bottom accent */
+.page-banner::after {
+ content: '';
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ height: 3px;
+ background: linear-gradient(90deg, transparent, var(--color-caramel), var(--color-amber), var(--color-caramel), transparent);
+ z-index: 3;
 }
 
 .page-banner__container {
@@ -38,34 +100,37 @@
  display: flex;
  align-items: center;
  gap: 8px;
- font-size: 0.85rem;
- margin-bottom: 24px;
+ font-family: var(--font-body);
+ font-size: 0.78rem;
+ font-weight: 700;
+ letter-spacing: 0.1em;
+ text-transform: uppercase;
+ margin-bottom: 28px;
 }
 
 .page-banner__breadcrumbs a {
- color: var(--color-cream-mid);
+ color: rgba(240, 223, 192, 0.6);
  text-decoration: none;
- transition: color var(--transition-fast);
+ transition: color var(--trans-fast);
 }
 
 .page-banner__breadcrumbs a:hover {
- color: var(--color-gold);
+ color: var(--color-tan);
 }
 
 .page-banner__crumb-sep {
- color: rgba(255, 255, 255, 0.3);
+ color: rgba(240, 223, 192, 0.25);
 }
 
 .page-banner__crumb-current {
- color: var(--color-gold);
- font-weight: 600;
+ color: var(--color-tan);
 }
 
 .page-banner__icon-row {
  display: flex;
  align-items: center;
- gap: 12px;
- margin-bottom: 16px;
+ gap: 14px;
+ margin-bottom: 18px;
 }
 
 .page-banner__icon {
@@ -74,41 +139,55 @@
  justify-content: center;
  width: 52px;
  height: 52px;
- border-radius: var(--radius-md);
- background: rgba(200, 149, 90, 0.2);
- border: 1px solid rgba(200, 149, 90, 0.4);
- font-size: 1.8rem;
+ border-radius: 50%;
+ background: rgba(200, 147, 90, 0.15);
+ border: 1px solid rgba(200, 147, 90, 0.35);
+ font-size: 1.7rem;
 }
 
 .page-banner__badge {
- background: var(--color-gold);
- color: var(--color-primary-dark);
- font-size: 0.75rem;
+ background: var(--color-amber);
+ color: var(--color-espresso);
+ font-family: var(--font-body);
+ font-size: 0.7rem;
  font-weight: 700;
  text-transform: uppercase;
- letter-spacing: 0.06em;
- padding: 4px 12px;
+ letter-spacing: 0.12em;
+ padding: 5px 14px;
  border-radius: var(--radius-full);
 }
 
 .page-banner__title {
- font-family: var(--font-serif);
- font-size: clamp(2.2rem, 4vw, 3.4rem);
+ font-family: var(--font-display);
+ font-size: clamp(2.4rem, 5vw, 4rem);
  font-weight: 700;
- color: var(--color-white);
- line-height: 1.15;
- margin-bottom: 14px;
+ color: var(--color-parchment);
+ line-height: 1.1;
+ margin-bottom: 16px;
+}
+
+.page-banner__title em {
+ font-style: italic;
+ color: var(--color-tan);
 }
 
 .page-banner__subtitle {
- font-size: clamp(1rem, 1.6vw, 1.2rem);
- color: var(--color-cream-mid);
- max-width: 680px;
- line-height: 1.65;
+ font-family: var(--font-accent);
+ font-size: clamp(1rem, 1.8vw, 1.2rem);
+ font-style: italic;
+ color: rgba(240, 223, 192, 0.75);
+ max-width: 640px;
+ line-height: 1.7;
 }
 
 @media (max-width: 768px) {
  .page-banner {
-  padding: 130px 0 60px;
+  padding: clamp(100px, 14vw, 140px) 0 clamp(48px, 7vw, 72px);
+ }
+}
+
+@media (max-width: 480px) {
+ .page-banner__title {
+  font-size: clamp(2rem, 9vw, 2.8rem);
  }
 }

@@ -1,21 +1,23 @@
 /* ============================================================
-  CAFE & BAR SECTION — NEO-BRUTALIST
-  ============================================================ */
+   BRAVO — VINTAGE CAFÉ: CAFE & BAR SECTION
+   ============================================================ */
 
 .cafebar {
- background: var(--bg-lavender);
- padding: 80px 0;
+ background: var(--bg-section-alt);
+ padding: clamp(80px, 10vw, 120px) 0;
+ border-top: 1px solid rgba(120, 72, 30, 0.12);
+ border-bottom: 1px solid rgba(120, 72, 30, 0.12);
 }
 
-/* ---- Header split ---- */
+/* ── Header Split ── */
 .cafebar__header {
  display: grid;
- grid-template-columns: 1fr 1fr;
+ grid-template-columns: 1.1fr 1fr;
  gap: clamp(40px, 6vw, 80px);
- align-items: start;
- margin-bottom: clamp(50px, 7vw, 90px);
- padding-bottom: clamp(40px, 5vw, 60px);
- border-bottom: var(--border-thick);
+ align-items: center;
+ margin-bottom: clamp(60px, 8vw, 100px);
+ padding-bottom: clamp(50px, 7vw, 80px);
+ border-bottom: 1px solid rgba(120, 72, 30, 0.15);
 }
 
 .cafebar__header-text {
@@ -23,47 +25,57 @@
 }
 
 .cafebar__header-text .eyebrow {
- font-family: var(--font-mono);
- font-size: 0.85rem;
+ font-family: var(--font-body);
+ font-size: 0.75rem;
+ font-weight: 700;
  text-transform: uppercase;
- letter-spacing: 0.1em;
- color: var(--color-text-muted);
+ letter-spacing: 0.18em;
+ color: var(--color-caramel);
  display: block;
- margin-bottom: 12px;
+ margin-bottom: 14px;
 }
 
 .cafebar__header-text h2 {
  font-family: var(--font-display);
- font-size: clamp(2.8rem, 5vw, 4.2rem);
- line-height: 1.0;
- color: var(--color-black);
- text-transform: uppercase;
+ font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+ font-weight: 900;
+ line-height: 1.05;
+ color: var(--color-mahogany);
  margin-bottom: 0;
+ letter-spacing: -0.01em;
 }
 
 .cafebar__highlight {
  font-style: italic;
- color: var(--color-black);
+ color: var(--color-caramel);
  display: block;
 }
 
 .cafebar__header-text .divider {
- margin: 20px 0;
+ margin: 24px 0;
+ height: 2px;
+ width: 60px;
+ background: var(--color-caramel);
+ border: none;
+ border-radius: 2px;
 }
 
 .cafebar__header-text p {
  font-size: 1.05rem;
- line-height: 1.72;
- color: #333;
- max-width: 480px;
+ line-height: 1.8;
+ color: var(--color-text-body);
+ max-width: 520px;
  margin: 0;
+ font-family: var(--font-body);
 }
 
 .cafebar__header-img {
- border: var(--border-thick);
- box-shadow: var(--shadow-lg);
+ border-radius: var(--radius-lg);
+ border: 1px solid rgba(120, 72, 30, 0.15);
+ box-shadow: var(--shadow-xl);
  overflow: hidden;
- height: 420px;
+ height: 480px;
+ background: var(--color-mahogany);
 }
 
 .cafebar__hero-img {
@@ -71,29 +83,31 @@
  height: 100%;
  object-fit: cover;
  object-position: center 40%;
- transition: transform 0.55s ease;
+ transition: transform 0.6s ease;
 }
 
 .cafebar__header-img:hover .cafebar__hero-img {
- transform: scale(1.04);
+ transform: scale(1.05);
 }
 
-/* ---- Card Grid ---- */
+/* ── Card Grid ── */
 .cafebar__grid {
  display: grid;
  grid-template-columns: repeat(4, 1fr);
  gap: 0;
- margin-bottom: clamp(50px, 7vw, 90px);
- border: var(--border-thick);
+ margin-bottom: clamp(60px, 8vw, 100px);
+ border: 1px solid rgba(120, 72, 30, 0.18);
+ border-radius: var(--radius-lg);
  box-shadow: var(--shadow-md);
  overflow: hidden;
+ background: var(--color-cream);
 }
 
 .cafebar__card {
  cursor: default;
- background: var(--color-white);
- border-right: var(--border-medium);
- transition: background var(--trans-fast);
+ background: var(--color-cream);
+ border-right: 1px solid rgba(120, 72, 30, 0.15);
+ transition: background var(--trans-fast), transform var(--trans-fast);
 }
 
 .cafebar__card:last-child {
@@ -101,59 +115,63 @@
 }
 
 .cafebar__card:hover {
- background: var(--color-lime);
+ background: var(--color-parchment);
 }
 
 .cafebar__card-img-wrap {
- height: 200px;
+ height: 220px;
  overflow: hidden;
- border-bottom: var(--border-medium);
+ border-bottom: 1px solid rgba(120, 72, 30, 0.12);
+ background: var(--color-mahogany);
 }
 
 .cafebar__card-img-wrap img {
  width: 100%;
  height: 100%;
  object-fit: cover;
- transition: transform 0.55s ease;
+ transition: transform 0.6s ease;
 }
 
 .cafebar__card:hover .cafebar__card-img-wrap img {
- transform: scale(1.06);
+ transform: scale(1.08);
 }
 
 .cafebar__card-body {
- padding: 20px 22px;
+ padding: 24px 26px;
 }
 
 .cafebar__card-title {
  font-family: var(--font-display);
- font-size: 1.4rem;
- color: var(--color-black);
- text-transform: uppercase;
- margin-bottom: 8px;
- line-height: 1;
+ font-size: 1.5rem;
+ font-weight: 700;
+ color: var(--color-mahogany);
+ margin-bottom: 10px;
+ line-height: 1.1;
 }
 
 .cafebar__card-desc {
- font-size: 0.9rem;
- color: #444;
- line-height: 1.55;
+ font-size: 0.92rem;
+ color: var(--color-text-muted);
+ line-height: 1.6;
+ font-family: var(--font-body);
 }
 
-/* ---- CTA Banner ---- */
+/* ── CTA Banner ── */
 .cafebar__cta-banner {
  display: grid;
  grid-template-columns: 1fr 1fr;
- border: var(--border-thick);
- box-shadow: var(--shadow-lg);
+ border-radius: var(--radius-lg);
+ border: 1px solid rgba(120, 72, 30, 0.15);
+ box-shadow: var(--shadow-xl);
  overflow: hidden;
- min-height: 360px;
- background: var(--color-black);
+ min-height: 400px;
+ background: var(--bg-dark);
 }
 
 .cafebar__cta-img-wrap {
  overflow: hidden;
- border-right: var(--border-thick);
+ border-right: 1px solid rgba(240, 223, 192, 0.1);
+ background: var(--color-mahogany);
 }
 
 .cafebar__cta-img {
@@ -161,84 +179,102 @@
  height: 100%;
  object-fit: cover;
  object-position: center 20%;
- transition: transform 0.55s ease;
+ transition: transform 0.7s ease;
 }
 
 .cafebar__cta-banner:hover .cafebar__cta-img {
- transform: scale(1.04);
+ transform: scale(1.05);
 }
 
 .cafebar__cta-text {
- padding: clamp(32px, 5vw, 60px);
+ padding: clamp(40px, 6vw, 72px);
  display: flex;
  flex-direction: column;
  justify-content: center;
- gap: 20px;
+ gap: 24px;
+ position: relative;
+}
+
+/* Warm radial glow inside CTA */
+.cafebar__cta-text::before {
+ content: '';
+ position: absolute;
+ inset: 0;
+ background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(181, 101, 29, 0.15) 0%, transparent 70%);
+ pointer-events: none;
 }
 
 .cafebar__cta-text h3 {
- color: var(--color-lime);
+ color: var(--color-parchment);
  font-family: var(--font-display);
- font-size: clamp(1.8rem, 3vw, 2.6rem);
- text-transform: uppercase;
+ font-size: clamp(2rem, 4vw, 3rem);
+ font-weight: 700;
  line-height: 1.1;
+ margin: 0;
+}
+
+.cafebar__cta-text h3 em {
+ color: var(--color-tan);
+ font-style: italic;
 }
 
 .cafebar__cta-text p {
- color: #CCCCCC;
+ color: rgba(240, 223, 192, 0.75);
  font-size: 1rem;
- line-height: 1.65;
+ line-height: 1.7;
+ font-family: var(--font-body);
+ margin: 0;
 }
 
 .cafebar__cta-btns {
  display: flex;
- gap: 12px;
+ gap: 14px;
  flex-wrap: wrap;
+ position: relative;
+ z-index: 2;
 }
 
-/* ============================================================
-  RESPONSIVE
-  ============================================================ */
+/* ── Responsive ── */
 @media (max-width: 1100px) {
  .cafebar__grid {
   grid-template-columns: repeat(2, 1fr);
  }
-
  .cafebar__card:nth-child(2) {
   border-right: none;
  }
-
  .cafebar__card:nth-child(3) {
-  border-top: var(--border-medium);
+  border-top: 1px solid rgba(120, 72, 30, 0.15);
  }
-
  .cafebar__card:nth-child(4) {
   border-right: none;
-  border-top: var(--border-medium);
+  border-top: 1px solid rgba(120, 72, 30, 0.15);
  }
 }
 
 @media (max-width: 900px) {
  .cafebar__header {
   grid-template-columns: 1fr;
+  text-align: center;
  }
-
  .cafebar__header-text {
   padding-right: 0;
  }
-
- .cafebar__header-img {
-  height: 300px;
+ .cafebar__header-text p {
+  margin: 0 auto;
  }
-
+ .cafebar__header-text .divider {
+  margin: 24px auto;
+ }
+ .cafebar__header-img {
+  height: 340px;
+ }
  .cafebar__cta-banner {
   grid-template-columns: 1fr;
  }
-
  .cafebar__cta-img-wrap {
-  height: 260px;
+  height: 300px;
   border-right: none;
-  border-bottom: var(--border-thick);
+  border-bottom: 1px solid rgba(240, 223, 192, 0.1);
  }
 }
 
@@ -246,16 +282,16 @@
  .cafebar {
   padding: 60px 0;
  }
-
  .cafebar__grid {
   grid-template-columns: 1fr;
  }
-
  .cafebar__card {
   border-right: none;
-  border-bottom: var(--border-medium);
+  border-bottom: 1px solid rgba(120, 72, 30, 0.15);
  }
-
+ .cafebar__card:last-child {
+  border-bottom: none;
+ }
  .cafebar__card-img-wrap {
   height: 200px;
  }

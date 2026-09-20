@@ -37,7 +37,7 @@ const Contact: React.FC<ContactProps> = ({ initialCourse = 'barista' }) => {
    `• Phone: ${formData.phone}\n` +
    (formData.notes ? `• Notes: ${formData.notes}` : '')
   );
-  window.open(`https://wa.me/9779800000000?text=${text}`, '_blank');
+  window.open(`https://wa.me/9779802004823?text=${text}`, '_blank');
  };
 
  return (
@@ -203,7 +203,7 @@ const Contact: React.FC<ContactProps> = ({ initialCourse = 'barista' }) => {
          <span className="contact__item-icon"></span>
          <div>
           <strong>Phone &amp; Hotline</strong>
-          <p>+977 980-0000000 / +977 01-4XXXXXX</p>
+          <p>+977 980-2004823 / +977 01-4XXXXXX</p>
           <small>Direct counseling &amp; admissions line</small>
          </div>
         </div>

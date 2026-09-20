@@ -6,7 +6,7 @@ import FloatingCTA from './components/FloatingCTA/FloatingCTA';
 import ScrollToTop from './components/ScrollToTop';
 import { useScrollReveal } from './hooks/useScrollReveal';
 
-// Pages
+// Public Pages
 import HomePage from './pages/HomePage';
 import BaristaPage from './pages/BaristaPage';
 import CafeBarTrainingPage from './pages/CafeBarTrainingPage';
@@ -19,48 +19,80 @@ import CertificationPage from './pages/CertificationPage';
 import ContactPage from './pages/ContactPage';
 import FAQPage from './pages/FAQPage';
 
-const AppContent: React.FC = () => {
- useScrollReveal();
+// Admin Imports
+import { useAdminAuth } from './admin/hooks/useAdminAuth';
+import ProtectedRoute from './admin/components/ProtectedRoute';
+import AdminLayout from './admin/components/AdminLayout';
+import AdminLogin from './admin/pages/AdminLogin';
+import AccessDenied from './admin/pages/AccessDenied';
+import Dashboard from './admin/pages/Dashboard';
+import Banners from './admin/pages/Banners';
+import Gallery from './admin/pages/Gallery';
+import Videos from './admin/pages/Videos';
+import Enquiries from './admin/pages/Enquiries';
+import Programs from './admin/pages/Programs';
+import SiteSettings from './admin/pages/SiteSettings';
+import './admin/admin.css';
 
- return (
-  <div className="app">
-   <ScrollToTop />
-   <Header />
+const PublicLayout: React.FC = () => {
+  useScrollReveal();
 
-   <main id="main-content">
+  return (
+    <div className="app">
+      <ScrollToTop />
+      <Header />
+      <main id="main-content">
+        <Routes>
+          {/* Home Overview */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/programs" element={<ProgramsPage />} />
+          <Route path="/barista-training" element={<BaristaPage />} />
+          <Route path="/cafe-bar-training" element={<CafeBarTrainingPage />} />
+          <Route path="/cafe-bar" element={<CafeBarPage />} />
+          <Route path="/chef-training" element={<ChefPage />} />
+          <Route path="/certification" element={<CertificationPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="*" element={<HomePage />} />
+        </Routes>
+      </main>
+      <Footer />
+      <FloatingCTA />
+    </div>
+  );
+};
+
+const AdminRoutes: React.FC = () => {
+  const auth = useAdminAuth();
+
+  return (
     <Routes>
-     {/* Home Overview */}
-     <Route path="/" element={<HomePage />} />
-
-     {/* Dedicated Program & Icon Pages */}
-     <Route path="/programs" element={<ProgramsPage />} />
-     <Route path="/barista-training" element={<BaristaPage />} />
-     <Route path="/cafe-bar-training" element={<CafeBarTrainingPage />} />
-     <Route path="/cafe-bar" element={<CafeBarPage />} />
-     <Route path="/chef-training" element={<ChefPage />} />
-     <Route path="/certification" element={<CertificationPage />} />
-     <Route path="/gallery" element={<GalleryPage />} />
-     <Route path="/about" element={<AboutPage />} />
-     <Route path="/contact" element={<ContactPage />} />
-     <Route path="/faq" element={<FAQPage />} />
-
-     {/* Catch-all fallback */}
-     <Route path="*" element={<HomePage />} />
+      <Route path="/" element={<AdminLogin />} />
+      <Route path="/denied" element={<AccessDenied />} />
+      <Route element={<ProtectedRoute auth={auth}><AdminLayout /></ProtectedRoute>}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/banners" element={<Banners />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/videos" element={<Videos />} />
+        <Route path="/enquiries" element={<Enquiries />} />
+        <Route path="/programs" element={<Programs />} />
+        <Route path="/settings" element={<SiteSettings />} />
+      </Route>
     </Routes>
-   </main>
-
-   <Footer />
-   <FloatingCTA />
-  </div>
- );
+  );
 };
 
 const App: React.FC = () => {
- return (
-  <Router>
-   <AppContent />
-  </Router>
- );
+  return (
+    <Router>
+      <Routes>
+        <Route path="/admin/007/*" element={<AdminRoutes />} />
+        <Route path="/*" element={<PublicLayout />} />
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;

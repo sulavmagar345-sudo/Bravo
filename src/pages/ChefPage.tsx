@@ -36,25 +36,58 @@ const CHEF_CURRICULUM = [
  },
 ];
 
+const isValidName = (v: string) => {
+  const t = v.trim();
+  if (t.length < 2 || t.length > 60) return false;
+  if (!/[\p{L}]/u.test(t)) return false;
+  if (!/^[\p{L}\s'.-]+$/u.test(t)) return false;
+  return true;
+};
+const isValidPhone = (v: string) => {
+  const digits = v.replace(/[\s\-()]/g, '');
+  const stripped = digits.startsWith('+') ? digits.slice(1) : digits;
+  if (!/^\d+$/.test(stripped)) return false;
+  if (stripped.length < 7 || stripped.length > 15) return false;
+  return true;
+};
+const isValidEmail = (v: string) => {
+  const t = v.trim();
+  if (!t) return true; // optional field
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(t) && t.length <= 254;
+};
+
 const ChefPage: React.FC = () => {
- const [waitlistSent, setWaitlistSent] = useState(false);
- const [chefData, setChefData] = useState({ name: '', phone: '', email: '', exp: 'beginner' });
+  const [waitlistSent, setWaitlistSent] = useState(false);
+  const [chefData, setChefData] = useState({ name: '', phone: '', email: '', exp: 'beginner' });
+  const [errors, setErrors] = useState<{ name?: string; phone?: string; email?: string }>({});
 
- const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  setWaitlistSent(true);
- };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const nextErrors: typeof errors = {};
+    const trimmedName = chefData.name.trim();
+    const trimmedPhone = chefData.phone.trim();
+    const trimmedEmail = chefData.email.trim();
+    if (!isValidName(trimmedName)) nextErrors.name = 'Please enter a valid name (2–60 letters, spaces, hyphen or apostrophe).';
+    if (!isValidPhone(trimmedPhone)) nextErrors.phone = 'Please enter a valid phone number (7–15 digits, may start with +).';
+    if (!isValidEmail(trimmedEmail)) nextErrors.email = 'Please enter a valid email address.';
+    if (Object.keys(nextErrors).length) {
+      setErrors(nextErrors);
+      return;
+    }
+    setErrors({});
+    setChefData({ ...chefData, name: trimmedName, phone: trimmedPhone, email: trimmedEmail });
+    setWaitlistSent(true);
+  };
 
- return (
-  <div className="chef-page">
-   <PageBanner
-    icon=""
-    badge="Coming Soon • Pre-Registration Open"
-    title="Professional Chef &amp; Culinary Arts"
-    subtitle="Step into our commercial kitchen stations. Learn knife mastery, global cooking techniques, kitchen management, and food hygiene from seasoned head chefs."
-    bgImage={IMAGES.cafeInterior}
-    breadcrumbs={[{ label: 'Programs', path: '/programs' }, { label: 'Chef Training' }]}
-   />
+  return (
+    <div className="chef-page">
+      <PageBanner
+        icon=""
+        badge="Coming Soon • Pre-Registration Open"
+        title="Professional Chef &amp; Culinary Arts"
+        subtitle="Step into our commercial kitchen stations. Learn knife mastery, global cooking techniques, kitchen management, and food hygiene from seasoned head chefs."
+        breadcrumbs={[{ label: 'Programs', path: '/programs' }, { label: 'Chef Training' }]}
+      />
 
    {/* Vision Split */}
    <section className="section section--white">
@@ -157,37 +190,59 @@ const ChefPage: React.FC = () => {
        {!waitlistSent ? (
         <form onSubmit={handleSubmit} className="chef-form">
          <h3>Pre-Register Today</h3>
-         <div className="form-group">
-          <label>Full Name *</label>
-          <input
-           type="text"
-           required
-           placeholder="Your full name"
-           value={chefData.name}
-           onChange={(e) => setChefData({ ...chefData, name: e.target.value })}
-          />
-         </div>
-         <div className="form-row">
           <div className="form-group">
-           <label>Phone / WhatsApp *</label>
-           <input
-            type="tel"
-            required
-            placeholder="98XXXXXXXX"
-            value={chefData.phone}
-            onChange={(e) => setChefData({ ...chefData, phone: e.target.value })}
-           />
+            <label htmlFor="chef-name">Full Name *</label>
+            <input
+              id="chef-name"
+              type="text"
+              required
+              placeholder="Your full name"
+              value={chefData.name}
+              onChange={(e) => setChefData({ ...chefData, name: e.target.value })}
+              autoComplete="name"
+              inputMode="text"
+              maxLength={60}
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? 'chef-name-error' : undefined}
+            />
+            {errors.name && <span id="chef-name-error" className="form-error" role="alert">{errors.name}</span>}
           </div>
-          <div className="form-group">
-           <label>Email</label>
-           <input
-            type="email"
-            placeholder="name@email.com"
-            value={chefData.email}
-            onChange={(e) => setChefData({ ...chefData, email: e.target.value })}
-           />
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="chef-phone">Phone / WhatsApp *</label>
+              <input
+                id="chef-phone"
+                type="tel"
+                required
+                placeholder="98XXXXXXXX"
+                value={chefData.phone}
+                onChange={(e) => setChefData({ ...chefData, phone: e.target.value })}
+                autoComplete="tel"
+                inputMode="numeric"
+                maxLength={20}
+                pattern="\+?[0-9\s\-()]{7,20}"
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? 'chef-phone-error' : undefined}
+              />
+              {errors.phone && <span id="chef-phone-error" className="form-error" role="alert">{errors.phone}</span>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="chef-email">Email</label>
+              <input
+                id="chef-email"
+                type="email"
+                placeholder="name@email.com"
+                value={chefData.email}
+                onChange={(e) => setChefData({ ...chefData, email: e.target.value })}
+                autoComplete="email"
+                inputMode="email"
+                maxLength={254}
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? 'chef-email-error' : undefined}
+              />
+              {errors.email && <span id="chef-email-error" className="form-error" role="alert">{errors.email}</span>}
+            </div>
           </div>
-         </div>
          <div className="form-group">
           <label>Culinary Background</label>
           <select
@@ -213,7 +268,7 @@ const ChefPage: React.FC = () => {
           We will notify you on WhatsApp as soon as kitchen commissioning dates are announced.
          </p>
          <a
-          href="https://wa.me/9779800000000?text=Hi%20Bravo,%20I%20just%20joined%20the%20Chef%20Training%20waitlist."
+          href="https://wa.me/9779802004823?text=Hi%20Bravo,%20I%20just%20joined%20the%20Chef%20Training%20waitlist."
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn--primary"

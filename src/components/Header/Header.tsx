@@ -1,196 +1,207 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
-import { IMAGES } from '../../data/images';
 
-interface NavItem {
- label: string;
- path: string;
- submenu?: { label: string; path: string; badge?: string }[];
-}
-
-const NAV_ITEMS: NavItem[] = [
- { label: 'Home', path: '/' },
- {
-  label: 'Programs',
-  path: '/programs',
-  submenu: [
-   { label: 'Barista Training', path: '/barista-training' },
-   { label: 'Café & Bar Training', path: '/cafe-bar-training' },
-   { label: 'Chef Training', path: '/chef-training', badge: 'Soon' },
-  ],
- },
- { label: 'Café & Bar', path: '/cafe-bar' },
- { label: 'About', path: '/about' },
- { label: 'Certifications', path: '/certification' },
- { label: 'Gallery', path: '/gallery' },
- { label: 'Contact', path: '/contact' },
+const NAV_LINKS = [
+  { label: 'Home',          path: '/' },
+  { label: 'Programs',      path: '/programs',
+    sub: [
+      { label: 'Barista Training',    path: '/barista-training' },
+      { label: 'Café & Bar Training', path: '/cafe-bar-training' },
+      { label: 'Chef Training',       path: '/chef-training', badge: 'Soon' },
+    ]
+  },
+  { label: 'About',         path: '/about' },
+  { label: 'Certification', path: '/certification' },
+  { label: 'Gallery',       path: '/gallery' },
+  { label: 'Contact',       path: '/contact' },
 ];
 
 const Header: React.FC = () => {
- const [drawerOpen, setDrawerOpen] = useState(false);
- const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
- const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [dropdown, setDropdown] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<number | null>(null);
+  const location = useLocation();
 
- useEffect(() => {
-  setDrawerOpen(false);
-  setActiveDropdown(null);
- }, [location.pathname]);
+  // Close menu on route change
+  useEffect(() => {
+    setMenuOpen(false);
+    setDropdown(null);
+  }, [location.pathname]);
 
- useEffect(() => {
-  if (drawerOpen) {
-   document.body.style.overflow = 'hidden';
-  } else {
-   document.body.style.overflow = '';
-  }
-  return () => {
-   document.body.style.overflow = '';
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
+  // Scrolled state for header shadow
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Close dropdown on outside click / Escape + keyboard support
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdown(null);
+      }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setDropdown(null);
+    };
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, []);
+
+  const openDropdown = (label: string) => {
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    setDropdown(label);
   };
- }, [drawerOpen]);
+  const scheduleClose = () => {
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = window.setTimeout(() => setDropdown(null), 160);
+  };
+  const cancelClose = () => {
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+  };
 
- return (
-  <>
-   <header className="brutal-header" role="banner">
-    <div className="container brutal-header__inner">
-     {/* Logo & Brand */}
-     <Link to="/" className="brutal-logo" aria-label="Bravo Home">
-      <div className="brutal-logo__avatar">
-       <img src={IMAGES.logo} alt="Bravo Logo" />
-      </div>
-      <div className="brutal-logo__text-group">
-       <span className="brutal-logo__title">BRAVO</span>
-       <span className="brutal-badge brutal-badge--sm">EST. 2019</span>
-      </div>
-     </Link>
-
-     {/* Desktop Nav */}
-     <nav className="brutal-nav" aria-label="Main navigation">
-      <ul className="brutal-nav__list">
-       {NAV_ITEMS.map((item) => {
-        const isActive = location.pathname === item.path;
-        return (
-         <li
-          key={item.label}
-          className={`brutal-nav__item ${item.submenu ? 'has-sub' : ''}`}
-          onMouseEnter={() => item.submenu && setActiveDropdown(item.label)}
-          onMouseLeave={() => setActiveDropdown(null)}
-         >
-          <Link
-           to={item.path}
-           className={`brutal-nav__link ${isActive ? 'active' : ''}`}
-          >
-           <span>{item.label}</span>
-           {item.submenu && <span className="brutal-nav__arrow"></span>}
+  return (
+    <>
+      <header className={`site-header${scrolled ? ' scrolled' : ''}`}>
+        <div className="container site-header__inner">
+          {/* Logo */}
+          <Link to="/" className="site-logo" aria-label="Bravo Home">
+            <img src="/assets/bravo Logo.jpg" alt="Bravo Logo" className="site-logo__img" />
+            <div className="site-logo__text-group">
+              <span className="site-logo__name">Bravo</span>
+              <span className="site-logo__tag">Barista School</span>
+            </div>
           </Link>
 
-          {item.submenu && activeDropdown === item.label && (
-           <div className="brutal-dropdown">
-            {item.submenu.map((sub) => (
-             <Link
-              key={sub.label}
-              to={sub.path}
-              className="brutal-dropdown__link"
-             >
-              <span className="brutal-dropdown__label">{sub.label}</span>
-              {sub.badge && (
-               <span className="brutal-badge brutal-badge--white">{sub.badge}</span>
-              )}
-             </Link>
-            ))}
-           </div>
-          )}
-         </li>
-        );
-       })}
-      </ul>
-     </nav>
+          {/* Desktop nav */}
+          <nav className="site-nav" aria-label="Main navigation" ref={dropdownRef}>
+            <ul className="site-nav__list">
+              {NAV_LINKS.map((item) => (
+                <li
+                  key={item.label}
+                  className={`site-nav__item${item.sub ? ' has-sub' : ''}`}
+                  onMouseEnter={() => item.sub && openDropdown(item.label)}
+                  onMouseLeave={() => item.sub && scheduleClose()}
+                  onFocusCapture={() => item.sub && openDropdown(item.label)}
+                  onBlurCapture={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node)) scheduleClose();
+                  }}
+                >
+                  <Link
+                    to={item.path}
+                    className={`site-nav__link${location.pathname === item.path ? ' active' : ''}`}
+                    aria-haspopup={item.sub ? 'true' : undefined}
+                    aria-expanded={item.sub ? dropdown === item.label : undefined}
+                    onFocus={() => item.sub && openDropdown(item.label)}
+                  >
+                    {item.label}
+                    {item.sub && <span className="nav-arrow">›</span>}
+                  </Link>
 
-     {/* Action CTA */}
-     <div className="brutal-header__actions">
-      <Link to="/contact" className="brutal-btn brutal-btn--sm">
-       Enroll Now ↗
-      </Link>
+                  {item.sub && (
+                    <div
+                      className={`site-dropdown${dropdown === item.label ? ' open' : ''}`}
+                      onMouseEnter={cancelClose}
+                      onMouseLeave={scheduleClose}
+                    >
+                      {item.sub.map((s) => (
+                        <Link key={s.label} to={s.path} className="site-dropdown__item">
+                          {s.label}
+                          {s.badge && <span className="nav-badge">{s.badge}</span>}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-      {/* Mobile Toggle */}
-      <button
-       className={`brutal-hamburger${drawerOpen ? ' is-open' : ''}`}
-       onClick={() => setDrawerOpen(!drawerOpen)}
-       aria-label={drawerOpen ? 'Close navigation' : 'Open navigation'}
-      >
-       <span className="hbg-bar" />
-       <span className="hbg-bar" />
-       <span className="hbg-bar" />
-      </button>
-     </div>
-    </div>
-   </header>
+          {/* CTA + Hamburger */}
+          <div className="site-header__actions">
+            <Link to="/contact" className="btn btn--primary btn--sm header-cta">
+              Enroll Now
+            </Link>
+            <button
+              className={`hamburger${menuOpen ? ' is-open' : ''}`}
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+          </div>
+        </div>
+      </header>
 
-   {/* Mobile Drawer */}
-   {drawerOpen && (
-    <div
-     className="brutal-drawer-backdrop"
-     onClick={() => setDrawerOpen(false)}
-    />
-   )}
+      {/* Mobile Overlay */}
+      <div
+        className={`mobile-overlay${menuOpen ? ' open' : ''}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
 
-   <div className={`brutal-drawer ${drawerOpen ? 'open' : ''}`}>
-    <div className="brutal-drawer__header">
-     <div className="brutal-logo">
-      <div className="brutal-logo__avatar">
-       <img src={IMAGES.logo} alt="Bravo Logo" />
+      {/* Mobile Drawer */}
+      <div className={`mobile-drawer${menuOpen ? ' open' : ''}`} aria-modal="true" role="dialog">
+        <div className="mobile-drawer__header">
+          <Link to="/" className="site-logo" onClick={() => setMenuOpen(false)}>
+            <span className="site-logo__name">Bravo</span>
+            <span className="site-logo__tag">Barista School</span>
+          </Link>
+          <button className="mobile-drawer__close" onClick={() => setMenuOpen(false)} aria-label="Close menu">
+            ✕
+          </button>
+        </div>
+
+        <nav className="mobile-drawer__nav">
+          {NAV_LINKS.map((item) => (
+            <React.Fragment key={item.label}>
+              <Link
+                to={item.path}
+                className={`mobile-nav-link${location.pathname === item.path ? ' active' : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+              {item.sub && item.sub.map((s) => (
+                <Link
+                  key={s.label}
+                  to={s.path}
+                  className={`mobile-nav-link mobile-nav-link--sub${location.pathname === s.path ? ' active' : ''}`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {s.label}
+                  {s.badge && <span className="nav-badge">{s.badge}</span>}
+                </Link>
+              ))}
+            </React.Fragment>
+          ))}
+        </nav>
+
+        <div className="mobile-drawer__footer">
+          <Link to="/contact" className="btn btn--primary btn--full" onClick={() => setMenuOpen(false)}>
+            Enroll Now
+          </Link>
+        </div>
       </div>
-      <span className="brutal-logo__title">BRAVO</span>
-     </div>
-     <button
-      className="brutal-drawer__close"
-      onClick={() => setDrawerOpen(false)}
-     >
-      [ X ]
-     </button>
-    </div>
-
-    <ul className="brutal-drawer__list">
-     {NAV_ITEMS.map((item) => (
-      <React.Fragment key={item.label}>
-       <li>
-        <Link
-         to={item.path}
-         className={`brutal-drawer__link ${location.pathname === item.path ? 'active' : ''}`}
-        >
-         <span>{item.label}</span>
-        </Link>
-       </li>
-       {item.submenu && item.submenu.map((sub) => (
-        <li key={sub.label} className="brutal-drawer__sub-item">
-         <Link
-          to={sub.path}
-          className={`brutal-drawer__link sub ${location.pathname === sub.path ? 'active' : ''}`}
-         >
-          <span>{sub.label}</span>
-          {sub.badge && <span className="brutal-badge brutal-badge--sm">{sub.badge}</span>}
-         </Link>
-        </li>
-       ))}
-      </React.Fragment>
-     ))}
-     <li>
-      <Link
-       to="/faq"
-       className={`brutal-drawer__link ${location.pathname === '/faq' ? 'active' : ''}`}
-      >
-       <span>FAQs</span>
-      </Link>
-     </li>
-    </ul>
-
-    <div className="brutal-drawer__footer">
-     <Link to="/contact" className="brutal-btn brutal-btn--full">
-      Enroll Now ↗
-     </Link>
-    </div>
-   </div>
-  </>
- );
+    </>
+  );
 };
 
 export default Header;

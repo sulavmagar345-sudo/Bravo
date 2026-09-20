@@ -1,167 +1,172 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import PageBanner from '../components/PageBanner/PageBanner';
 import { IMAGES } from '../data/images';
+import { fetchAllProgramStatuses } from '../admin/services/programs';
+import { ENROLLMENT_STATUS_LABELS } from '../admin/types';
+import type { ProgramStatus } from '../admin/types';
 import './ProgramsPage.css';
 
-const PROGRAMS_DATA = [
- {
-  num: '01',
-  title: 'Barista Professional Training',
-  path: '/barista-training',
-  tag: 'Flagship Course',
-  duration: '2 to 4 Weeks',
-  hours: '30 - 70+ Practical Hours',
-  cert: 'Certified Barista Diploma',
-  desc: 'Master espresso extraction, grinder calibration, milk texturing, latte art, and manual brewing inside our active café.',
-  highlights: ['Commercial FAEMA machine training', 'Unlimited practice milk & beans', 'Free-pour latte art mastery', 'International job placement prep'],
-  img: IMAGES.baristaTraining3,
- },
- {
-  num: '02',
-  title: 'Café & Bar Bartending',
-  path: '/cafe-bar-training',
-  tag: 'Hospitality & Mixology',
-  duration: '4 Weeks',
-  hours: '50+ Practical Hours',
-  cert: 'Professional Bartender Certificate',
-  desc: 'Learn classic & signature cocktail mixology, speed bar ergonomics, craft mocktails, and live bottle flair showmanship.',
-  highlights: ['Operating behind a real live bar', 'Working flair & bottle tricks', 'Coffee & spirit cocktail infusion', 'Cruise line & resort trade-test prep'],
-  img: IMAGES.barAction,
- },
- {
-  num: '03',
-  title: 'Professional Chef & Culinary Arts',
-  path: '/chef-training',
-  tag: 'Pre-Registration Open',
-  duration: '8 Weeks',
-  hours: '120+ Practical Hours',
-  cert: 'Commercial Culinary Diploma',
-  desc: 'Step into our commercial kitchen for intensive knife training, stock & sauce foundations, continental cookery, and HACCP food safety.',
-  highlights: ['Individual burner & prep station', 'Continental & Asian hot kitchens', 'Food hygiene & temperature safety', 'Early bird 15% discount waitlist'],
-  img: IMAGES.cafeInterior,
- },
-];
-
-const COMPARISON_ROWS = [
- { feature: 'Core Focus', barista: 'Espresso, Latte Art & Brewing', cafebar: 'Cocktails, Mixology & Flair', chef: 'Commercial Cookery & Hot Kitchen' },
- { feature: 'Practical Training %', barista: '100% Hands-On', cafebar: '100% Hands-On', chef: '100% Commercial Kitchen' },
- { feature: 'Class Duration', barista: '2 - 4 Weeks', cafebar: '4 Weeks', chef: '8 Weeks' },
- { feature: 'Equipment Used', barista: 'Multi-group commercial espresso machines', cafebar: 'Live bar speed rails & shakers', chef: 'Commercial ranges, combi ovens' },
- { feature: 'Batch Size Limit', barista: 'Max 8 students', cafebar: 'Max 8 students', chef: 'Max 10 students' },
- { feature: 'Target Careers', barista: 'Cafés, Specialty Roasteries, Australia/Dubai', cafebar: 'Lounges, Luxury Hotels, Cruise Ships', chef: 'Fine Dining, Resort Kitchens, Culinary Abroad' },
+const PROGRAMS = [
+  {
+    number: '01',
+    title: 'Barista Training',
+    meta: '2–4 weeks · Beginner to advanced · Certificate',
+    description: 'Master the art and science of specialty coffee on commercial FAEMA machines in a live café environment.',
+    label: "What You'll Learn",
+    points: [
+      'Coffee bean science and roast profiles',
+      'Espresso extraction and grinder calibration',
+      'Milk texturing and microfoam technique',
+      'Free-pour latte art (hearts, tulips, rosettas)',
+      'Manual brewing: V60, AeroPress, Chemex',
+    ],
+    image: IMAGES.groupTraining1,
+    alt: 'Students with FAEMA espresso machine and crafted lattes during barista training',
+    path: '/barista-training',
+    slug: 'barista-training',
+  },
+  {
+    number: '02',
+    title: 'Café & Bar Training',
+    meta: '2–4 weeks · Beginner to intermediate · Certificate',
+    description: 'Train behind a real operational bar serving live customers. Learn cocktails, mocktails, and hospitality service.',
+    label: "What You'll Learn",
+    points: [
+      'Classic cocktails and mocktail preparation',
+      'Working flair bartending and bottle techniques',
+      'Bar operations and inventory management',
+      'Customer service and hospitality standards',
+      'Speed rail workflows and order sequencing',
+    ],
+    image: IMAGES.baristaTraining3,
+    alt: 'Student preparing iced beverages at the bar during café and bar training',
+    path: '/cafe-bar-training',
+    slug: 'cafe-bar-training',
+  },
+  {
+    number: '03',
+    title: 'Chef Training',
+    meta: 'Coming soon · Culinary foundations · Pre-registration',
+    description: 'Commercial kitchen training with individual stations. Learn culinary fundamentals, food safety, and plating artistry.',
+    label: "What You'll Learn",
+    points: [
+      'Professional knife skills and mise-en-place',
+      'The 5 mother sauces and stock preparation',
+      'Hot kitchen techniques: sauté, braise, grill',
+      'HACCP food safety and hygiene protocols',
+      'Modern plating and presentation techniques',
+    ],
+    image: IMAGES.cafeInterior,
+    alt: 'Bravo hospitality interior — closest available real asset representing future kitchen training environment',
+    path: '/chef-training',
+    slug: 'chef-training',
+  },
 ];
 
 const ProgramsPage: React.FC = () => {
- return (
-  <div className="programs-page">
-   <PageBanner
-    icon=""
-    badge="Career Pathways"
-    title="Training Programs &amp; Diplomas"
-    subtitle="Compare our specialized hospitality tracks. Built around real-world commercial equipment and dedicated individual practice."
-    bgImage={IMAGES.groupTraining2}
-    breadcrumbs={[{ label: 'Programs' }]}
-   />
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [statuses, setStatuses] = useState<Record<string, ProgramStatus>>({});
 
-   {/* Program Cards */}
-   <section className="section section--white">
-    <div className="container">
-     <div className="section-header text-center reveal">
-      <span className="eyebrow">Find Your Path</span>
-      <h2>Choose Your Specialty</h2>
-      <div className="divider divider--center" />
-      <p className="section-subtitle">
-       Every course at Bravo is designed with career mobility, verified credentials, and high practical standards in mind.
-      </p>
-     </div>
+  useEffect(() => {
+    fetchAllProgramStatuses().then(data => {
+      const map: Record<string, ProgramStatus> = {};
+      data.forEach(p => { map[p.slug] = p; });
+      setStatuses(map);
+    }).catch(console.error);
 
-     <div className="program-cards-grid">
-      {PROGRAMS_DATA.map((p, i) => (
-       <div key={i} className="prog-detail-card reveal">
-        <div className="prog-detail-img-wrap">
-         <img src={p.img} alt={p.title} />
-         <span className="prog-detail-tag">{p.tag}</span>
-        </div>
-        <div className="prog-detail-body">
-         <span className="prog-detail-num">{p.num}</span>
-         <h3>{p.title}</h3>
-         <p className="prog-detail-desc">{p.desc}</p>
+    const root = rootRef.current;
+    if (!root) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
+    );
+    root.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
-         <div className="prog-detail-meta">
-          <div>
-           <small>Duration</small>
-           <strong>{p.duration}</strong>
+  return (
+    <div className="programs-page" ref={rootRef}>
+      {/* Compact hero — editorial, not full-screen */}
+      <section className="programs-hero" aria-labelledby="programs-hero-title">
+        <div className="container">
+          <div className="programs-hero__inner" data-reveal>
+            <p className="home-kicker">What we teach</p>
+            <h1 id="programs-hero-title">Our Programs</h1>
+            <p className="programs-hero__lede">Professional hands-on training for coffee, café, bar and culinary careers.</p>
           </div>
-          <div>
-           <small>Practice</small>
-           <strong>{p.hours}</strong>
-          </div>
-         </div>
-
-         <ul className="prog-detail-features">
-          {p.highlights.map((h, hi) => (
-           <li key={hi}>— {h}</li>
-          ))}
-         </ul>
-
-         <Link to={p.path} className="btn btn--primary btn--full">
-          View Course Details <span className="btn-arrow">→</span>
-         </Link>
         </div>
-       </div>
-      ))}
-     </div>
+      </section>
+
+      {/* Program directory — alternating editorial */}
+      <section className="programs-directory" aria-labelledby="programs-directory-title">
+        <h2 id="programs-directory-title" className="programs-sr-only">Program directory</h2>
+        <div className="container">
+          <div className="prog-list">
+            {PROGRAMS.map((program, index) => (
+              <article
+                key={program.number}
+                className={`prog ${index % 2 === 1 ? 'prog--reverse' : ''}`}
+                data-reveal
+              >
+                {/* IMAGE FIRST in DOM for mobile order */}
+                <figure className="prog__image">
+                  <img src={program.image} alt={program.alt} loading="lazy" />
+                </figure>
+                <div className="prog__copy">
+                  <span className="prog__number">{program.number}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+                    <h3 style={{ margin: 0 }}>{program.title}</h3>
+                    {statuses[program.slug] && statuses[program.slug].enrollment_status !== 'hidden' && (
+                      <span className={`admin-badge admin-badge--${statuses[program.slug].enrollment_status}`} style={{ fontSize: '0.65rem' }}>
+                        {ENROLLMENT_STATUS_LABELS[statuses[program.slug].enrollment_status]}
+                      </span>
+                    )}
+                  </div>
+                  <p className="prog__meta">{program.meta}</p>
+                  <p className="prog__desc">{program.description}</p>
+                  <p className="prog__label">{program.label}</p>
+                  <ul className="prog__points">
+                    {program.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                  <Link className="home-text-link prog__cta" to={program.path}>
+                    Want to know more <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA — compact, reuses homepage closing tokens */}
+      <section className="programs-closing" aria-labelledby="programs-closing-title">
+        <div className="container">
+          <div className="programs-closing__inner" data-reveal>
+            <p className="home-kicker home-kicker--light">Your next chapter</p>
+            <h2 id="programs-closing-title">Ready to Start Your Journey?</h2>
+            <p>Choose the program that fits your goals.</p>
+            <div className="programs-closing__actions">
+              <Link className="btn btn--cream" to="/barista-training">
+                Explore a Program
+              </Link>
+              <Link className="btn btn--outline-light" to="/contact">
+                Contact Us
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-   </section>
-
-   {/* Comparison Table */}
-   <section className="section section--gray">
-    <div className="container">
-     <div className="section-header text-center reveal">
-      <span className="eyebrow">Side-by-Side Comparison</span>
-      <h2>Program Feature Comparison</h2>
-      <div className="divider divider--center" />
-     </div>
-
-     <div className="table-responsive reveal">
-      <table className="comp-table">
-       <thead>
-        <tr>
-         <th>Feature</th>
-         <th> Barista Training</th>
-         <th> Café &amp; Bar Training</th>
-         <th> Chef Training</th>
-        </tr>
-       </thead>
-       <tbody>
-        {COMPARISON_ROWS.map((row, i) => (
-         <tr key={i}>
-          <td className="comp-feature-name">{row.feature}</td>
-          <td>{row.barista}</td>
-          <td>{row.cafebar}</td>
-          <td>{row.chef}</td>
-         </tr>
-        ))}
-       </tbody>
-      </table>
-     </div>
-
-     <div className="comp-cta text-center reveal">
-      <p>Not sure which track is the best fit for your background?</p>
-      <a
-       href="https://wa.me/9779800000000?text=Hi%20Bravo,%20can%20you%20guide%20me%20on%20which%20program%20is%20best%20for%20me?"
-       target="_blank"
-       rel="noopener noreferrer"
-       className="btn btn--primary"
-      >
-       Free Counselor Consultation on WhatsApp
-      </a>
-     </div>
-    </div>
-   </section>
-  </div>
- );
+  );
 };
 
 export default ProgramsPage;
