@@ -93,13 +93,23 @@ const Counter: React.FC<{ value: number; suffix: string; label: string }> = ({ v
 
 const HomePage: React.FC = () => {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [videoUrl, setVideoUrl] = useState(VIDEO_SRC);
+  const [videoData, setVideoData] = useState<{url: string, caption: string} | null>({
+    url: VIDEO_SRC,
+    caption: 'Welcome to Bravo — training in session'
+  });
 
   useEffect(() => {
     // Fetch video from Supabase
     fetchVideoBySlot('welcome')
       .then(video => {
-        if (video) setVideoUrl(getVideoUrl(video.video_path));
+        if (video) {
+          setVideoData({
+            url: getVideoUrl(video.video_path),
+            caption: video.display_name
+          });
+        } else {
+          setVideoData(null);
+        }
       })
       .catch(console.error);
 
@@ -130,22 +140,24 @@ const HomePage: React.FC = () => {
 
       <section className="home-quote" aria-label="Our philosophy"><div className="container" data-reveal><p className="home-kicker">Our philosophy</p><blockquote><span className="home-quote__line"><span>"Every great barista was once a beginner</span></span><span className="home-quote__line"><span>who refused to give up."</span></span></blockquote><cite>Bravo Philosophy</cite></div></section>
 
-      <section className="home-welcome section section--white" aria-labelledby="welcome-title">
-        <div className="container home-welcome__grid">
-          <figure className="home-welcome__media" data-reveal>
-            <video controls muted playsInline preload="metadata" key={videoUrl}>
-              <source src={videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <figcaption>Welcome to Bravo — training in session</figcaption>
-          </figure>
-          <div className="home-welcome__copy" data-reveal>
-            <p className="home-kicker">Welcome to Bravo</p>
-            <h2 id="welcome-title">A Real Training Environment</h2>
-            <p>See our students learning inside an active café and bar. This is where theory meets practice — with commercial equipment, real service rhythms, and working hospitality standards.</p>
+      {videoData && (
+        <section className="home-welcome section section--white" aria-labelledby="welcome-title">
+          <div className="container home-welcome__grid">
+            <figure className="home-welcome__media" data-reveal>
+              <video controls muted playsInline preload="metadata" key={videoData.url}>
+                <source src={videoData.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <figcaption>{videoData.caption}</figcaption>
+            </figure>
+            <div className="home-welcome__copy" data-reveal>
+              <p className="home-kicker">Welcome to Bravo</p>
+              <h2 id="welcome-title">A Real Training Environment</h2>
+              <p>See our students learning inside an active café and bar. This is where theory meets practice — with commercial equipment, real service rhythms, and working hospitality standards.</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="home-programs section" aria-labelledby="programs-title"><div className="container">
         <header className="home-section-head" data-reveal><p className="home-kicker">What we teach</p><h2 id="programs-title">Our Programs</h2><p>Practical training for people building a career in coffee, bar service and hospitality.</p></header>
