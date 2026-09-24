@@ -157,13 +157,16 @@ export interface AuthState {
 // ─── BOOKING SYSTEM ────────────────────────────────────────
 
 export type ResourceType = 'table' | 'netflix_room';
+export type ResourceStatus = 'available' | 'occupied' | 'paused' | 'archived';
 
 export interface Resource {
   id: string;
   type: ResourceType;
   name: string;
   capacity: number;
+  status: ResourceStatus;
   active: boolean;
+  archived?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -189,6 +192,7 @@ export interface Booking {
   special_request: string | null;
   created_at: string;
   updated_at: string;
+  resource?: { id: string; name: string; type: string; capacity?: number; status?: ResourceStatus } | null;
 }
 
 export interface BlockedTime {
@@ -198,6 +202,7 @@ export interface BlockedTime {
   ends_at: string;
   reason: string | null;
   created_at: string;
+  resource?: { id: string; name: string; type: ResourceType } | null;
 }
 
 export interface BookingSetting {

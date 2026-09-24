@@ -289,19 +289,6 @@ const VisitPage: React.FC = () => {
         </div>
       </section>
 
-
-      {/* ════════════════════════════════════════════════
-          FULLWIDTH STRIP — drinks atmosphere
-          ════════════════════════════════════════════════ */}
-      <div className="vp-strip vp-img-wrap" data-vp aria-hidden="true">
-        <img
-          src={IMAGES.milkshakes}
-          alt="Drinks at Bravo Café"
-          loading="lazy"
-        />
-      </div>
-
-
       {/* ════════════════════════════════════════════════
           4. PRIVATE NETFLIX ROOM
           ════════════════════════════════════════════════ */}
@@ -511,16 +498,7 @@ const VisitPage: React.FC = () => {
       </section>
 
 
-      {/* ════════════════════════════════════════════════
-          FULLWIDTH STRIP — bar/cocktail
-          ════════════════════════════════════════════════ */}
-      <div className="vp-strip vp-img-wrap" data-vp aria-hidden="true">
-        <img
-          src={IMAGES.barCocktail}
-          alt="Bar at Bravo"
-          loading="lazy"
-        />
-      </div>
+
 
 
       {/* ════════════════════════════════════════════════

@@ -20,15 +20,8 @@ const AdminSidebar: React.FC<Props> = ({ isOpen, onClose }) => {
         </Link>
         
         <nav className="admin-sidebar__nav">
-          <div className="admin-sidebar__section-label">Overview</div>
           <NavLink to="/admin/007/dashboard" className="admin-sidebar__link" end onClick={onClose}>
             <span className="admin-sidebar__link-icon">📊</span> Dashboard
-          </NavLink>
-          <NavLink to="/admin/007/bookings" className="admin-sidebar__link" onClick={onClose}>
-            <span className="admin-sidebar__link-icon">📅</span> Bookings
-          </NavLink>
-          <NavLink to="/admin/007/enquiries" className="admin-sidebar__link" onClick={onClose}>
-            <span className="admin-sidebar__link-icon">📩</span> Enquiries
           </NavLink>
           
           <div className="admin-sidebar__section-label">Content</div>
@@ -42,23 +35,35 @@ const AdminSidebar: React.FC<Props> = ({ isOpen, onClose }) => {
             <span className="admin-sidebar__link-icon">🎥</span> Videos
           </NavLink>
           
-          <div className="admin-sidebar__section-label">Configuration</div>
+          <div className="admin-sidebar__section-label">Business</div>
+          <NavLink to="/admin/007/bookings" className="admin-sidebar__link" onClick={onClose}>
+            <span className="admin-sidebar__link-icon">📅</span> Bookings
+          </NavLink>
+          <NavLink to="/admin/007/table-reservations" className="admin-sidebar__link" onClick={onClose}>
+            <span className="admin-sidebar__link-icon">🪑</span> Table Reservations
+          </NavLink>
+          <NavLink to="/admin/007/netflix-room" className="admin-sidebar__link" onClick={onClose}>
+            <span className="admin-sidebar__link-icon">🍿</span> Netflix Room
+          </NavLink>
+          <NavLink to="/admin/007/enquiries" className="admin-sidebar__link" onClick={onClose}>
+            <span className="admin-sidebar__link-icon">📩</span> Enquiries
+          </NavLink>
           <NavLink to="/admin/007/programs" className="admin-sidebar__link" onClick={onClose}>
             <span className="admin-sidebar__link-icon">🎓</span> Programs
           </NavLink>
           <NavLink to="/admin/007/settings" className="admin-sidebar__link" onClick={onClose}>
-            <span className="admin-sidebar__link-icon">⚙️</span> Settings
+            <span className="admin-sidebar__link-icon">⚙️</span> Contact Information
           </NavLink>
         </nav>
         
         <div className="admin-sidebar__footer">
-          <a href="/" target="_blank" className="admin-sidebar__link">
+          <a href="/" target="_blank" rel="noopener noreferrer" className="admin-sidebar__link">
             <span className="admin-sidebar__link-icon">🌐</span> View Site
           </a>
           <button 
             onClick={() => { signOut(); onClose(); }}
             className="admin-sidebar__link" 
-            style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer' }}
+            style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
           >
             <span className="admin-sidebar__link-icon">🚪</span> Log Out
           </button>

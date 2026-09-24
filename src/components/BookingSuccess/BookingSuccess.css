@@ -230,6 +230,39 @@
   font-size: 1rem;
 }
 
+.bsuccess__table-notice {
+  max-width: 22rem;
+  margin: 0 auto 1.5rem;
+  padding: 0.875rem 1rem;
+  background: rgba(197, 160, 89, 0.12);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  border-radius: var(--radius-sm, 0.375rem);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  text-align: left;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+.bsuccess__table-notice-icon {
+  font-size: 1.15rem;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.bsuccess__table-notice strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--color-gold);
+}
+
+.bsuccess__table-notice p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
 .bsuccess__actions {
   display: flex;
   gap: 0.75rem;

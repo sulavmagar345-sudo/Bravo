@@ -39,6 +39,8 @@ import SiteSettings from './admin/pages/SiteSettings';
 import Bookings from './admin/pages/Bookings';
 import BookingDetail from './admin/pages/BookingDetail';
 import BookingSettings from './admin/pages/BookingSettings';
+import TableReservations from './admin/pages/TableReservations';
+import NetflixRoomAdmin from './admin/pages/NetflixRoomAdmin';
 import './admin/admin.css';
 
 const PublicLayout: React.FC = () => {
@@ -92,6 +94,8 @@ const AdminRoutes: React.FC = () => {
         <Route path="/settings" element={<SiteSettings />} />
         <Route path="/bookings" element={<Bookings />} />
         <Route path="/bookings/:id" element={<BookingDetail />} />
+        <Route path="/table-reservations" element={<TableReservations />} />
+        <Route path="/netflix-room" element={<NetflixRoomAdmin />} />
         <Route path="/booking-settings" element={<BookingSettings />} />
       </Route>
     </Routes>

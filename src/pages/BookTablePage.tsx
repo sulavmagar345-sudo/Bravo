@@ -25,11 +25,39 @@ const BookTablePage: React.FC = () => {
   const [checkingAvailability, setCheckingAvailability] = useState(false);
   const [whatsapp, setWhatsapp] = useState('');
   const [booking, setBooking] = useState<Booking | null>(null);
+  const [isTableBookingAvailable, setIsTableBookingAvailable] = useState<boolean | null>(null);
 
   useEffect(() => {
     fetchSettingsMap().then(map => {
       if (map.whatsapp) setWhatsapp(map.whatsapp);
     }).catch(console.error);
+
+    // Check if table bookings are globally enabled and have AVAILABLE non-archived tables
+    async function checkInitialStatus() {
+      try {
+        const [tablesRes, settingRes] = await Promise.all([
+          supabase
+            .from('resources')
+            .select('id, capacity, status')
+            .eq('type', 'table')
+            .eq('status', 'available')
+            .eq('active', true)
+            .eq('archived', false),
+          supabase
+            .from('booking_settings')
+            .select('value')
+            .eq('key', 'table_booking_enabled')
+            .maybeSingle(),
+        ]);
+
+        const enabled = settingRes.data?.value !== 'false';
+        const hasAvail = (tablesRes.data?.length ?? 0) > 0;
+        setIsTableBookingAvailable(enabled && hasAvail);
+      } catch {
+        setIsTableBookingAvailable(true);
+      }
+    }
+    checkInitialStatus();
 
     // Set min date to today
     const today = new Date().toLocaleDateString('en-CA');
@@ -37,7 +65,7 @@ const BookTablePage: React.FC = () => {
     if (dateInput) dateInput.min = today;
   }, []);
 
-  // Fetch availability when date changes
+  // Fetch availability when date or guests change
   useEffect(() => {
     async function checkAvailability() {
       if (!date) {
@@ -47,27 +75,34 @@ const BookTablePage: React.FC = () => {
       setCheckingAvailability(true);
       setTime(''); // Reset time selection
       try {
-        // Need a table resource ID to check slots against.
-        // For table bookings, we can check any table's availability, but the RPC `create_booking` handles assigning one.
-        // Let's get a list of active tables and check slots for the FIRST one as a proxy, or ideally, we need a custom function.
-        // To be rigorous, we should ask the DB "are there ANY tables available at these times?".
-        // For simplicity, let's just show standard times based on settings if checking multiple resources is too complex via single RPC.
-        // Wait, the prompt says "availability must come from Supabase/database state".
-        // Let's just fetch slots for all active tables and merge them.
-        
-        const { data: tables } = await supabase.from('resources').select('id').eq('type', 'table').eq('active', true);
+        const guestNum = parseInt(guests, 10) || 1;
+        const { data: tables } = await supabase
+          .from('resources')
+          .select('id, capacity, status')
+          .eq('type', 'table')
+          .eq('status', 'available')
+          .eq('active', true)
+          .eq('archived', false)
+          .gte('capacity', guestNum);
+
         if (!tables || tables.length === 0) {
-           setAvailableSlots([]);
-           return;
+          setAvailableSlots([]);
+          return;
         }
 
         // Fetch duration from settings
-        const { data: durSetting } = await supabase.from('booking_settings').select('value').eq('key', 'table_default_duration_minutes').single();
+        const { data: durSetting } = await supabase
+          .from('booking_settings')
+          .select('value')
+          .eq('key', 'table_default_duration_minutes')
+          .single();
         const duration = parseInt(durSetting?.value || '90', 10);
-        
-        const allSlots = await Promise.all(tables.map(t => getAvailableSlots(t.id, date, duration)));
-        
-        // Merge: a slot is available if ANY table has it available
+
+        const allSlots = await Promise.all(
+          tables.map((t) => getAvailableSlots(t.id, date, duration))
+        );
+
+        // Merge: a slot is available if ANY active suitable table has it available
         const merged: Record<string, AvailableSlot> = {};
         for (const tableSlots of allSlots) {
           for (const slot of tableSlots) {
@@ -79,19 +114,20 @@ const BookTablePage: React.FC = () => {
             }
           }
         }
-        
-        const finalSlots = Object.values(merged).sort((a, b) => new Date(a.slot_start).getTime() - new Date(b.slot_start).getTime());
-        setAvailableSlots(finalSlots);
 
+        const finalSlots = Object.values(merged).sort(
+          (a, b) => new Date(a.slot_start).getTime() - new Date(b.slot_start).getTime()
+        );
+        setAvailableSlots(finalSlots);
       } catch (err) {
         console.error(err);
       } finally {
         setCheckingAvailability(false);
       }
     }
-    
+
     checkAvailability();
-  }, [date, guests]); // Re-run if date or guests change (though we didn't filter by capacity in this quick check, create_booking will validate)
+  }, [date, guests]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,31 +140,37 @@ const BookTablePage: React.FC = () => {
     setError(null);
 
     try {
-        const { data: durSetting } = await supabase.from('booking_settings').select('value').eq('key', 'table_default_duration_minutes').single();
-        const duration = parseInt(durSetting?.value || '90', 10);
+      const { data: durSetting } = await supabase
+        .from('booking_settings')
+        .select('value')
+        .eq('key', 'table_default_duration_minutes')
+        .single();
+      const duration = parseInt(durSetting?.value || '90', 10);
 
-        const res = await createBookingRpc({
-            booking_type: 'table',
-            customer_name: name,
-            phone: phone,
-            email: email || undefined,
-            guest_count: parseInt(guests, 10),
-            starts_at: time,
-            duration_minutes: duration,
-            special_request: request || undefined
-        });
+      const res = await createBookingRpc({
+        booking_type: 'table',
+        customer_name: name,
+        phone: phone,
+        email: email || undefined,
+        guest_count: parseInt(guests, 10),
+        starts_at: time,
+        duration_minutes: duration,
+        special_request: request || undefined,
+      });
 
-        if (!res.success) {
-            throw new Error(res.error || "Failed to create booking.");
+      if (!res.success) {
+        if (res.error === 'NO_TABLES_AVAILABLE' || (res.error && res.error.toLowerCase().includes('table'))) {
+          throw new Error("THIS TABLE IS NO LONGER AVAILABLE. All tables are currently reserved. Please choose another option or try again later.");
         }
+        throw new Error(res.error || "Failed to create booking.");
+      }
 
-        setBooking(res.booking!);
-        setStep('success');
-
+      setBooking(res.booking!);
+      setStep('success');
     } catch (err: any) {
-        setError(err.message || "An unexpected error occurred. Please try again.");
+      setError(err.message || "An unexpected error occurred. Please try again.");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -147,7 +189,32 @@ const BookTablePage: React.FC = () => {
   return (
     <main className="book-flow-page" id="main-content">
       <div className="container book-flow__container">
-        {step === 'form' ? (
+        {isTableBookingAvailable === false ? (
+          <div className="book-form-wrapper" style={{ textAlign: 'center', padding: '3.5rem 1.5rem' }}>
+            <span className="eyebrow" style={{ color: '#ea580c' }}>Reservation Notice</span>
+            <h1 className="book-form__title" style={{ marginTop: '0.75rem', marginBottom: '1rem' }}>
+              NO TABLES CURRENTLY AVAILABLE
+            </h1>
+            <p className="book-form__intro" style={{ marginBottom: '2rem', maxWidth: '28rem', marginInline: 'auto' }}>
+              All tables are currently reserved. Please check again later or contact Bravo directly for walk-in availability.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              {whatsapp && (
+                <a
+                  href={`https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hello Bravo, are there any tables available right now?')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--primary"
+                >
+                  WhatsApp Bravo
+                </a>
+              )}
+              <Link to="/visit" className="btn btn--outline">
+                Contact & Location
+              </Link>
+            </div>
+          </div>
+        ) : step === 'form' ? (
           <div className="book-form-wrapper">
             <div className="book-form__header">
               <span className="eyebrow">Table Reservation</span>
@@ -157,6 +224,12 @@ const BookTablePage: React.FC = () => {
                 Choose your date and time, tell us how many guests are joining, 
                 and we'll take care of the rest.
               </p>
+              <div className="book-form__notice" role="note">
+                <span className="book-form__notice-icon" aria-hidden="true">⚠️</span>
+                <span>
+                  <strong>Important:</strong> When you arrive at Bravo, please ask the staff for your reserved table number. Your table will be assigned and confirmed by the team.
+                </span>
+              </div>
             </div>
 
             {error && <div className="book-alert book-alert--error">{error}</div>}
@@ -185,10 +258,9 @@ const BookTablePage: React.FC = () => {
                     value={guests}
                     onChange={(e) => setGuests(e.target.value)}
                   >
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
+                    {[1, 2, 3, 4, 5, 6].map(n => (
                       <option key={n} value={n}>{n} {n === 1 ? 'Guest' : 'Guests'}</option>
                     ))}
-                    <option value="12">12 Guests</option>
                   </select>
                 </div>
 
@@ -199,7 +271,9 @@ const BookTablePage: React.FC = () => {
                   ) : !date ? (
                     <div className="book-times__empty">Please select a date first.</div>
                   ) : availableSlots.length === 0 ? (
-                    <div className="book-times__empty">No availability found for this date. Please try another date.</div>
+                    <div className="book-times__empty">
+                      No tables currently available for this party size on this date. Please try another party size or date.
+                    </div>
                   ) : (
                     <div className="book-times__grid">
                       {availableSlots.map((slot) => {
@@ -283,7 +357,7 @@ const BookTablePage: React.FC = () => {
               <div className="book-form__actions">
                 <Link to="/book" className="btn btn--outline">Cancel</Link>
                 <button type="submit" className="btn btn--primary" disabled={loading || !time}>
-                  {loading ? 'Checking...' : 'Check Availability & Book'}
+                  {loading ? 'Confirming...' : 'Confirm Reservation'}
                 </button>
               </div>
             </form>

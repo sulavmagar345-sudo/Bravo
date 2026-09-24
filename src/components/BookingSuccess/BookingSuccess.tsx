@@ -93,6 +93,18 @@ const BookingSuccess: React.FC<Props> = ({ booking, whatsappNumber, onBookAnothe
           )}
         </div>
 
+        {booking.booking_type === 'table' && (
+          <div className="bsuccess__table-notice" role="note">
+            <span className="bsuccess__table-notice-icon" aria-hidden="true">📌</span>
+            <div>
+              <strong>Important Table Notice:</strong>
+              <p>
+                When you arrive at Bravo, please present your Booking ID <strong>({booking.booking_reference})</strong> to the front desk or staff to be escorted to your assigned table.
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="bsuccess__actions">
           <a href={waUrl} target="_blank" rel="noopener noreferrer" className="btn btn--primary">
             WhatsApp Bravo

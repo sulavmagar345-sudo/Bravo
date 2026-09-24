@@ -27,11 +27,39 @@ const BookNetflixPage: React.FC = () => {
   const [checkingAvailability, setCheckingAvailability] = useState(false);
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [booking, setBooking] = useState<Booking | null>(null);
+  const [isRoomAvailable, setIsRoomAvailable] = useState<boolean | null>(null);
 
   useEffect(() => {
     fetchSettingsMap().then(map => {
       setSettings(map as Record<string, string>);
     }).catch(console.error);
+
+    // Check if Netflix rooms are globally enabled and have AVAILABLE non-archived rooms
+    async function checkInitialStatus() {
+      try {
+        const [roomsRes, settingRes] = await Promise.all([
+          supabase
+            .from('resources')
+            .select('id, status')
+            .eq('type', 'netflix_room')
+            .eq('status', 'available')
+            .eq('active', true)
+            .eq('archived', false),
+          supabase
+            .from('booking_settings')
+            .select('value')
+            .eq('key', 'netflix_booking_enabled')
+            .maybeSingle(),
+        ]);
+
+        const enabled = settingRes.data?.value !== 'false';
+        const hasAvail = (roomsRes.data?.length ?? 0) > 0;
+        setIsRoomAvailable(enabled && hasAvail);
+      } catch {
+        setIsRoomAvailable(true);
+      }
+    }
+    checkInitialStatus();
 
     // Set min date to today
     const today = new Date().toLocaleDateString('en-CA');
@@ -49,7 +77,14 @@ const BookNetflixPage: React.FC = () => {
       setCheckingAvailability(true);
       setTime(''); // Reset time selection
       try {
-        const { data: resources } = await supabase.from('resources').select('id').eq('type', 'netflix_room').eq('active', true);
+        const { data: resources } = await supabase
+          .from('resources')
+          .select('id, status')
+          .eq('type', 'netflix_room')
+          .eq('status', 'available')
+          .eq('active', true)
+          .eq('archived', false);
+
         if (!resources || resources.length === 0) {
            setAvailableSlots([]);
            return;
@@ -98,30 +133,32 @@ const BookNetflixPage: React.FC = () => {
     setError(null);
 
     try {
-        const durationMin = parseInt(durationHours, 10) * 60;
+      const durationMin = parseInt(durationHours, 10) * 60;
 
-        const res = await createBookingRpc({
-            booking_type: 'netflix_room',
-            customer_name: name,
-            phone: phone,
-            email: email || undefined,
-            guest_count: parseInt(guests, 10),
-            starts_at: time,
-            duration_minutes: durationMin,
-            special_request: request || undefined
-        });
+      const res = await createBookingRpc({
+        booking_type: 'netflix_room',
+        customer_name: name,
+        phone: phone,
+        email: email || undefined,
+        guest_count: parseInt(guests, 10),
+        starts_at: time,
+        duration_minutes: durationMin,
+        special_request: request || undefined,
+      });
 
-        if (!res.success) {
-            throw new Error(res.error || "Failed to create booking.");
+      if (!res.success) {
+        if (res.error === 'NETFLIX_ROOM_UNAVAILABLE' || (res.error && res.error.toLowerCase().includes('netflix'))) {
+          throw new Error("NETFLIX ROOM CURRENTLY UNAVAILABLE. Please check again later or contact Bravo.");
         }
+        throw new Error(res.error || "Failed to create booking.");
+      }
 
-        setBooking(res.booking!);
-        setStep('success');
-
+      setBooking(res.booking!);
+      setStep('success');
     } catch (err: any) {
-        setError(err.message || "An unexpected error occurred. Please try again.");
+      setError(err.message || "An unexpected error occurred. Please try again.");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -141,7 +178,32 @@ const BookNetflixPage: React.FC = () => {
   return (
     <main className="book-flow-page" id="main-content">
       <div className="container book-flow__container">
-        {step === 'form' ? (
+        {isRoomAvailable === false ? (
+          <div className="book-form-wrapper" style={{ textAlign: 'center', padding: '3.5rem 1.5rem' }}>
+            <span className="eyebrow" style={{ color: '#ea580c' }}>Room Notice</span>
+            <h1 className="book-form__title" style={{ marginTop: '0.75rem', marginBottom: '1rem' }}>
+              NETFLIX ROOM CURRENTLY UNAVAILABLE
+            </h1>
+            <p className="book-form__intro" style={{ marginBottom: '2rem', maxWidth: '28rem', marginInline: 'auto' }}>
+              The Netflix room is currently reserved or in session. Please check again later or contact Bravo for next available time.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              {settings.whatsapp && (
+                <a
+                  href={`https://wa.me/${settings.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hello Bravo, is the Netflix Room free today?')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--primary"
+                >
+                  WhatsApp Bravo
+                </a>
+              )}
+              <Link to="/visit" className="btn btn--outline">
+                Contact & Location
+              </Link>
+            </div>
+          </div>
+        ) : step === 'form' ? (
           <div className="book-form-wrapper">
             <div className="book-form__header" style={{ textAlign: 'center' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="100" height="27" viewBox="0 0 1024 276.742" style={{ marginBottom: '1rem', display: 'inline-block' }}>
@@ -179,26 +241,25 @@ const BookNetflixPage: React.FC = () => {
                     value={guests}
                     onChange={(e) => setGuests(e.target.value)}
                   >
-                    {[1, 2, 3, 4, 5, 6].map(n => (
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
                       <option key={n} value={n}>{n} {n === 1 ? 'Guest' : 'Guests'}</option>
                     ))}
                   </select>
                 </div>
 
-                <div className="form-group form-group--full">
-                  <label>Duration (Hours) *</label>
-                  <div className="book-duration-tabs">
-                    {[1, 2, 3, 4].map(h => (
-                       <button
-                         key={h}
-                         type="button"
-                         className={`book-duration-tab ${durationHours === h.toString() ? 'is-active' : ''}`}
-                         onClick={() => setDurationHours(h.toString())}
-                       >
-                         {h} hr{h > 1 ? 's' : ''}
-                       </button>
+                <div className="form-group">
+                  <label htmlFor="b-duration">Duration *</label>
+                  <select
+                    id="b-duration"
+                    className="form-select"
+                    required
+                    value={durationHours}
+                    onChange={(e) => setDurationHours(e.target.value)}
+                  >
+                    {[1, 2, 3, 4, 5, 6].map(h => (
+                      <option key={h} value={h}>{h} {h === 1 ? 'Hour' : 'Hours'}</option>
                     ))}
-                  </div>
+                  </select>
                 </div>
 
                 <div className="form-group form-group--full">
@@ -208,7 +269,9 @@ const BookNetflixPage: React.FC = () => {
                   ) : !date ? (
                     <div className="book-times__empty">Please select a date first.</div>
                   ) : availableSlots.length === 0 ? (
-                    <div className="book-times__empty">No availability found for this date. Please try another date or a shorter duration.</div>
+                    <div className="book-times__empty">
+                      No availability found for this date. Please try another date.
+                    </div>
                   ) : (
                     <div className="book-times__grid">
                       {availableSlots.map((slot) => {
@@ -281,7 +344,7 @@ const BookNetflixPage: React.FC = () => {
                   <textarea
                     id="b-request"
                     className="form-textarea"
-                    placeholder="Any special movies or occasions?"
+                    placeholder="Movie preferences or special setup requests?"
                     value={request}
                     onChange={(e) => setRequest(e.target.value)}
                     maxLength={500}
@@ -289,13 +352,17 @@ const BookNetflixPage: React.FC = () => {
                 </div>
               </fieldset>
 
-              <div className="book-form__summary">
-                <div className="book-form__summary-row">
-                  <span>Netflix Room ({durationHours} hr{parseInt(durationHours) > 1 ? 's' : ''})</span>
-                  <span>Rs. {totalAmount}</span>
+              <div className="book-pricing-summary">
+                <div className="book-pricing-summary__row">
+                  <span>Duration:</span>
+                  <span>{durationHours} {parseInt(durationHours, 10) === 1 ? 'Hour' : 'Hours'}</span>
                 </div>
-                <div className="book-form__summary-total">
-                  <span>Total Due at Counter</span>
+                <div className="book-pricing-summary__row">
+                  <span>Rate:</span>
+                  <span>Rs. {pricePerHour} / hour</span>
+                </div>
+                <div className="book-pricing-summary__row book-pricing-summary__row--total">
+                  <span>Total Amount:</span>
                   <span>Rs. {totalAmount}</span>
                 </div>
               </div>
@@ -303,7 +370,7 @@ const BookNetflixPage: React.FC = () => {
               <div className="book-form__actions">
                 <Link to="/book" className="btn btn--outline">Cancel</Link>
                 <button type="submit" className="btn btn--primary" disabled={loading || !time}>
-                  {loading ? 'Checking...' : 'Check Availability & Book'}
+                  {loading ? 'Confirming...' : 'Confirm Netflix Booking'}
                 </button>
               </div>
             </form>

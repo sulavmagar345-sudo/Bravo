@@ -12,7 +12,7 @@ export async function fetchAllBookings(filters?: {
 }): Promise<Booking[]> {
   let query = supabase
     .from('bookings')
-    .select('*')
+    .select('*, resource:resources(id, name, type, capacity, status)')
     .order('starts_at', { ascending: false });
 
   if (filters?.type && filters.type !== 'all') {
@@ -30,7 +30,7 @@ export async function fetchAllBookings(filters?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data ?? [];
+  return (data as unknown as Booking[]) ?? [];
 }
 
 /** Admin: fetch today's bookings */
@@ -51,11 +51,11 @@ export async function fetchTodayBookings(): Promise<Booking[]> {
 export async function fetchBookingById(id: string): Promise<Booking | null> {
   const { data, error } = await supabase
     .from('bookings')
-    .select('*')
+    .select('*, resource:resources(id, name, type, capacity, status)')
     .eq('id', id)
     .maybeSingle();
   if (error) throw error;
-  return data;
+  return data as unknown as Booking | null;
 }
 
 /** Admin: update booking status */
