@@ -21,6 +21,7 @@ import FAQPage from './pages/FAQPage';
 import BookPage from './pages/BookPage';
 import BookTablePage from './pages/BookTablePage';
 import BookNetflixPage from './pages/BookNetflixPage';
+import VisitPage from './pages/VisitPage';
 
 // Admin Imports
 import { useAdminAuth } from './admin/hooks/useAdminAuth';
@@ -64,6 +65,7 @@ const PublicLayout: React.FC = () => {
           <Route path="/book" element={<BookPage />} />
           <Route path="/book/table" element={<BookTablePage />} />
           <Route path="/book/netflix" element={<BookNetflixPage />} />
+          <Route path="/visit" element={<VisitPage />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </main>

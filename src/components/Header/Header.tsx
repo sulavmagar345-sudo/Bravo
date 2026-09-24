@@ -11,6 +11,7 @@ const NAV_LINKS = [
       { label: 'Chef Training',       path: '/chef-training', badge: 'Soon' },
     ]
   },
+  { label: 'Visit',         path: '/visit' },
   { label: 'About',         path: '/about' },
   { label: 'Certification', path: '/certification' },
   { label: 'Gallery',       path: '/gallery' },

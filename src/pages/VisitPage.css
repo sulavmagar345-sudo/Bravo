@@ -1,0 +1,581 @@
+/* ============================================================
+   BRAVO — VISIT PAGE  (/visit)
+   "More than training."
+   Editorial, warm, hospitality-first.
+   ============================================================ */
+
+/* ── Page Shell ── */
+.visit-page {
+  min-width: 0;
+  overflow-x: clip;
+  background: var(--color-canvas);
+  color: var(--color-text);
+}
+.visit-page :is(h1, h2, h3) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ── Shared utility within this page ── */
+.visit-eyebrow {
+  display: block;
+  margin-bottom: var(--space-3);
+  color: var(--color-gold);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.visit-text-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: var(--space-2);
+  border-bottom: 1px solid currentColor;
+  color: var(--color-coffee);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+.visit-text-link:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+.visit-hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 0;
+}
+
+
+/* ── HERO ── */
+.visit-hero {
+  position: relative;
+  display: grid;
+  min-height: clamp(34rem, 78svh, 52rem);
+  align-items: end;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--color-coffee-deep);
+}
+
+.visit-hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.visit-hero__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-coffee-deep) 82%, transparent) 0%,
+    color-mix(in srgb, var(--color-coffee-deep) 45%, transparent) 55%,
+    color-mix(in srgb, var(--color-coffee-deep) 20%, transparent) 100%
+  );
+}
+
+.visit-hero__content {
+  position: relative;
+  z-index: 2;
+  padding-top: var(--space-8);
+  padding-bottom: clamp(4rem, 10vw, 7rem);
+  color: var(--color-on-dark);
+}
+
+.visit-hero__eyebrow {
+  display: block;
+  margin-bottom: var(--space-4);
+  color: var(--color-gold-soft);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.visit-hero h1 {
+  max-width: 18ch;
+  color: var(--color-on-dark);
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 11vw, 6.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.visit-hero h1 em {
+  color: var(--color-gold-soft);
+  font-style: italic;
+}
+
+.visit-hero__lede {
+  max-width: 34rem;
+  margin-top: var(--space-5);
+  color: var(--color-on-dark-muted);
+  font-size: var(--text-lg);
+  line-height: 1.6;
+}
+
+.visit-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  margin-top: var(--space-6);
+}
+
+
+/* ── INTRO STRIP ── */
+.visit-intro {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  background: var(--color-surface-muted);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.visit-intro__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--color-border);
+}
+
+@media (min-width: 42rem) {
+  .visit-intro__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.visit-intro__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-4);
+  background: var(--color-surface-muted);
+  text-align: center;
+}
+
+.visit-intro__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.visit-intro__label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-coffee-soft);
+}
+
+
+/* ── EDITORIAL SECTIONS ── */
+/* Shared structure for 01/02/03/04 narrative sections */
+.visit-editorial {
+  padding-block: clamp(4.5rem, 10vw, 8rem);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.visit-editorial--alt {
+  background: var(--color-surface);
+}
+
+.visit-editorial--dark {
+  background: var(--color-coffee);
+  color: var(--color-on-dark);
+  border-bottom-color: color-mix(in srgb, var(--color-on-dark) 15%, transparent);
+}
+
+.visit-editorial--dark .visit-eyebrow {
+  color: var(--color-gold-soft);
+}
+
+.visit-editorial__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2.5rem, 7vw, 6rem);
+  align-items: center;
+}
+
+@media (min-width: 58rem) {
+  .visit-editorial__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .visit-editorial__inner--flip .visit-editorial__copy {
+    order: 2;
+  }
+  .visit-editorial__inner--flip .visit-editorial__media {
+    order: 1;
+  }
+}
+
+.visit-editorial__num {
+  display: block;
+  margin-bottom: var(--space-3);
+  color: var(--color-gold);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-style: italic;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.visit-editorial__dark .visit-editorial__num {
+  color: var(--color-gold-soft);
+}
+
+.visit-editorial h2 {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.visit-editorial--dark h2 {
+  color: var(--color-on-dark);
+}
+
+.visit-editorial__copy > p:not(.visit-eyebrow) {
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.visit-editorial--dark .visit-editorial__copy > p:not(.visit-eyebrow) {
+  color: var(--color-on-dark-muted);
+}
+
+.visit-editorial__copy > *:last-child {
+  margin-bottom: 0;
+}
+
+.visit-editorial__media {
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-surface-muted);
+}
+
+.visit-editorial__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 600ms var(--ease-out);
+}
+
+.visit-editorial__media:hover img {
+  transform: scale(1.025);
+}
+
+/* Aspect ratios by section */
+.visit-editorial__media--square {
+  aspect-ratio: 4 / 3;
+}
+
+.visit-editorial__media--portrait {
+  aspect-ratio: 3 / 4;
+}
+
+@media (max-width: 57.9rem) {
+  .visit-editorial__media--portrait {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+
+/* ── NETFLIX HIGHLIGHT PILL-BADGES ── */
+.visit-netflix-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-5) 0 var(--space-6);
+}
+
+.visit-netflix-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4rem var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--color-on-dark) 25%, transparent);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-gold-soft);
+}
+
+.visit-netflix-price {
+  margin: var(--space-4) 0;
+  color: var(--color-gold-soft);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-style: italic;
+}
+
+.visit-netflix-price span {
+  font-style: normal;
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--color-on-dark-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+
+/* ── TABLE INFO PILLS ── */
+.visit-table-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-4) 0 var(--space-5);
+}
+
+.visit-table-pill {
+  padding: 0.35rem var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-coffee-soft);
+}
+
+
+/* ── HOURS BAND ── */
+.visit-hours-band {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5) var(--space-8);
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.visit-hours-item strong {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: var(--space-1);
+}
+
+.visit-hours-item span {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+
+/* ── FINAL CTA SECTION ── */
+.visit-cta {
+  padding-block: clamp(4rem, 9vw, 7rem);
+  background: var(--color-coffee-deep);
+  color: var(--color-on-dark);
+  text-align: center;
+}
+
+.visit-cta__eyebrow {
+  display: block;
+  margin-bottom: var(--space-4);
+  color: var(--color-gold-soft);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.visit-cta h2 {
+  color: var(--color-on-dark);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5.5vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.visit-cta__sub {
+  max-width: 32rem;
+  margin: var(--space-4) auto var(--space-7);
+  color: var(--color-on-dark-muted);
+  font-size: var(--text-lg);
+}
+
+.visit-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.visit-cta__note {
+  margin-top: var(--space-6);
+  color: var(--color-on-dark-muted);
+  font-size: var(--text-sm);
+}
+
+.visit-cta__note a {
+  color: var(--color-gold-soft);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-gold-soft) 40%, transparent);
+  text-underline-offset: 4px;
+}
+
+.visit-cta__note a:hover {
+  color: var(--color-on-dark);
+}
+
+
+/* ── TRAINING BRIDGE SECTION ── */
+.visit-bridge {
+  padding-block: clamp(3.5rem, 8vw, 6rem);
+  background: var(--color-surface-muted);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.visit-bridge__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 52rem) {
+  .visit-bridge__inner {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+}
+
+.visit-bridge__copy h2 {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.1;
+  margin-bottom: var(--space-4);
+}
+
+.visit-bridge__copy > p {
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.visit-bridge__media {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-border);
+}
+
+.visit-bridge__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+/* ══════════════════════════════
+   ANIMATION
+   ══════════════════════════════ */
+
+/* Hero text entrances */
+.v-fade-up {
+  opacity: 0;
+  transform: translateY(1.75rem);
+  transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v-fade-up--d1 { transition-delay: 60ms; }
+.v-fade-up--d2 { transition-delay: 200ms; }
+.v-fade-up--d3 { transition-delay: 360ms; }
+.v-fade-up--d4 { transition-delay: 500ms; }
+.v-fade-up--d5 { transition-delay: 650ms; }
+.v-visible { opacity: 1; transform: translateY(0); }
+
+/* Scroll-triggered reveals — triggered by IntersectionObserver in component */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out);
+}
+.reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+
+.reveal-up--d1.is-visible { transition-delay: 80ms; }
+.reveal-up--d2.is-visible { transition-delay: 160ms; }
+.reveal-up--d3.is-visible { transition-delay: 240ms; }
+
+/* Image reveal — clip-path slide open */
+.reveal-img {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-img.is-visible {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Netflix section masked text */
+.v-masked-line {
+  display: block;
+  overflow: hidden;
+}
+.v-masked-line span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(120%);
+  transition: opacity 0ms, transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v-masked-active .v-masked-line:nth-child(1) span {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 50ms;
+  transition-property: opacity, transform;
+  transition-duration: 50ms, 900ms;
+}
+.v-masked-active .v-masked-line:nth-child(2) span {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 220ms;
+  transition-property: opacity, transform;
+  transition-duration: 50ms, 900ms;
+}
+.v-masked-active .v-masked-line:nth-child(3) span {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 380ms;
+  transition-property: opacity, transform;
+  transition-duration: 50ms, 900ms;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .v-fade-up,
+  .reveal-up,
+  .reveal-img {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
+  }
+  .v-masked-line span {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
