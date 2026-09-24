@@ -143,8 +143,8 @@ const BookNetflixPage: React.FC = () => {
       <div className="container book-flow__container">
         {step === 'form' ? (
           <div className="book-form-wrapper">
-            <div className="book-form__header">
-              <span className="eyebrow">Netflix Room</span>
+            <div className="book-form__header" style={{ textAlign: 'center' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" style={{ height: '32px', marginBottom: '1rem', display: 'inline-block' }} />
               <h1 className="book-form__title">Book Netflix Room</h1>
               <p className="book-form__intro">
                 Enjoy a private room, big screen, and free popcorn. Rate is Rs. {pricePerHour}/hour.
