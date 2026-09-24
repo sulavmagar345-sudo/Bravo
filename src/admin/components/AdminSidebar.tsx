@@ -24,6 +24,9 @@ const AdminSidebar: React.FC<Props> = ({ isOpen, onClose }) => {
           <NavLink to="/admin/007/dashboard" className="admin-sidebar__link" end onClick={onClose}>
             <span className="admin-sidebar__link-icon">📊</span> Dashboard
           </NavLink>
+          <NavLink to="/admin/007/bookings" className="admin-sidebar__link" onClick={onClose}>
+            <span className="admin-sidebar__link-icon">📅</span> Bookings
+          </NavLink>
           <NavLink to="/admin/007/enquiries" className="admin-sidebar__link" onClick={onClose}>
             <span className="admin-sidebar__link-icon">📩</span> Enquiries
           </NavLink>

@@ -1,0 +1,240 @@
+/* ============================================================
+   BRAVO — BOOKING FORMS (SHARED)
+   ============================================================ */
+
+.book-flow-page {
+  background: var(--color-canvas);
+  min-height: 100dvh;
+  padding-block: calc(var(--header-height) + 2rem) var(--section-space);
+}
+
+.book-flow__container {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.book-form-wrapper {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+@media (max-width: 48rem) {
+  .book-form-wrapper {
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+  }
+}
+
+.book-form__header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.book-form__title {
+  margin-block: 0.5rem 1rem;
+}
+
+.book-form__intro {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.book-alert {
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 2rem;
+  font-weight: 500;
+  font-size: var(--text-sm);
+}
+
+.book-alert--error {
+  background: #fdf3f2;
+  color: #b94a2e;
+  border: 1px solid #f2d5cd;
+}
+
+.book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.book-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 40rem) {
+  .book-fieldset {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.book-fieldset legend {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--color-ink);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.form-group--full {
+  grid-column: 1 / -1;
+}
+
+/* Time Slots */
+.book-times__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.book-times__empty,
+.book-times__loading {
+  padding: 1.5rem;
+  text-align: center;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.book-time-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.25rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  user-select: none;
+}
+
+.book-time-btn input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.book-time-btn span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.book-time-btn:hover:not(.is-disabled) {
+  border-color: var(--color-coffee);
+  background: var(--color-surface-muted);
+}
+
+.book-time-btn.is-selected {
+  background: var(--color-coffee);
+  border-color: var(--color-coffee);
+}
+.book-time-btn.is-selected span {
+  color: var(--color-on-dark);
+}
+
+.book-time-btn.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: var(--color-canvas);
+  border-color: var(--color-border);
+}
+
+.book-time-btn.is-disabled span {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+/* Duration Tabs */
+.book-duration-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.book-duration-tab {
+  flex: 1;
+  min-width: 4.5rem;
+  padding: 0.6rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.book-duration-tab:hover {
+  background: var(--color-surface-muted);
+}
+
+.book-duration-tab.is-active {
+  background: var(--color-coffee);
+  border-color: var(--color-coffee);
+  color: var(--color-on-dark);
+}
+
+/* Summary */
+.book-form__summary {
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.book-form__summary-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.book-form__summary-total {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.75rem;
+  color: var(--color-ink);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Actions */
+.book-form__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 40rem) {
+  .book-form__actions {
+    flex-direction: column-reverse;
+  }
+  .book-form__actions .btn {
+    width: 100%;
+  }
+}

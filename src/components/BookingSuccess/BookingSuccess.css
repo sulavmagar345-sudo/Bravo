@@ -1,0 +1,247 @@
+/* ============================================================
+   BRAVO — BOOKING SUCCESS ANIMATION
+   ============================================================ */
+
+.bsuccess {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+/* ── Seal / Animation ── */
+.bsuccess__seal {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+}
+
+.bsuccess__ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.bsuccess__ring-track {
+  stroke: var(--color-border);
+  stroke-width: 3;
+  fill: none;
+}
+
+.bsuccess__ring-fill {
+  stroke: var(--color-gold);
+  stroke-width: 3;
+  fill: none;
+  stroke-dasharray: 226;
+  stroke-dashoffset: 226;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bsuccess--phase-1 .bsuccess__ring-fill,
+.bsuccess--phase-2 .bsuccess__ring-fill,
+.bsuccess--phase-3 .bsuccess__ring-fill,
+.bsuccess--phase-4 .bsuccess__ring-fill {
+  stroke-dashoffset: 0;
+}
+
+/* Checkmark */
+.bsuccess__check {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 2rem;
+  height: 2rem;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bsuccess--phase-2 .bsuccess__check,
+.bsuccess--phase-3 .bsuccess__check,
+.bsuccess--phase-4 .bsuccess__check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.bsuccess__check-line {
+  stroke: var(--color-coffee);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke-dasharray: 36;
+  stroke-dashoffset: 36;
+  transition: stroke-dashoffset 0.35s ease 0.1s;
+}
+
+.bsuccess--phase-2 .bsuccess__check-line,
+.bsuccess--phase-3 .bsuccess__check-line,
+.bsuccess--phase-4 .bsuccess__check-line {
+  stroke-dashoffset: 0;
+}
+
+/* Steam */
+.bsuccess__steam {
+  position: absolute;
+  top: -1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.3rem;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.bsuccess--phase-3 .bsuccess__steam,
+.bsuccess--phase-4 .bsuccess__steam {
+  opacity: 1;
+}
+
+.bsuccess__steam span {
+  display: block;
+  width: 3px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--color-gold-soft);
+  animation: steam-rise 1.4s ease-in-out infinite;
+}
+
+.bsuccess__steam span:nth-child(1) { animation-delay: 0s; }
+.bsuccess__steam span:nth-child(2) { animation-delay: 0.2s; height: 14px; }
+.bsuccess__steam span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes steam-rise {
+  0%   { transform: translateY(0) scaleY(1); opacity: 0.8; }
+  60%  { transform: translateY(-8px) scaleY(1.3); opacity: 0.4; }
+  100% { transform: translateY(-16px) scaleY(0.8); opacity: 0; }
+}
+
+/* ── Content ── */
+.bsuccess__body {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 0.5s ease, transform 0.5s var(--ease-out, cubic-bezier(0.2, 0.7, 0.2, 1));
+}
+
+.bsuccess__body--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bsuccess__eyebrow {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-gold);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.bsuccess__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: 0.4rem;
+  line-height: 1.1;
+}
+
+.bsuccess__sub {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.bsuccess__ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 0.25rem);
+  background: var(--color-surface-muted);
+  margin-bottom: 1.5rem;
+}
+
+.bsuccess__ref-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.bsuccess__ref-code {
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-coffee);
+  letter-spacing: 0.03em;
+}
+
+.bsuccess__details {
+  max-width: 22rem;
+  margin: 0 auto 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 0.5rem);
+  overflow: hidden;
+}
+
+.bsuccess__detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.1rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.bsuccess__detail-row:last-child {
+  border-bottom: none;
+}
+
+.bsuccess__detail-row span:first-child {
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.bsuccess__detail-row span:last-child {
+  color: var(--color-ink);
+  font-weight: 500;
+  text-align: right;
+}
+
+.bsuccess__detail-row--total {
+  background: var(--color-surface-muted);
+}
+
+.bsuccess__detail-row--total span:last-child {
+  color: var(--color-gold);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.bsuccess__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bsuccess__ring-fill { transition: none; stroke-dashoffset: 0; }
+  .bsuccess__check { opacity: 1; transform: scale(1); transition: none; }
+  .bsuccess__check-line { stroke-dashoffset: 0; transition: none; }
+  .bsuccess__steam { opacity: 1; }
+  .bsuccess__steam span { animation: none; }
+  .bsuccess__body { opacity: 1; transform: none; transition: none; }
+}

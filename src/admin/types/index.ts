@@ -153,3 +153,90 @@ export interface AuthState {
   userId: string | null;
   email: string | null;
 }
+
+// ─── BOOKING SYSTEM ────────────────────────────────────────
+
+export type ResourceType = 'table' | 'netflix_room';
+
+export interface Resource {
+  id: string;
+  type: ResourceType;
+  name: string;
+  capacity: number;
+  active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export type BookingStatus = 'pending' | 'confirmed' | 'cancelled' | 'completed' | 'no-show';
+export type BookingType = 'table' | 'netflix_room';
+
+export interface Booking {
+  id: string;
+  booking_reference: string;
+  booking_type: BookingType;
+  resource_id: string | null;
+  customer_name: string;
+  phone: string;
+  email: string | null;
+  guest_count: number;
+  starts_at: string;
+  ends_at: string;
+  duration_minutes: number;
+  total_amount: number;
+  currency: string;
+  status: BookingStatus;
+  special_request: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface BlockedTime {
+  id: string;
+  resource_id: string;
+  starts_at: string;
+  ends_at: string;
+  reason: string | null;
+  created_at: string;
+}
+
+export interface BookingSetting {
+  id: string;
+  key: string;
+  value: string | null;
+  updated_at: string;
+}
+
+export interface BookingSettingsMap {
+  table_booking_enabled: string;
+  netflix_booking_enabled: string;
+  netflix_price_per_hour: string;
+  netflix_min_duration_hours: string;
+  netflix_max_duration_hours: string;
+  table_default_duration_minutes: string;
+  booking_interval_minutes: string;
+  min_advance_minutes: string;
+  max_advance_days: string;
+  opening_time: string;
+  closing_time: string;
+}
+
+export interface AvailableSlot {
+  slot_start: string;
+  slot_end: string;
+  available: boolean;
+}
+
+export const BOOKING_STATUS_LABELS: Record<BookingStatus, string> = {
+  pending:   'Pending',
+  confirmed: 'Confirmed',
+  cancelled: 'Cancelled',
+  completed: 'Completed',
+  'no-show': 'No-show',
+};
+
+export const BOOKING_TYPE_LABELS: Record<BookingType, string> = {
+  table:       'Table Reservation',
+  netflix_room: 'Netflix Room',
+};
+

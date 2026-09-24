@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PageBanner from '../components/PageBanner/PageBanner';
 import { IMAGES } from '../data/images';
 import './CafeBarPage.css';
@@ -188,74 +189,14 @@ const CafeBarPage: React.FC = () => {
        </div>
       </div>
 
-      <div className="cb-reserve-form-card">
-       {!reserved ? (
-        <form onSubmit={handleReserve} className="cb-reserve-form">
-         <h3>Table Reservation</h3>
-         <div className="form-group">
-          <label>Your Name *</label>
-          <input
-           type="text"
-           required
-           placeholder="e.g. Suman Thapa"
-           value={reserveInfo.name}
-           onChange={(e) => setReserveInfo({ ...reserveInfo, name: e.target.value })}
-          />
-         </div>
-         <div className="form-row">
-          <div className="form-group">
-           <label>Contact Phone *</label>
-           <input
-            type="tel"
-            required
-            placeholder="98XXXXXXXX"
-            value={reserveInfo.phone}
-            onChange={(e) => setReserveInfo({ ...reserveInfo, phone: e.target.value })}
-           />
-          </div>
-          <div className="form-group">
-           <label>Number of Guests</label>
-           <select
-            value={reserveInfo.guests}
-            onChange={(e) => setReserveInfo({ ...reserveInfo, guests: e.target.value })}
-           >
-            <option value="1-2">1 - 2 People</option>
-            <option value="3-4">3 - 4 People</option>
-            <option value="5-8">5 - 8 People</option>
-            <option value="10+">10+ Group Booking</option>
-           </select>
-          </div>
-         </div>
-         <div className="form-group">
-          <label>Date &amp; Time</label>
-          <input
-           type="text"
-           placeholder="e.g. Tomorrow 6:00 PM"
-           value={reserveInfo.date}
-           onChange={(e) => setReserveInfo({ ...reserveInfo, date: e.target.value })}
-          />
-         </div>
-         <button type="submit" className="btn btn--primary btn--full">
-          Reserve Table Now <span className="btn-arrow">→</span>
-         </button>
-        </form>
-       ) : (
-        <div className="cb-reserve-success">
-         <div className="b-success-icon"></div>
-         <h4>Table Request Submitted!</h4>
-         <p>
-          Thank you, <strong>{reserveInfo.name}</strong>! We will verify availability and confirm with you on WhatsApp.
+      <div className="cb-reserve-form-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '3rem 2rem' }}>
+         <h3 style={{ marginBottom: '1rem' }}>Reserve Your Table</h3>
+         <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem' }}>
+           Use our live booking system to check availability and instantly reserve your table.
          </p>
-         <a
-          href="https://wa.me/9779802004823?text=Hi%20Bravo%20Café,%20I%20would%20like%20to%20confirm%20my%20table%20reservation."
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn--primary"
-         >
-          Chat on WhatsApp to Confirm
-         </a>
-        </div>
-       )}
+         <Link to="/book/table" className="btn btn--primary btn--lg" style={{ width: '100%' }}>
+          Check Availability & Book <span className="btn-arrow">→</span>
+         </Link>
       </div>
      </div>
     </div>

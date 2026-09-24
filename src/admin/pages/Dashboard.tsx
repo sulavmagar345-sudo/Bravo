@@ -4,6 +4,7 @@ import PageHeader from '../components/PageHeader';
 import { fetchEnquiryCounts } from '../services/enquiries';
 import { fetchAllBanners } from '../services/banners';
 import { fetchAllProgramStatuses } from '../services/programs';
+import { fetchBookingCounts } from '../services/bookings';
 
 import type { EnquiryStatus } from '../types';
 
@@ -14,15 +15,18 @@ const Dashboard: React.FC = () => {
     enquiriesTotal: 0,
     bannersActive: 0,
     programsOpen: 0,
+    bookingsToday: 0,
+    bookingsPending: 0,
   });
 
   useEffect(() => {
     async function loadStats() {
       try {
-        const [counts, banners, { fetchAllProgramStatuses }] = await Promise.all([
+        const [counts, banners, { fetchAllProgramStatuses }, bookingStats] = await Promise.all([
           fetchEnquiryCounts(),
           fetchAllBanners(),
-          import('../services/programs')
+          import('../services/programs'),
+          fetchBookingCounts()
         ]);
         
         const programs = await fetchAllProgramStatuses();
@@ -42,7 +46,9 @@ const Dashboard: React.FC = () => {
           enquiriesNew: counts['new'] || 0,
           enquiriesTotal: totalEnq,
           bannersActive: activeBanners,
-          programsOpen: openPrograms
+          programsOpen: openPrograms,
+          bookingsToday: bookingStats.today,
+          bookingsPending: bookingStats.pending,
         });
       } catch (err) {
         console.error('Failed to load stats', err);
@@ -65,6 +71,18 @@ const Dashboard: React.FC = () => {
           <div className="admin-stat-card__label">New Enquiries</div>
           <div className="admin-stat-card__value">
             {loading ? '-' : stats.enquiriesNew}
+          </div>
+        </div>
+        <div className={`admin-stat-card ${stats.bookingsPending > 0 ? 'admin-stat-card--highlight' : ''}`}>
+          <div className="admin-stat-card__label">Pending Bookings</div>
+          <div className="admin-stat-card__value">
+            {loading ? '-' : stats.bookingsPending}
+          </div>
+        </div>
+        <div className="admin-stat-card">
+          <div className="admin-stat-card__label">Today's Bookings</div>
+          <div className="admin-stat-card__value">
+            {loading ? '-' : stats.bookingsToday}
           </div>
         </div>
         <div className="admin-stat-card">
@@ -93,6 +111,12 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="admin-card__body">
           <div className="admin-dashboard__quick-actions">
+            <Link to="/admin/007/bookings" className="admin-btn admin-btn--secondary">
+              View Bookings
+            </Link>
+            <Link to="/admin/007/enquiries" className="admin-btn admin-btn--secondary">
+              View Enquiries
+            </Link>
             <Link to="/admin/007/banners" className="admin-btn admin-btn--secondary">
               Update Banners
             </Link>

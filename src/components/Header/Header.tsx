@@ -133,6 +133,9 @@ const Header: React.FC = () => {
 
           {/* CTA + Hamburger */}
           <div className="site-header__actions">
+            <Link to="/book" className="btn btn--outline btn--sm header-cta">
+              Book Now
+            </Link>
             <Link to="/contact" className="btn btn--primary btn--sm header-cta">
               Enroll Now
             </Link>
@@ -194,9 +197,12 @@ const Header: React.FC = () => {
           ))}
         </nav>
 
-        <div className="mobile-drawer__footer">
+        <div className="mobile-drawer__footer" style={{ display: 'flex', gap: '0.5rem' }}>
+          <Link to="/book" className="btn btn--outline btn--full" onClick={() => setMenuOpen(false)}>
+            Book Now
+          </Link>
           <Link to="/contact" className="btn btn--primary btn--full" onClick={() => setMenuOpen(false)}>
-            Enroll Now
+            Enroll
           </Link>
         </div>
       </div>

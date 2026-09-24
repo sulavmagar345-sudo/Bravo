@@ -1,0 +1,159 @@
+/* ============================================================
+   BRAVO — BOOKING LANDING PAGE
+   ============================================================ */
+
+.book-page {
+  background: var(--color-canvas);
+  min-height: 100dvh;
+  padding-bottom: var(--section-space);
+}
+
+.book-hero {
+  padding-top: calc(var(--header-height) + 4rem);
+  padding-bottom: 4rem;
+  text-align: center;
+}
+
+.book-hero__inner {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.book-hero__heading {
+  margin-bottom: 1.5rem;
+  color: var(--color-ink);
+}
+
+.book-hero__intro {
+  margin: 0 auto;
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.book-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 48rem) {
+  .book-choices {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.book-choice {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 2rem;
+  text-decoration: none;
+  background: transparent;
+  border-radius: var(--radius-lg);
+  transition: background-color var(--duration-base) var(--ease-out);
+}
+
+.book-choice:hover,
+.book-choice:focus-visible {
+  background: var(--color-surface-muted);
+}
+
+.book-choice__icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-gold);
+}
+
+.book-choice__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.book-choice__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  margin-bottom: 1rem;
+}
+
+.book-choice__desc {
+  color: var(--color-text-muted);
+  font-size: var(--text-base);
+  margin-bottom: 2rem;
+  flex: 1;
+}
+
+.book-choice__cta {
+  font-weight: 700;
+  color: var(--color-coffee);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color var(--duration-fast);
+}
+
+.book-choice:hover .book-choice__cta,
+.book-choice:focus-visible .book-choice__cta {
+  color: var(--color-gold);
+}
+
+.book-choices__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border);
+}
+
+@media (min-width: 48rem) {
+  .book-choices__divider {
+    width: 1px;
+    height: auto;
+  }
+}
+
+.book-note {
+  margin-top: 5rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.book-note a {
+  color: var(--color-coffee);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--color-border-strong);
+  text-underline-offset: 4px;
+}
+
+.book-note a:hover {
+  color: var(--color-gold);
+}
+
+/* ── Animation Classes ── */
+.book-reveal {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+}
+.book-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.book-reveal--d1 { transition-delay: 50ms; }
+.book-reveal--d2 { transition-delay: 150ms; }
+.book-reveal--d3 { transition-delay: 250ms; }
+.book-reveal--d4 { transition-delay: 350ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .book-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

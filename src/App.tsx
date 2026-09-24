@@ -18,6 +18,9 @@ import AboutPage from './pages/AboutPage';
 import CertificationPage from './pages/CertificationPage';
 import ContactPage from './pages/ContactPage';
 import FAQPage from './pages/FAQPage';
+import BookPage from './pages/BookPage';
+import BookTablePage from './pages/BookTablePage';
+import BookNetflixPage from './pages/BookNetflixPage';
 
 // Admin Imports
 import { useAdminAuth } from './admin/hooks/useAdminAuth';
@@ -32,6 +35,9 @@ import Videos from './admin/pages/Videos';
 import Enquiries from './admin/pages/Enquiries';
 import Programs from './admin/pages/Programs';
 import SiteSettings from './admin/pages/SiteSettings';
+import Bookings from './admin/pages/Bookings';
+import BookingDetail from './admin/pages/BookingDetail';
+import BookingSettings from './admin/pages/BookingSettings';
 import './admin/admin.css';
 
 const PublicLayout: React.FC = () => {
@@ -55,6 +61,9 @@ const PublicLayout: React.FC = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/faq" element={<FAQPage />} />
+          <Route path="/book" element={<BookPage />} />
+          <Route path="/book/table" element={<BookTablePage />} />
+          <Route path="/book/netflix" element={<BookNetflixPage />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </main>
@@ -79,6 +88,9 @@ const AdminRoutes: React.FC = () => {
         <Route path="/enquiries" element={<Enquiries />} />
         <Route path="/programs" element={<Programs />} />
         <Route path="/settings" element={<SiteSettings />} />
+        <Route path="/bookings" element={<Bookings />} />
+        <Route path="/bookings/:id" element={<BookingDetail />} />
+        <Route path="/booking-settings" element={<BookingSettings />} />
       </Route>
     </Routes>
   );
